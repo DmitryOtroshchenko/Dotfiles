@@ -15,25 +15,35 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 Plugin 'ZoomWin'
-Plugin 'The-NERD-tree'
-Plugin 'The-NERD-Commenter'
 Plugin 'Lokaltog/powerline'
+Plugin 'fugitive.vim'
+Plugin 'ack.vim'
+Plugin 'The-NERD-tree'
+Bundle 'jistr/vim-nerdtree-tabs'
+Plugin 'The-NERD-Commenter'
+Plugin 'Command-T'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Bundle 'kien/ctrlp.vim'
+
+" Color Themes
+Bundle 'flazz/vim-colorschemes'
 
 Bundle 'Valloric/YouCompleteMe'
-Bundle 'Solarized'
+Bundle 'joonty/vdebug.git'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" /Vundle 
+" General 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 syntax on
 
 set background=dark
-colorscheme default
+colorscheme Monokai
 
 filetype indent plugin on
 
@@ -43,6 +53,9 @@ set expandtab
 set softtabstop=4
 set shiftround
 set autoindent
+
+" Trim trailing whitespaces
+autocmd FileType c,cpp,java,php,python,markdown autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 set foldmethod=indent
 set foldlevel=99
@@ -74,10 +87,41 @@ let NERDTreeShowBookmarks=1
 " let NERDTreeShowHidden=0
 " let NERDTreeShowLineNumbers=0
 " let NERDTreeSortOrder=???
-" let NERDTreeStatusline=???
+" let NERDTreeStatusline=-1
 " let NERDTreeWinPos="left"
 let NERDTreeWinSize=31
 let NERDTreeMinimalUI=1
 let NERDTreeDirArrows=1
 
-autocmd VimEnter * NERDTree | wincmd p
+" map <leader>a :NERDTreeToggle<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" nerdtree-tabs
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" let g:nerdtree_tabs_open_on_gui_startup = 1
+" let g:nerdtree_tabs_open_on_console_startup = 0
+" let g:nerdtree_tabs_no_startup_for_diff = 1
+" let g:nerdtree_tabs_smart_startup_focus = 1
+" let g:nerdtree_tabs_open_on_new_tab = 1
+" let g:nerdtree_tabs_meaningful_tab_names = 1
+" let g:nerdtree_tabs_autoclose = 1
+" let g:nerdtree_tabs_synchronize_view = 1
+" let g:nerdtree_tabs_synchronize_focus = 1
+" let g:nerdtree_tabs_focus_on_files = 0
+" g:nerdtree_tabs_startup_cd = 1
+
+map <leader>a :NERDTreeMirrorToggle<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ZoomWin
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>f :call ZoomWin()<CR><CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Ultisnips
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:UltiSnipsEditSplit="horizontal"
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
