@@ -1,0 +1,35 @@
+# General.
+set bell-style none
+
+# Completion.
+set completion-ignore-case on
+set completion-map-case on
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+set skip-completed-text on
+set menu-complete-display-prefix on
+
+#set print-completions-horizontally on
+set completion-display-width 100
+set completion-query-items 100
+
+set colored-stats on
+set visible-stats on
+#set expand-tilde on
+
+# Meta characters.
+set input-meta on
+set output-meta on
+set convert-meta off
+#set echo-control-characters off
+
+# Key bindings.
+#set show-mode-in-prompt on # Does not work...
+set editing-mode vi
+
+set keymap vi-insert
+"\C-e": end-of-line
+"\C-a": beginning-of-line
+
+set keymap vi-command
+"\\\\": end-of-line
