@@ -34,7 +34,7 @@ if executable('ag')
     " Use ag in unite grep source.
     let g:unite_source_grep_command = 'ag'
     let g:unite_source_grep_default_opts =
-        \ '--line-numbers --nocolor --nogroup --hidden --ignore ' .
+        \ '--nocolor --nogroup --hidden --ignore ' .
         \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
     let g:unite_source_grep_recursive_opt = ''
 elseif executable('pt')
@@ -56,8 +56,9 @@ endif
 " call unite#custom#source('file_rec/async','sorters','sorter_rank')
 
 nnoremap <Leader>b  :Unite -no-split -buffer-name=buffers buffer<CR>
-nnoremap <Leader>f  :Unite -no-split -buffer-name=files neomru/file file_rec/async<CR>
-nnoremap <Leader>t  :Unite -no-split -buffer-name=fb buffer neomru/file file_rec/async<CR>
+nnoremap <Leader>t  :Unite -no-split -buffer-name=fb buffer file_rec/async<CR>
+" nnoremap <Leader>gg :Unite -no-split -auto-preview -buffer-name=grep grep:.<CR>
+" nnoremap <Leader>gb :Unite -no-split -auto-preview -buffer-name=grep grep:$buffers<CR>
 " nnoremap <Leader>cm :Unite -no-split -buffer-name=directory -default-action=cd neomru/directory<CR>
 " nnoremap <Leader>cd :Unite -no-split -buffer-name=directory -default-action=cd directory_rec/async<CR>
 " nnoremap <leader>y  :Unite -no-split -buffer-name=yank history/yank<CR>
@@ -136,10 +137,43 @@ omap <Leader>f <Plug>(easymotion-sn)
 
 NeoBundle 'majutsushi/tagbar'
 
+nnoremap <F6> :Tagbar<CR>
+
 NeoBundle 'tpope/vim-repeat'
+
+NeoBundle 'Yggdroot/indentLine'
+
+" '⋮', '⁞', '┊', '┆', '│'
+let g:indentLine_enabled = 0
+let g:indentLine_char = "⋮"
+let g:indentLine_first_char = "⋮"
+let g:indentLine_color_term = 239
+let g:indentLine_color_gui = '#4A4A4F'
+
+NeoBundle 'chrisbra/NrrwRgn'
+
+" NeoBundle 'mbbill/undotree'
+NeoBundle 'sjl/gundo.vim/'
+
+let g:gundo_preview_bottom = 1
+let g:gundo_right = 1
+let g:gundo_help = 0
+let g:gundo_preview_statusline = 'history preview'
+let g:gundo_tree_statusline = 'undo tree'
+
+noremap <F5> :GundoToggle<CR>
+
+" NeoBundle 'chrisbra/histwin.vim'
+
+" NeoBundle 'davidhalter/jedi-vim'
+
+NeoBundle 'ervandew/supertab'
 
 NeoBundle 'tomtom/tcomment_vim'
 
+NeoBundle 'mhinz/vim-startify'
+
+NeoBundle 'rking/ag.vim'
 " NeoBundle 'moll/vim-bbye'
 " NeoBundle 'mattdbridges/bufkill.vim'
 
@@ -163,9 +197,7 @@ NeoBundleCheck
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-if ! has("gui_running")
-    set paste
-else
+if has("gui_running")
     set guifont=Source\ Code\ Pro\ for\ Powerline:h16
     set guioptions+=Tceimgr
 endif
@@ -183,9 +215,6 @@ colorscheme Monokai
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 " :highlight Search    ctermfg=235 ctermbg=186 cterm=NONE guifg=#272822 guibg=#e6db74 gui=NONE
 " :highlight IncSearch ctermfg=235 ctermbg=186 cterm=NONE guifg=#272822 guibg=#e6db74 gui=NONE
-
-set list
-set listchars=tab:>.,trail:.,extends:#,nbsp:.
 
 " Indentation
 set nowrap
@@ -208,7 +237,10 @@ set relativenumber
 set cursorline
 set nocursorcolumn
 set colorcolumn=80
+set scrolloff=3
+set virtualedit=block,onemore
 
+set gdefault
 set hlsearch
 set incsearch
 set ignorecase
@@ -229,7 +261,7 @@ set splitright
 set encoding=utf-8
 set fileformats=unix,dos,mac
 set list
-set listchars=tab:▸\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
+set listchars=tab:▸⋅,nbsp:⋅,trail:⋅,eol:¬,extends:❯,precedes:❮
 
 " Misc
 set clipboard=unnamed
@@ -258,10 +290,12 @@ endif
 
 nnoremap ; :
 
+nnoremap ,cd :cd %:p:h<CR>
+
 map Y y$
 
 " automatically reload vimrc when it's saved
-au BufWritePost .vimrc so ~/.vimrc
+" au BufWritePost .vimrc so ~/.vimrc
 
 nnoremap <leader>ss :source $MYVIMRC<cr>
 nnoremap <leader>se :e $MYVIMRC<cr>
@@ -295,10 +329,10 @@ nmap <silent> <Leader>/ :nohlsearch<CR>
 vnoremap < <gv
 vnoremap > >gv
 
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
+" map <up> <nop>
+" map <down> <nop>
+" map <left> <nop>
+" map <right> <nop>
 
 " Up-down through long lines chunks.
 nnoremap j gj
@@ -306,13 +340,27 @@ nnoremap k gk
 
 cmap w!! w !sudo tee % >/dev/null
 
+" Show Git diff in window split when commiting git diff.
+autocmd FileType gitcommit DiffGitCached | wincmd p
+
 " Trim trailing whitespaces
 autocmd FileType c,cpp,java,php,python,markdown,r,sql autocmd BufWritePre <buffer> :%s/\s\+$//e
 
+" autocmd BufWinLeave *.* silent! mkview   " Make Vim save view (state) (folds, cursor, etc)
+" autocmd BufWinEnter *.* silent! loadview " Make Vim load view (state) (folds, cursor, etc)
+
 autocmd WinLeave * set nocursorline
 autocmd WinEnter * set cursorline
-auto InsertEnter * set nocursorline
-auto InsertLeave * set cursorline
+autocmd InsertEnter * set nocursorline
+autocmd InsertLeave * set cursorline
+
+autocmd InsertLeave * set nopaste
+
+" Absolute line numbers in insert mode, relative otherwise for easy movement.
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber
+
+autocmd BufRead COMMIT_EDITMSG setlocal spell!
 
 " TODO:
 " Use :sort with visual selection to sort lines.
@@ -325,3 +373,25 @@ auto InsertLeave * set cursorline
 " Better alternative for rainbow parentheses
 " :help!
 " map <Leader>a ggVG
+
+" Move all backups to ~
+" set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+" set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+
+" :earlier :later
+
+" Keep search pattern in the center of the screen.
+" nnoremap <silent> n nzz
+" nnoremap <silent> N Nzz
+" nnoremap <silent> * *zz
+" nnoremap <silent> # #zz
+" nnoremap <silent> g* g*zz
+" nnoremap <silent> g# g#zz
+
+" Undotree
+
+" use augroup
+"
+" Move line up/down | insert newline up/down -- tpope's unimpaired
+"
+" Add spellcheck
