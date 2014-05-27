@@ -1,7 +1,10 @@
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" <NeoBundle>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 if has('vim_starting')
     set nocompatible
-
     " Required:
     set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
@@ -9,11 +12,13 @@ endif
 " Required:
 call neobundle#begin(expand('~/.vim/bundle/'))
 
-" Let NeoBundle manage NeoBundle
 " Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-" My Bundles here:
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Bundles
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 NeoBundle 'Shougo/vimproc', {
     \ 'build' : {
     \     'windows' : 'make -f make_mingw32.mak',
@@ -23,69 +28,6 @@ NeoBundle 'Shougo/vimproc', {
     \    },
     \ }
 
-NeoBundle 'Shougo/unite.vim'
-
-let g:unite_source_yank_history_save_clipboard = 1
-let g:unite_source_history_yank_enable = 1
-let g:unite_source_history_yank_limit=40
-let g:unite_winheight=12
-
-if executable('ag')
-    " Use ag in unite grep source.
-    let g:unite_source_grep_command = 'ag'
-    let g:unite_source_grep_default_opts =
-        \ '--nocolor --nogroup --hidden --ignore ' .
-        \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('pt')
-    " Use pt in unite grep source.
-    " https://github.com/monochromegane/the_platinum_searcher
-    let g:unite_source_grep_command = 'pt'
-    let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack-grep')
-    " Use ack in unite grep source.
-    let g:unite_source_grep_command = 'ack-grep'
-    let g:unite_source_grep_default_opts =
-        \ '--no-heading --no-color -k -H'
-    let g:unite_source_grep_recursive_opt = ''
-endif
-
-" call unite#filters#matcher_default#use(['matcher_fuzzy'])
-" call unite#filters#sorter_default#use(['sorter_rank'])
-" call unite#custom#source('file_rec/async','sorters','sorter_rank')
-
-nnoremap <Leader>b  :Unite -no-split -buffer-name=buffers buffer<CR>
-nnoremap <Leader>t  :Unite -no-split -buffer-name=fb buffer file_rec/async<CR>
-" nnoremap <Leader>gg :Unite -no-split -auto-preview -buffer-name=grep grep:.<CR>
-" nnoremap <Leader>gb :Unite -no-split -auto-preview -buffer-name=grep grep:$buffers<CR>
-" nnoremap <Leader>cm :Unite -no-split -buffer-name=directory -default-action=cd neomru/directory<CR>
-" nnoremap <Leader>cd :Unite -no-split -buffer-name=directory -default-action=cd directory_rec/async<CR>
-" nnoremap <leader>y  :Unite -no-split -buffer-name=yank history/yank<CR>
-
-NeoBundle 'Shougo/neomru.vim'
-
-NeoBundle 'vim-scripts/YankRing.vim'
-
-let g:yankring_max_history = 20
-let g:yankring_min_element_length = 2
-" let g:yankring_max_display = 40
-let g:yankring_paste_using_g = 1
-let g:yankring_window_height = 12
-let g:yankring_window_use_bottom = 0
-let g:yankring_manage_numbered_reg = 1
-let g:yankring_clipboard_monitor = 1
-let g:yankring_manual_clipboard_check = 1
-
-nnoremap <silent> <leader>y :YRShow<CR>
-
-NeoBundle 'Lokaltog/powerline'
-set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
-
-NeoBundle 'scrooloose/syntastic'
-
-" let g:syntastic_python_checker_args='--ignore=E501'
-
 NeoBundle 'Valloric/YouCompleteMe', {
     \ 'build' : {
     \      'mac' : './install.sh --clang-completer --system-libclang',
@@ -93,87 +35,31 @@ NeoBundle 'Valloric/YouCompleteMe', {
     \     },
     \ }
 
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_min_num_of_chars_for_completion = 1
-
-nnoremap tg :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'vim-scripts/YankRing.vim'
+NeoBundle 'Lokaltog/powerline'
+NeoBundle 'scrooloose/syntastic'
 NeoBundle 'kien/rainbow_parentheses.vim'
-
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
-au VimEnter * RainbowParenthesesToggle
-
 NeoBundle 'tpope/vim-surround'
-
 NeoBundle 'flazz/vim-colorschemes'
-
 NeoBundle 'szw/vim-maximizer'
-
 NeoBundle 'dhruvasagar/vim-table-mode'
-
 NeoBundle 'Lokaltog/vim-easymotion'
-
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_use_smartsign_us = 1
-let g:EasyMotion_enter_jump_first = 1
-let g:EasyMotion_space_jump_first = 1
-
-let g:EasyMotion_use_upper = 1
-let g:EasyMotion_keys = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ;'
-let g:EasyMotion_do_shade = 1
-
-" Add jump anywhere
-map <SPACE>  <Plug>(easymotion-prefix)
-" map <SPACE>s <Plug>(easymotion-s2)
-" nnoremap f <Plug>(easymotion-s2)
-nmap f         <Plug>(easymotion-s2)
-xmap f         <Plug>(easymotion-s2)
-omap f         <Plug>(easymotion-s2)
-nmap <Leader>f <Plug>(easymotion-sn)
-xmap <Leader>f <Plug>(easymotion-sn)
-omap <Leader>f <Plug>(easymotion-sn)
-
 NeoBundle 'majutsushi/tagbar'
-
-nnoremap <F6> :Tagbar<CR>
-
 NeoBundle 'tpope/vim-repeat'
-
 NeoBundle 'Yggdroot/indentLine'
-
-" '⋮', '⁞', '┊', '┆', '│'
-let g:indentLine_enabled = 0
-let g:indentLine_char = "⋮"
-let g:indentLine_first_char = "⋮"
-let g:indentLine_color_term = 239
-let g:indentLine_color_gui = '#4A4A4F'
-
 NeoBundle 'chrisbra/NrrwRgn'
+NeoBundle 'sjl/gundo.vim/'
+NeoBundle 'ervandew/supertab'
+NeoBundle 'tomtom/tcomment_vim'
+NeoBundle 'mhinz/vim-startify'
+NeoBundle 'rking/ag.vim'
+NeoBundle 'Shougo/vimfiler.vim'
 
 " NeoBundle 'mbbill/undotree'
-NeoBundle 'sjl/gundo.vim/'
-
-let g:gundo_preview_bottom = 1
-let g:gundo_right = 1
-let g:gundo_help = 0
-let g:gundo_preview_statusline = 'history preview'
-let g:gundo_tree_statusline = 'undo tree'
-
-noremap <F5> :GundoToggle<CR>
-
 " NeoBundle 'chrisbra/histwin.vim'
-
 " NeoBundle 'davidhalter/jedi-vim'
-
-NeoBundle 'ervandew/supertab'
-
-NeoBundle 'tomtom/tcomment_vim'
-
-NeoBundle 'mhinz/vim-startify'
-
-NeoBundle 'rking/ag.vim'
 " NeoBundle 'moll/vim-bbye'
 " NeoBundle 'mattdbridges/bufkill.vim'
 
@@ -183,6 +69,10 @@ NeoBundle 'rking/ag.vim'
 
 " You can specify revision/branch/tag.
 " NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" </NeoBundle>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 call neobundle#end()
 
@@ -346,9 +236,6 @@ autocmd FileType gitcommit DiffGitCached | wincmd p
 " Trim trailing whitespaces
 autocmd FileType c,cpp,java,php,python,markdown,r,sql autocmd BufWritePre <buffer> :%s/\s\+$//e
 
-" autocmd BufWinLeave *.* silent! mkview   " Make Vim save view (state) (folds, cursor, etc)
-" autocmd BufWinEnter *.* silent! loadview " Make Vim load view (state) (folds, cursor, etc)
-
 autocmd WinLeave * set nocursorline
 autocmd WinEnter * set cursorline
 autocmd InsertEnter * set nocursorline
@@ -362,7 +249,147 @@ autocmd InsertLeave * :set relativenumber
 
 autocmd BufRead COMMIT_EDITMSG setlocal spell!
 
-" TODO:
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugins
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Unite.vim
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:unite_source_yank_history_save_clipboard = 1
+let g:unite_source_history_yank_enable = 1
+let g:unite_source_history_yank_limit=40
+let g:unite_winheight=12
+
+if executable('ag')
+    " Use ag in unite grep source.
+    let g:unite_source_grep_command = 'ag'
+    let g:unite_source_grep_default_opts =
+        \ '--nocolor --nogroup --hidden --ignore ' .
+        \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+    let g:unite_source_grep_recursive_opt = ''
+elseif executable('pt')
+    " Use pt in unite grep source.
+    " https://github.com/monochromegane/the_platinum_searcher
+    let g:unite_source_grep_command = 'pt'
+    let g:unite_source_grep_default_opts = '--nogroup --nocolor'
+    let g:unite_source_grep_recursive_opt = ''
+elseif executable('ack-grep')
+    " Use ack in unite grep source.
+    let g:unite_source_grep_command = 'ack-grep'
+    let g:unite_source_grep_default_opts =
+        \ '--no-heading --no-color -k -H'
+    let g:unite_source_grep_recursive_opt = ''
+endif
+
+nnoremap <Leader>b  :Unite -no-split -buffer-name=buffers buffer<CR>
+nnoremap <Leader>t  :Unite -no-split -buffer-name=fb buffer file_rec/async<CR>
+" nnoremap <Leader>gg :Unite -no-split -auto-preview -buffer-name=grep grep:.<CR>
+" nnoremap <Leader>gb :Unite -no-split -auto-preview -buffer-name=grep grep:$buffers<CR>
+" nnoremap <Leader>cm :Unite -no-split -buffer-name=directory -default-action=cd neomru/directory<CR>
+" nnoremap <Leader>cd :Unite -no-split -buffer-name=directory -default-action=cd directory_rec/async<CR>
+" nnoremap <leader>y  :Unite -no-split -buffer-name=yank history/yank<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" YankRing.vim
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:yankring_max_history = 20
+let g:yankring_min_element_length = 2
+let g:yankring_paste_using_g = 1
+let g:yankring_window_height = 12
+let g:yankring_window_use_bottom = 0
+let g:yankring_manage_numbered_reg = 1
+let g:yankring_clipboard_monitor = 1
+let g:yankring_manual_clipboard_check = 1
+
+nnoremap <silent> <leader>y :YRShow<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Lokaltog/powerline
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Valloric/YouCompleteMe
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_min_num_of_chars_for_completion = 1
+
+nnoremap tg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Lokaltog/vim-easymotion
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_use_smartsign_us = 1
+let g:EasyMotion_enter_jump_first = 1
+let g:EasyMotion_space_jump_first = 1
+
+let g:EasyMotion_use_upper = 1
+let g:EasyMotion_keys = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ;'
+let g:EasyMotion_do_shade = 1
+
+map <SPACE>    <Plug>(easymotion-prefix)
+
+nmap f         <Plug>(easymotion-s2)
+xmap f         <Plug>(easymotion-s2)
+omap f         <Plug>(easymotion-s2)
+nmap <Leader>f <Plug>(easymotion-sn)
+xmap <Leader>f <Plug>(easymotion-sn)
+omap <Leader>f <Plug>(easymotion-sn)
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Yggdroot/indentLine
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" '⋮', '⁞', '┊', '┆', '│'
+let g:indentLine_enabled = 0
+let g:indentLine_char = "⋮"
+let g:indentLine_first_char = "⋮"
+let g:indentLine_color_term = 239
+let g:indentLine_color_gui = '#4A4A4F'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" tagbar
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nnoremap <F6> :Tagbar<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Gundo
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:gundo_preview_bottom = 1
+let g:gundo_right = 1
+let g:gundo_help = 0
+let g:gundo_preview_statusline = 'history preview'
+let g:gundo_tree_statusline = 'undo tree'
+
+noremap <F5> :GundoToggle<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" syntastic
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" let g:syntastic_python_checker_args='--ignore=E501'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vimfiler
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:vimfiler_as_default_explorer = 1
+
+nnoremap <F3> :VimFiler -toggle<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Notes
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Use :sort with visual selection to sort lines.
 " SHIFT-H|M|L - navigate screen
 " SHIFT-x - back delete
