@@ -36,9 +36,13 @@ NeoBundle 'Valloric/YouCompleteMe', {
     \ }
 
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/vimfiler.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'vim-scripts/YankRing.vim'
 NeoBundle 'Lokaltog/powerline'
+" NeoBundle 'bling/vim-airline'
+" let g:airline_powerline_fonts = 1
+"
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'tpope/vim-surround'
@@ -55,8 +59,9 @@ NeoBundle 'ervandew/supertab'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'mhinz/vim-startify'
 NeoBundle 'rking/ag.vim'
-NeoBundle 'Shougo/vimfiler.vim'
-
+NeoBundle 'hdima/python-syntax'
+NeoBundle 'michaeljsmith/vim-indent-object'
+NeoBundle 'wmvanvliet/vim-ipython'
 " NeoBundle 'mbbill/undotree'
 " NeoBundle 'chrisbra/histwin.vim'
 " NeoBundle 'davidhalter/jedi-vim'
@@ -86,6 +91,13 @@ NeoBundleCheck
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+if &term =~ '256color'
+    " Disable Background Color Erase (BCE) so that color schemes
+    " render properly when inside 256-color tmux and GNU screen.
+    " See also http://snk.tuxfamily.org/log/vim-256color-bce.html
+    set t_ut=
+endif
 
 if has("gui_running")
     set guifont=Source\ Code\ Pro\ for\ Powerline:h16
@@ -182,7 +194,8 @@ nnoremap ; :
 
 nnoremap ,cd :cd %:p:h<CR>
 
-map Y y$
+noremap Y y$
+
 
 " automatically reload vimrc when it's saved
 " au BufWritePost .vimrc so ~/.vimrc
@@ -358,7 +371,10 @@ let g:indentLine_color_gui = '#4A4A4F'
 " tagbar
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap <F6> :Tagbar<CR>
+let g:tagbar_autofocus = 1
+let g:tagbar_sort = 1
+
+nnoremap <F6> :TagbarOpenAutoClose<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Gundo
@@ -387,6 +403,12 @@ let g:vimfiler_as_default_explorer = 1
 nnoremap <F3> :VimFiler -toggle<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" python-syntax
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let python_highlight_all = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Notes
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -400,13 +422,13 @@ nnoremap <F3> :VimFiler -toggle<CR>
 " Better alternative for rainbow parentheses
 " :help!
 " map <Leader>a ggVG
-
+" 
 " Move all backups to ~
 " set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 " set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-
+" 
 " :earlier :later
-
+" 
 " Keep search pattern in the center of the screen.
 " nnoremap <silent> n nzz
 " nnoremap <silent> N Nzz
@@ -414,11 +436,13 @@ nnoremap <F3> :VimFiler -toggle<CR>
 " nnoremap <silent> # #zz
 " nnoremap <silent> g* g*zz
 " nnoremap <silent> g# g#zz
-
+" 
 " Undotree
-
+" 
 " use augroup
 "
 " Move line up/down | insert newline up/down -- tpope's unimpaired
 "
 " Add spellcheck
+"
+" Text objects -> read docs
