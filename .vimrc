@@ -38,11 +38,16 @@ NeoBundle 'Valloric/YouCompleteMe', {
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler.vim'
 NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/neossh.vim'
 NeoBundle 'vim-scripts/YankRing.vim'
-NeoBundle 'Lokaltog/powerline'
-" NeoBundle 'bling/vim-airline'
-" let g:airline_powerline_fonts = 1
-"
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'edkolev/tmuxline.vim'
+
+NeoBundle 'suan/vim-instant-markdown'
+NeoBundle 'osyo-manga/vim-over'
+nnoremap g/r :<c-u>OverCommandLine<cr>%s/
+xnoremap g/r :<c-u>OverCommandLine<cr>%s/\%V
+
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'tpope/vim-surround'
@@ -101,7 +106,7 @@ endif
 
 if has("gui_running")
     set guifont=Source\ Code\ Pro\ for\ Powerline:h16
-    set guioptions+=Tceimgr
+    set guioptions=acimgr
 endif
 
 set pastetoggle=<F2>
@@ -155,7 +160,7 @@ set showcmd
 set showmode
 
 " Splits tabs and sessions
-set laststatus=2  " Statusline in every window
+set laststatus=2
 set splitbelow
 set splitright
 
@@ -200,6 +205,9 @@ noremap Y y$
 " automatically reload vimrc when it's saved
 " au BufWritePost .vimrc so ~/.vimrc
 
+" TODO:
+" Bind :set wrap linebreak nolist
+
 nnoremap <leader>ss :source $MYVIMRC<cr>
 nnoremap <leader>se :e $MYVIMRC<cr>
 
@@ -232,16 +240,15 @@ nmap <silent> <Leader>/ :nohlsearch<CR>
 vnoremap < <gv
 vnoremap > >gv
 
-" map <up> <nop>
-" map <down> <nop>
-" map <left> <nop>
-" map <right> <nop>
-
 " Up-down through long lines chunks.
-nnoremap j gj
-nnoremap k gk
+map j gj
+map <down> gj
+map k gk
+map <up> gk
 
 cmap w!! w !sudo tee % >/dev/null
+
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 " Show Git diff in window split when commiting git diff.
 autocmd FileType gitcommit DiffGitCached | wincmd p
@@ -320,10 +327,26 @@ let g:yankring_manual_clipboard_check = 1
 nnoremap <silent> <leader>y :YRShow<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Lokaltog/powerline
+" lightline
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+let g:lightline = {
+      \ 'colorscheme': 'powerline',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component': {
+      \   'readonly': '%{&filetype=="help"?"":&readonly?"":""}',
+      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
+      \ },
+      \ 'component_visible_condition': {
+      \   'readonly': '(&filetype!="help"&& &readonly)',
+      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))'
+      \ },
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' }
+      \ }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Valloric/YouCompleteMe
@@ -361,7 +384,7 @@ omap <Leader>f <Plug>(easymotion-sn)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " '⋮', '⁞', '┊', '┆', '│'
-let g:indentLine_enabled = 0
+let g:indentLine_enabled = 1
 let g:indentLine_char = "⋮"
 let g:indentLine_first_char = "⋮"
 let g:indentLine_color_term = 239
@@ -392,7 +415,7 @@ noremap <F5> :GundoToggle<CR>
 " syntastic
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" let g:syntastic_python_checker_args='--ignore=E501'
+let g:syntastic_python_checkers = ['python', 'pylama', 'py3kwarn']
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vimfiler
@@ -413,6 +436,8 @@ let python_highlight_all = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Use :sort with visual selection to sort lines.
+" Prompt reload if modified
+" Markdown + preview
 " SHIFT-H|M|L - navigate screen
 " SHIFT-x - back delete
 " Folds and bookmarks
@@ -427,8 +452,6 @@ let python_highlight_all = 1
 " set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 " set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 " 
-" :earlier :later
-" 
 " Keep search pattern in the center of the screen.
 " nnoremap <silent> n nzz
 " nnoremap <silent> N Nzz
@@ -436,9 +459,7 @@ let python_highlight_all = 1
 " nnoremap <silent> # #zz
 " nnoremap <silent> g* g*zz
 " nnoremap <silent> g# g#zz
-" 
-" Undotree
-" 
+"
 " use augroup
 "
 " Move line up/down | insert newline up/down -- tpope's unimpaired
