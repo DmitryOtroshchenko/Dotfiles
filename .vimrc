@@ -42,6 +42,7 @@ NeoBundle 'Shougo/neossh.vim'
 NeoBundle 'vim-scripts/YankRing.vim'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'edkolev/tmuxline.vim'
+NeoBundle 'edkolev/promptline.vim'
 
 NeoBundle 'suan/vim-instant-markdown'
 NeoBundle 'osyo-manga/vim-over'
@@ -67,6 +68,7 @@ NeoBundle 'rking/ag.vim'
 NeoBundle 'hdima/python-syntax'
 NeoBundle 'michaeljsmith/vim-indent-object'
 NeoBundle 'wmvanvliet/vim-ipython'
+NeoBundle 'vim-scripts/loremipsum'
 " NeoBundle 'mbbill/undotree'
 " NeoBundle 'chrisbra/histwin.vim'
 " NeoBundle 'davidhalter/jedi-vim'
@@ -114,6 +116,12 @@ set pastetoggle=<F2>
 " GUI
 set showtabline=2
 set guicursor+=a:blinkon0
+set mousemodel=popup_setpos
+" Turns off all error bells, visual or otherwise.
+set noerrorbells
+set visualbell
+set t_vb=
+" autocmd vimrc GUIEnter * set visualbell t_vb=
 
 " Colors
 syntax on
@@ -122,6 +130,14 @@ colorscheme Monokai
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 " :highlight Search    ctermfg=235 ctermbg=186 cterm=NONE guifg=#272822 guibg=#e6db74 gui=NONE
 " :highlight IncSearch ctermfg=235 ctermbg=186 cterm=NONE guifg=#272822 guibg=#e6db74 gui=NONE
+
+if v:version >= 704
+  " The new Vim regex engine is currently slooooow as hell which makes syntax
+  " highlighting slow, which introduces typing latency.
+  " Consider removing this in the future when the new regex engine becomes
+  " faster.
+  set regexpengine=1
+endif
 
 " Indentation
 set nowrap
@@ -141,6 +157,7 @@ set foldlevel=99
 " Navigation
 set number
 set relativenumber
+set numberwidth=4
 set cursorline
 set nocursorcolumn
 set colorcolumn=80
@@ -190,26 +207,23 @@ noremap <F1> <Esc>
 inoremap jk <Esc>
 inoremap kj <Esc>
 
-:set backspace=indent,eol,start
+set backspace=indent,eol,start
 if has('mouse')
     set mouse=a
 endif
 
 nnoremap ; :
+vnoremap ; :
 
 nnoremap ,cd :cd %:p:h<CR>
 
-noremap Y y$
-
-
-" automatically reload vimrc when it's saved
-" au BufWritePost .vimrc so ~/.vimrc
+map Y y$
 
 " TODO:
 " Bind :set wrap linebreak nolist
 
-nnoremap <leader>ss :source $MYVIMRC<cr>
-nnoremap <leader>se :e $MYVIMRC<cr>
+nnoremap <leader>ss :source $MYVIMRC<CR>
+nnoremap <leader>se :split  $MYVIMRC<CR>
 
 " nmap <C-J> o<Esc>
 " nmap <C-K> O<Esc>
@@ -218,6 +232,7 @@ nnoremap <leader>se :e $MYVIMRC<cr>
 nnoremap K i<CR><Esc>
 inoremap <C-e> <C-o>$
 inoremap <C-a> <C-o>0
+inoremap <C-d> <C-o>dd
 
 " Easy window navigation
 map <C-h> <C-w>h
@@ -225,16 +240,24 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-map <M-h> <C-w>-
-map <M-j> <C-w><
-map <M-k> <C-w>>
-map <M-l> <C-w>+
+if has("mac")
+    map ˙ :vertical resize -5<CR>
+    map ∆ :resize +5<CR>
+    map ˚ :resize -5<CR>
+    map ¬ :vertical resize +5<CR>
+else
+    map <M-h> :vertical resize -5<CR>
+    map <M-j> :resize +5<CR>
+    map <M-k> :resize -5<CR>
+    map <M-l> :vertical resize +5<CR>
+endif
 
 map <leader>] :bn<CR>
 map <leader>[ :bp<CR>
 map <leader>x :bd<CR>
 
-nmap <silent> <Leader>/ :nohlsearch<CR>
+nmap <Leader>/ :set hlsearch! hlsearch?<CR>
+nmap <Leader>w :set wrap! wrap?<CR>
 
 " Don't loose selection after indenting in visual mode.
 vnoremap < <gv
@@ -248,26 +271,41 @@ map <up> gk
 
 cmap w!! w !sudo tee % >/dev/null
 
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" autocmd
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Show Git diff in window split when commiting git diff.
-autocmd FileType gitcommit DiffGitCached | wincmd p
+augroup markdown
+    autocmd!
+    autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+augroup END " markdown
 
-" Trim trailing whitespaces
-autocmd FileType c,cpp,java,php,python,markdown,r,sql autocmd BufWritePre <buffer> :%s/\s\+$//e
+augroup git_diff
+    autocmd!
+    " Show Git diff in window split when commiting git diff.
+    autocmd FileType gitcommit DiffGitCached | wincmd p
+    " Turn on spellcheck.
+    autocmd BufRead COMMIT_EDITMSG setlocal spell!
+augroup END " git_diff
 
-autocmd WinLeave * set nocursorline
-autocmd WinEnter * set cursorline
-autocmd InsertEnter * set nocursorline
-autocmd InsertLeave * set cursorline
+augroup trim_trailing_whitespace
+    autocmd!
+    autocmd FileType c,cpp,java,php,python,markdown,r,sql,vim autocmd BufWritePre <buffer> :%s/\s\+$//e
+augroup END " trim_trailing_whitespace
 
-autocmd InsertLeave * set nopaste
-
-" Absolute line numbers in insert mode, relative otherwise for easy movement.
-autocmd InsertEnter * :set norelativenumber
-autocmd InsertLeave * :set relativenumber
-
-autocmd BufRead COMMIT_EDITMSG setlocal spell!
+augroup misc
+    autocmd!
+    " Autotoggle cursor line.
+    autocmd WinLeave * set nocursorline
+    autocmd WinEnter * set cursorline
+    autocmd InsertEnter * set nocursorline
+    autocmd InsertLeave * set cursorline
+    " Paste mode auto-off.
+    autocmd InsertLeave * set nopaste
+    " Absolute line numbers in insert mode, relative otherwise for easy movement.
+    autocmd InsertEnter * :set norelativenumber
+    autocmd InsertLeave * :set relativenumber
+augroup END " misc
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
@@ -282,26 +320,26 @@ let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit=40
 let g:unite_winheight=12
 
-if executable('ag')
-    " Use ag in unite grep source.
-    let g:unite_source_grep_command = 'ag'
-    let g:unite_source_grep_default_opts =
-        \ '--nocolor --nogroup --hidden --ignore ' .
-        \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('pt')
-    " Use pt in unite grep source.
-    " https://github.com/monochromegane/the_platinum_searcher
-    let g:unite_source_grep_command = 'pt'
-    let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack-grep')
-    " Use ack in unite grep source.
-    let g:unite_source_grep_command = 'ack-grep'
-    let g:unite_source_grep_default_opts =
-        \ '--no-heading --no-color -k -H'
-    let g:unite_source_grep_recursive_opt = ''
-endif
+" if executable('ag')
+"     " Use ag in unite grep source.
+"     let g:unite_source_grep_command = 'ag'
+"     let g:unite_source_grep_default_opts =
+"         \ '--nocolor --nogroup --hidden --ignore ' .
+"         \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+"     let g:unite_source_grep_recursive_opt = ''
+" elseif executable('pt')
+"     " Use pt in unite grep source.
+"     " https://github.com/monochromegane/the_platinum_searcher
+"     let g:unite_source_grep_command = 'pt'
+"     let g:unite_source_grep_default_opts = '--nogroup --nocolor'
+"     let g:unite_source_grep_recursive_opt = ''
+" elseif executable('ack-grep')
+"     " Use ack in unite grep source.
+"     let g:unite_source_grep_command = 'ack-grep'
+"     let g:unite_source_grep_default_opts =
+"         \ '--no-heading --no-color -k -H'
+"     let g:unite_source_grep_recursive_opt = ''
+" endif
 
 nnoremap <Leader>b  :Unite -no-split -buffer-name=buffers buffer<CR>
 nnoremap <Leader>t  :Unite -no-split -buffer-name=fb buffer file_rec/async<CR>
@@ -432,6 +470,13 @@ nnoremap <F3> :VimFiler -toggle<CR>
 let python_highlight_all = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Abbreviations
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+iabbrev @@ dmitry.otroshchenko@gmail.com
+" iabbrev @me Dmitry Otroshchenko
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Notes
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -447,11 +492,11 @@ let python_highlight_all = 1
 " Better alternative for rainbow parentheses
 " :help!
 " map <Leader>a ggVG
-" 
+"
 " Move all backups to ~
 " set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 " set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-" 
+"
 " Keep search pattern in the center of the screen.
 " nnoremap <silent> n nzz
 " nnoremap <silent> N Nzz
@@ -459,8 +504,6 @@ let python_highlight_all = 1
 " nnoremap <silent> # #zz
 " nnoremap <silent> g* g*zz
 " nnoremap <silent> g# g#zz
-"
-" use augroup
 "
 " Move line up/down | insert newline up/down -- tpope's unimpaired
 "
