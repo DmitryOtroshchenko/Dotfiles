@@ -39,17 +39,16 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neossh.vim'
-NeoBundle 'vim-scripts/YankRing.vim'
+NeoBundle 'Shougo/wildfire.vim'
+
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'edkolev/tmuxline.vim'
 NeoBundle 'edkolev/promptline.vim'
-
+NeoBundle 'wikimatze/hammer.vim'
 NeoBundle 'suan/vim-instant-markdown'
-NeoBundle 'osyo-manga/vim-over'
-nnoremap g/r :<c-u>OverCommandLine<cr>%s/
-xnoremap g/r :<c-u>OverCommandLine<cr>%s/\%V
-
-NeoBundle 'scrooloose/syntastic'
+NeoBundle 'mattdbridges/bufkill.vim'
+NeoBundle 'danro/rename.vim'
+NeoBundle 'alfredodeza/khuno.vim'
 NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'flazz/vim-colorschemes'
@@ -69,15 +68,49 @@ NeoBundle 'hdima/python-syntax'
 NeoBundle 'michaeljsmith/vim-indent-object'
 NeoBundle 'wmvanvliet/vim-ipython'
 NeoBundle 'vim-scripts/loremipsum'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'jmcantrell/vim-virtualenv'
+NeoBundle 'thinca/vim-visualstar'
+NeoBundle 't9md/vim-quickhl'
+
+nmap <Space>m <Plug>(quickhl-manual-this)
+noremap <Space>rm :QuickhlManualReset<CR>
+
+function! g:get_visual_selection()
+    " Why is this not a built-in Vim script function?!
+    let [lnum1, col1] = getpos("'<")[1:2]
+    let [lnum2, col2] = getpos("'>")[1:2]
+    let lines = getline(lnum1, lnum2)
+    let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[0] = lines[0][col1 - 1:]
+    return join(lines, "\n")
+endfunction
+
+function! g:quickhl_visual_selection()
+    let selected = g:get_visual_selection()
+    execute ':QuickhlManualAdd ' . selected
+    execute ':/' . selected
+endfunction
+
+vnoremap <Space>m :call g:quickhl_visual_selection()<CR>
+
+NeoBundle 'osyo-manga/vim-over'
+nnoremap g/r :<c-u>OverCommandLine<cr>%s/
+xnoremap g/r :<c-u>OverCommandLine<cr>%s/\%V
+
+" NeoBundle 'othree/eregex.vim'
+" Try rope, jedi and python-mode
+" NeoBundle 'vim-scripts/YankRing.vim'
+" NeoBundle 'scrooloose/syntastic'
+" NeoBundle 'osyo-manga/vim-watchdogs'
+" NeoBundle 'tomtom/checksyntax_vim'
+"
 " NeoBundle 'mbbill/undotree'
 " NeoBundle 'chrisbra/histwin.vim'
-" NeoBundle 'davidhalter/jedi-vim'
 " NeoBundle 'moll/vim-bbye'
-" NeoBundle 'mattdbridges/bufkill.vim'
 
 " NeoBundle 'Shougo/neosnippet.vim'
 " NeoBundle 'Shougo/neosnippet-snippets'
-" NeoBundle 'tpope/vim-fugitive'
 
 " You can specify revision/branch/tag.
 " NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
@@ -122,6 +155,10 @@ set noerrorbells
 set visualbell
 set t_vb=
 " autocmd vimrc GUIEnter * set visualbell t_vb=
+set wildignorecase
+set wildmenu
+set wildmode=longest:full,full
+set wildignore=*.o,*.pyc,*.pyo,*.hi,*.swp
 
 " Colors
 syntax on
@@ -130,13 +167,15 @@ colorscheme Monokai
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 " :highlight Search    ctermfg=235 ctermbg=186 cterm=NONE guifg=#272822 guibg=#e6db74 gui=NONE
 " :highlight IncSearch ctermfg=235 ctermbg=186 cterm=NONE guifg=#272822 guibg=#e6db74 gui=NONE
+highlight WildMenu ctermfg=148 ctermbg=240 cterm=bold guifg=#a6e22e guibg=#585858 gui=bold
+highlight StatusLine ctermfg=15 ctermbg=236 cterm=NONE guifg=#ffffff guibg=#303030 gui=NONE
 
 if v:version >= 704
-  " The new Vim regex engine is currently slooooow as hell which makes syntax
-  " highlighting slow, which introduces typing latency.
-  " Consider removing this in the future when the new regex engine becomes
-  " faster.
-  set regexpengine=1
+    " The new Vim regex engine is currently slooooow as hell which makes syntax
+    " highlighting slow, which introduces typing latency.
+    " Consider removing this in the future when the new regex engine becomes
+    " faster.
+    set regexpengine=1
 endif
 
 " Indentation
@@ -218,6 +257,7 @@ vnoremap ; :
 nnoremap ,cd :cd %:p:h<CR>
 
 map Y y$
+noremap <Leader>A ggVG
 
 " TODO:
 " Bind :set wrap linebreak nolist
@@ -252,9 +292,10 @@ else
     map <M-l> :vertical resize +5<CR>
 endif
 
-map <leader>] :bn<CR>
-map <leader>[ :bp<CR>
-map <leader>x :bd<CR>
+map <leader>] :BF<CR>
+map <leader>[ :BB<CR>
+map <leader>x :BD<CR>
+map <leader>X :bd<CR>
 
 nmap <Leader>/ :set hlsearch! hlsearch?<CR>
 nmap <Leader>w :set wrap! wrap?<CR>
@@ -274,6 +315,12 @@ cmap w!! w !sudo tee % >/dev/null
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " autocmd
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+augroup _python
+    autocmd!
+    " autocmd FileType python setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+    " autocmd FileType pyrex setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+augroup END
 
 augroup markdown
     autocmd!
@@ -317,9 +364,17 @@ augroup END " misc
 
 let g:unite_source_yank_history_save_clipboard = 1
 let g:unite_source_history_yank_enable = 1
-let g:unite_source_history_yank_limit=40
-let g:unite_winheight=12
+let g:unite_source_history_yank_limit = 40
+let g:unite_winheight = 12
+let g:unite_update_time = 100
 
+if executable('ag')
+    " Use ag over grep
+    set grepprg=ag\ --nogroup\ --nocolor
+    let g:unite_source_grep_command = 'ag'
+    let g:unite_source_grep_default_opts = '--nocolor --nogroup --hidden --ignore ''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'' '
+    let g:unite_source_grep_recursive_opt = ''
+endif
 " if executable('ag')
 "     " Use ag in unite grep source.
 "     let g:unite_source_grep_command = 'ag'
@@ -341,8 +396,8 @@ let g:unite_winheight=12
 "     let g:unite_source_grep_recursive_opt = ''
 " endif
 
-nnoremap <Leader>b  :Unite -no-split -buffer-name=buffers buffer<CR>
-nnoremap <Leader>t  :Unite -no-split -buffer-name=fb buffer file_rec/async<CR>
+nnoremap <Leader>b :Unite -no-split -buffer-name=buffers buffer<CR>
+nnoremap <Leader>tt :Unite -no-split -buffer-name=fb -input=** -start-insert buffer file_rec/async<CR>
 " nnoremap <Leader>gg :Unite -no-split -auto-preview -buffer-name=grep grep:.<CR>
 " nnoremap <Leader>gb :Unite -no-split -auto-preview -buffer-name=grep grep:$buffers<CR>
 " nnoremap <Leader>cm :Unite -no-split -buffer-name=directory -default-action=cd neomru/directory<CR>
@@ -362,7 +417,7 @@ let g:yankring_manage_numbered_reg = 1
 let g:yankring_clipboard_monitor = 1
 let g:yankring_manual_clipboard_check = 1
 
-nnoremap <silent> <leader>y :YRShow<CR>
+" nnoremap <silent> <leader>y :YRShow<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " lightline
@@ -370,6 +425,7 @@ nnoremap <silent> <leader>y :YRShow<CR>
 
 let g:lightline = {
       \ 'colorscheme': 'powerline',
+      \ 'enable': { 'tabline': 0 },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'filename', 'modified' ] ]
@@ -382,15 +438,18 @@ let g:lightline = {
       \   'readonly': '(&filetype!="help"&& &readonly)',
       \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))'
       \ },
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' }
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '⋮', 'right': '⋮' }
       \ }
 
+" '⋮', '⁞', '┊', '┆', '│'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Valloric/YouCompleteMe
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:ycm_autoclose_preview_window_after_completion = 1
+set completeopt-=preview
+let g:ycm_add_preview_to_completeopt = 0
+" let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_min_num_of_chars_for_completion = 1
 
 nnoremap tg :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -470,9 +529,37 @@ nnoremap <F3> :VimFiler -toggle<CR>
 let python_highlight_all = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" wildfire
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:wildfire_objects = ["i'", "a'", 'i"', 'a"', "i)", "a)", "i]", "a]", "i}", "a}", "ip", "it"]
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" khuno
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:khuno_ignore="E202,E128"
+let g:khuno_max_line_length=100
+
+nnoremap <silent><Leader>sc <Esc>:Khuno show<CR>
+
+" augroup khuno_buffer_setup
+"     autocmd!
+"     autocmd BufEnter Debug.khuno :set nomodifiable
+"     autocmd BufEnter Errors.khuno :set nomodifiable
+" augroup END " khuno_buffer_setup
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" bufkill
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:BufKillCreateMappings = 0
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Abbreviations
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+iabbrev teh the
 iabbrev @@ dmitry.otroshchenko@gmail.com
 " iabbrev @me Dmitry Otroshchenko
 
@@ -491,7 +578,6 @@ iabbrev @@ dmitry.otroshchenko@gmail.com
 " Go to definition
 " Better alternative for rainbow parentheses
 " :help!
-" map <Leader>a ggVG
 "
 " Move all backups to ~
 " set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
@@ -509,4 +595,4 @@ iabbrev @@ dmitry.otroshchenko@gmail.com
 "
 " Add spellcheck
 "
-" Text objects -> read docs
+" https://github.com/nelstrom/vim-cutlass
