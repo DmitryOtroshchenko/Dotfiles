@@ -71,36 +71,48 @@ NeoBundle 'vim-scripts/loremipsum'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'jmcantrell/vim-virtualenv'
 NeoBundle 'thinca/vim-visualstar'
+" NeoBundle 'maxbrunsfeld/vim-yankstack'
 NeoBundle 't9md/vim-quickhl'
+NeoBundle 'szw/vim-ctrlspace'
 
-nmap <Space>m <Plug>(quickhl-manual-this)
-noremap <Space>rm :QuickhlManualReset<CR>
+let g:ctrlspace_set_default_mapping = 0
+" let g:ctrlspace_default_mapping_key = "`<Space>"
 
-function! g:get_visual_selection()
-    " Why is this not a built-in Vim script function?!
-    let [lnum1, col1] = getpos("'<")[1:2]
-    let [lnum2, col2] = getpos("'>")[1:2]
-    let lines = getline(lnum1, lnum2)
-    let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
-    let lines[0] = lines[0][col1 - 1:]
-    return join(lines, "\n")
-endfunction
+nnoremap `<Space> :CtrlSpace<CR>
 
-function! g:quickhl_visual_selection()
-    let selected = g:get_visual_selection()
-    execute ':QuickhlManualAdd ' . selected
-    execute ':/' . selected
-endfunction
+" let g:yankstack_map_keys = 0
+" call yankstack#setup()
+" nmap <leader>p <Plug>yankstack_substitute_older_paste
+" nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
-vnoremap <Space>m :call g:quickhl_visual_selection()<CR>
+" nmap <Space>m <Plug>(quickhl-manual-this)
+" noremap <Space>rm :QuickhlManualReset<CR>
 
-NeoBundle 'osyo-manga/vim-over'
-nnoremap g/r :<c-u>OverCommandLine<cr>%s/
-xnoremap g/r :<c-u>OverCommandLine<cr>%s/\%V
+" function! g:get_visual_selection()
+"     " Why is this not a built-in Vim script function?!
+"     let [lnum1, col1] = getpos("'<")[1:2]
+"     let [lnum2, col2] = getpos("'>")[1:2]
+"     let lines = getline(lnum1, lnum2)
+"     let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
+"     let lines[0] = lines[0][col1 - 1:]
+"     return join(lines, "\n")
+" endfunction
+"
+" function! g:quickhl_visual_selection()
+"     let selected = g:get_visual_selection()
+"     execute ':QuickhlManualAdd ' . selected
+"     execute ':/' . selected
+" endfunction
+"
+" vnoremap <Space>m :call g:quickhl_visual_selection()<CR>
+"
+" NeoBundle 'osyo-manga/vim-over'
+" nnoremap g/r :<c-u>OverCommandLine<cr>%s/
+" xnoremap g/r :<c-u>OverCommandLine<cr>%s/\%V
 
 " NeoBundle 'othree/eregex.vim'
 " Try rope, jedi and python-mode
-" NeoBundle 'vim-scripts/YankRing.vim'
+NeoBundle 'vim-scripts/YankRing.vim'
 " NeoBundle 'scrooloose/syntastic'
 " NeoBundle 'osyo-manga/vim-watchdogs'
 " NeoBundle 'tomtom/checksyntax_vim'
@@ -423,12 +435,17 @@ let g:yankring_manual_clipboard_check = 1
 " lightline
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" '⋮', '⁞', '┊', '┆', '│'
 let g:lightline = {
       \ 'colorscheme': 'powerline',
       \ 'enable': { 'tabline': 0 },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'filename', 'modified' ] ]
+      \             [ 'readonly', 'filename', 'modified' ],
+      \             [ 'reg' ] ]
+      \ },
+      \ 'component_function': {
+      \   'reg': 'MyRegisterContents'
       \ },
       \ 'component': {
       \   'readonly': '%{&filetype=="help"?"":&readonly?"":""}',
@@ -442,7 +459,45 @@ let g:lightline = {
       \ 'subseparator': { 'left': '⋮', 'right': '⋮' }
       \ }
 
-" '⋮', '⁞', '┊', '┆', '│'
+let g:max_statusline_reg_contents_len = 25
+
+function! StripWS(input_string)
+    return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
+endfunction
+
+function! ShrinkWS(input_string)
+    return substitute(a:input_string, '\s\+', ' ', 'g')
+endfunction
+
+function! MyRegisterContents()
+    " TODO: add caching.
+    let reg_contents = @+
+    let reg_contents = ShrinkWS(reg_contents)
+    let reg_contents = StripWS(reg_contents)
+    let reg_contents = substitute(reg_contents, '\n', '¬ ', '')
+    if strlen(reg_contents) >= g:max_statusline_reg_contents_len
+        let trimmed = strpart(reg_contents, 0, g:max_statusline_reg_contents_len)
+        let trimmed = trimmed . '…'
+        return trimmed
+    else
+        return reg_contents
+    endif
+endfunction
+
+function! s:filtered_lightline_call(funcname)
+    if bufname('%') == '__CS__'
+        return
+    endif
+    execute 'call lightline#' . a:funcname . '()'
+endfunction
+
+augroup LightLine
+    autocmd!
+    autocmd WinEnter,BufWinEnter,FileType,ColorScheme * call s:filtered_lightline_call('update')
+    autocmd ColorScheme,SessionLoadPost * call s:filtered_lightline_call('highlight')
+    autocmd CursorMoved,BufUnload * call s:filtered_lightline_call('update_once')
+augroup END
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Valloric/YouCompleteMe
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -560,6 +615,7 @@ let g:BufKillCreateMappings = 0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 iabbrev teh the
+iabbrev fo of
 iabbrev @@ dmitry.otroshchenko@gmail.com
 " iabbrev @me Dmitry Otroshchenko
 
