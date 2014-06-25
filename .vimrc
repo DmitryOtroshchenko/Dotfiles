@@ -120,7 +120,9 @@ if has("gui_running")
     set guioptions=acimgr
 endif
 
-set macmeta
+if has("mac")
+    set macmeta
+endif
 
 " GUI
 set showtabline=2
