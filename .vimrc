@@ -28,30 +28,17 @@ NeoBundle 'Shougo/vimproc', {
     \    },
     \ }
 
-" NeoBundle 'Valloric/YouCompleteMe', {
-"     \ 'build' : {
-"     \      'mac' : './install.sh --clang-completer --system-libclang',
-"     \      'unix' : './install.sh --clang-completer --system-libclang',
-"     \     },
-"     \ }
-" NeoBundle 'ervandew/supertab'
-set completeopt+=longest
+NeoBundle 'Valloric/YouCompleteMe', {
+    \ 'build' : {
+    \      'mac' : './install.sh --clang-completer --system-libclang',
+    \      'unix' : './install.sh --clang-completer --system-libclang',
+    \     },
+    \ }
+NeoBundle 'ervandew/supertab'
+NeoBundle 'sirver/ultisnips'
+NeoBundle 'honza/vim-snippets'
 
-inoremap <expr><C-l> neocomplete#complete_common_string()
-inoremap <expr><Tab>
-    \ neocomplete#complete_common_string() != '' ?
-    \ neocomplete#complete_common_string() :
-    \ pumvisible() ? "\<C-l>" : "\<Tab>"
-
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-xmap <C-l>     <Plug>(neosnippet_start_unite_snippet_target)
-
-NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'Shougo/neossh.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler.vim'
@@ -120,9 +107,7 @@ if has("gui_running")
     set guioptions=acimgr
 endif
 
-if has("mac")
-    set macmeta
-endif
+set macmeta
 
 " GUI
 set showtabline=2
@@ -153,7 +138,7 @@ set wildignorecase
 set wildmenu
 set wildmode=longest:full,full
 set wildignore=*.o,*.pyc,*.pyo,*.hi,*.swp
-set completeopt-=preview
+set completeopt=menuone
 
 " Colors
 syntax on
@@ -396,6 +381,11 @@ let g:promptline_powerline_symbols = 0
 let g:ycm_add_preview_to_completeopt = 0
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_min_num_of_chars_for_completion = 1
+let g:ycm_filepath_completion_use_working_dir = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Ultisnips
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Lokaltog/vim-easymotion
@@ -474,16 +464,6 @@ let g:khuno_max_line_length=100
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 let g:BufKillCreateMappings = 0
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" neocomplete and neosnippet
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#max_list = 250
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#enable_cursor_hold_i = 1
-let g:neocomplete#enable_refresh_always = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ctrlspace
@@ -577,6 +557,13 @@ nnoremap <silent> <leader>y :Yanks<CR>
 " YouCompleteMe
 nnoremap tg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
+" Ultisnips
+
+let g:UltiSnipsExpandTrigger="<c-Space>"
+let g:UltiSnipsListSnippets="<c-Tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
 " EasyMotion
 map <SPACE>    <Plug>(easymotion-prefix)
 nmap f         <Plug>(easymotion-s2)
@@ -603,3 +590,4 @@ noremap <silent><Leader>sc <Esc>:Khuno show<CR>
 
 " Ctrlspace
 noremap `<Space> :CtrlSpace<CR>
+
