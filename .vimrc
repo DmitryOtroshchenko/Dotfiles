@@ -246,9 +246,15 @@ augroup git_diff
     autocmd BufRead COMMIT_EDITMSG setlocal spell!
 augroup END " git_diff
 
+function! TrimTrailingWS()
+    normal mq
+    execute '%s/\s\+$//e'
+    normal `q
+endfunction
+
 augroup trim_trailing_whitespace
     autocmd!
-    autocmd FileType c,cpp,java,php,python,markdown,r,sql,vim autocmd BufWritePre <buffer> :%s/\s\+$//e
+    autocmd FileType c,cpp,java,php,python,markdown,r,sql,vim autocmd BufWritePre <buffer> :call TrimTrailingWS()
 augroup END " trim_trailing_whitespace
 
 augroup misc
