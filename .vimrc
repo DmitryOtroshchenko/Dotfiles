@@ -1,12 +1,21 @@
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" <NeoBundle>
+" NeoBundle core
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if has('vim_starting')
     set nocompatible
     " Required:
     set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+let vundle_readme=expand('~/.vim/bundle/neobundle.vim/README.md')
+" Install neobundle if not found`
+if !filereadable(vundle_readme)
+  echo "Installing NeoBundle..."
+  echo ""
+  silent !mkdir -p ~/.vim/bundle
+  silent !git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim/
 endif
 
 " Required:
@@ -47,14 +56,14 @@ NeoBundle 'Shougo/wildfire.vim'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'danro/rename.vim'
-NeoBundle 'dhruvasagar/vim-table-mode'
+" NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'edkolev/promptline.vim'
 NeoBundle 'edkolev/tmuxline.vim'
 NeoBundle 'flazz/vim-colorschemes'
 NeoBundle 'hdima/python-syntax'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'jmcantrell/vim-virtualenv'
-NeoBundle 'kien/rainbow_parentheses.vim'
+NeoBundle 'luochen1990/rainbow'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'mattdbridges/bufkill.vim'
 NeoBundle 'michaeljsmith/vim-indent-object'
@@ -68,6 +77,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-scripts/loremipsum'
+NeoBundle 'jeetsukumaran/vim-markology'
 
 NeoBundle 'chrisbra/NrrwRgn'
 NeoBundle 'suan/vim-instant-markdown'
@@ -77,7 +87,7 @@ NeoBundle 'wikimatze/hammer.vim'
 NeoBundle 'wmvanvliet/vim-ipython'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" </NeoBundle>
+" NeoBundle end
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 call neobundle#end()
@@ -89,12 +99,15 @@ filetype plugin indent on
 " this will conveniently prompt you to install them.
 NeoBundleCheck
 
+" TODO
 call yankstack#setup()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+set t_Co=256
+set ttyfast
 if &term =~ '256color'
     " Disable Background Color Erase (BCE) so that color schemes
     " render properly when inside 256-color tmux and GNU screen.
@@ -107,14 +120,14 @@ if has("gui_running")
     set guioptions=acimgr
 endif
 
-if has("mac")
-    set macmeta
-endif
+set macmeta
 
 " GUI
 set showtabline=2
 set guicursor+=a:blinkon0
 set mousemodel=popup_setpos
+" CursorHold event frequency in ms. Used for UI updates.
+set updatetime=100
 
 " UI
 set title
@@ -125,6 +138,8 @@ set showmode
 set laststatus=2
 set splitbelow
 set splitright
+" Enable hiddenn buffers
+set hidden
 " Do not store global and local values in a session.
 set ssop-=options
 " Do not store folds.
@@ -136,11 +151,18 @@ set visualbell
 set t_vb=
 " autocmd vimrc GUIEnter * set visualbell t_vb=
 
+" Wildmenu
 set wildignorecase
 set wildmenu
 set wildmode=longest:full,full
-set wildignore=*.o,*.pyc,*.pyo,*.hi,*.swp
 set completeopt=menuone
+" Ignore
+set wildignore=*/tmp/*
+set wildignore+=.svn,.git,.hg
+set wildignore+=*.pyc,*.pyo,__pycache__
+set wildignore+=*.o,*.so
+set wildignore+=*.swp,*.dump,*.dmp,*.hi,*.zip
+set wildignore+=*.db,*.sqlite
 
 " Colors
 syntax on
@@ -153,6 +175,8 @@ colorscheme Monokai
 "                     \ guifg=#272822   guibg=#e6db74   gui=NONE
 highlight LineNr        ctermfg=DarkGrey ctermbg=NONE   cterm=NONE
                       \ guifg=DarkGrey  guibg=NONE      gui=NONE
+highlight SignColumn    ctermfg=DarkGrey ctermbg=NONE   cterm=NONE
+                      \ guifg=DarkGrey  guibg=NONE      gui=NONE
 highlight WildMenu      ctermfg=148     ctermbg=240     cterm=bold
                       \ guifg=#a6e22e   guibg=#585858   gui=bold
 highlight StatusLine    ctermfg=15      ctermbg=236     cterm=NONE
@@ -163,12 +187,14 @@ highlight Pmenu         ctermfg=NONE    ctermbg=237     cterm=NONE
 " Indentation
 set nowrap
 set copyindent
-set shiftwidth=4
-set tabstop=4
-set expandtab
-set softtabstop=4
 set shiftround
 set autoindent
+
+" Tabs
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
 set smarttab
 
 " Code folding
@@ -181,7 +207,7 @@ set relativenumber
 set numberwidth=4
 set cursorline
 set nocursorcolumn
-set colorcolumn=80
+set colorcolumn=80,100
 set scrolloff=3
 set virtualedit=block,onemore
 
@@ -247,9 +273,10 @@ augroup git_diff
 augroup END " git_diff
 
 function! TrimTrailingWS()
-    normal mq
+    normal mz
     execute '%s/\s\+$//e'
-    normal `q
+    normal `z
+    delmarks z
 endfunction
 
 augroup trim_trailing_whitespace
@@ -327,7 +354,8 @@ let g:lightline = {
       \ },
       \ 'component_visible_condition': {
       \   'readonly': '(&filetype!="help"&& &readonly)',
-      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))'
+      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+      \   'reg': 'winwidth(0) > 70'
       \ },
       \ 'separator': { 'left': '', 'right': '' },
       \ 'subseparator': { 'left': '⋮', 'right': '⋮' }
@@ -345,17 +373,18 @@ endfunction
 
 function! MyRegisterContents()
     " TODO: add caching.
-    let reg_contents = @+
+    let reg_contents = @"
     let reg_contents = ShrinkWS(reg_contents)
     let reg_contents = StripWS(reg_contents)
     let reg_contents = substitute(reg_contents, '\n', '¬ ', '')
     if strlen(reg_contents) >= g:max_statusline_reg_contents_len
         let trimmed = strpart(reg_contents, 0, g:max_statusline_reg_contents_len)
         let trimmed = trimmed . '…'
-        return trimmed
+        let prepared = trimmed
     else
-        return reg_contents
+        let prepared = reg_contents
     endif
+    return winwidth(0) > 78 ? prepared : ''
 endfunction
 
 function! s:filtered_lightline_call(funcname)
@@ -418,6 +447,8 @@ let g:indentLine_char = "⋮"
 let g:indentLine_first_char = "⋮"
 let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#4A4A4F'
+" let g:indentLine_color_gui = '#FF0000'
+let g:indentLine_noConcealCursor = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tagbar
@@ -480,6 +511,32 @@ let g:BufKillCreateMappings = 0
 let g:ctrlspace_set_default_mapping = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Markology
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let markology_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.'`^<>[]\""
+
+let g:markology_textlower = "\t "
+let g:markology_textupper = "\t "
+let markology_textother = "\t "
+
+let g:markology_hlline_lower = 0
+let g:markology_hlline_upper = 0
+let markology_hlline_other = 0
+
+" MarkologyHLl
+" MarkologyHLu
+" MarkologyHLo
+" MarkologyHLm
+" MarkologyHLLine
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" rainbow_parentheses
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:rainbow_active = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Abbreviations
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -490,6 +547,8 @@ iabbrev @@ dmitry.otroshchenko@gmail.com
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Keymap
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let mapleader=','
 
 set pastetoggle=<F2>
 " I can type :help on my own, thanks.
@@ -519,6 +578,14 @@ inoremap <C-e> <C-o>$
 inoremap <C-a> <C-o>0
 inoremap <C-d> <C-o>dd
 
+"" Set working directory
+nnoremap <leader>. :lcd %:p:h<CR>
+
+"" Tabs
+nmap <Tab> gt
+nmap <S-Tab> gT
+nnoremap <silent> <S-t> :tabnew<CR>
+
 " Easy window navigation
 map <C-h> <C-w>h
 map <C-j> <C-w>j
@@ -547,7 +614,14 @@ map j gj
 map <down> gj
 map k gk
 map <up> gk
+map h j
 
+" Redo with U
+noremap U <C-r>
+
+" Expand currend file path in command mode
+cnoremap <C-SPACE> <C-R>=expand("%:p:h") . "/" <CR>
+" Sudo write
 cmap w!! w !sudo tee % >/dev/null
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -563,20 +637,37 @@ nnoremap <Leader>tt :Unite -no-split -buffer-name=fb -input=** -start-insert buf
 nnoremap <silent> <leader>y :Yanks<CR>
 
 " YouCompleteMe
-nnoremap tg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" nnoremap tg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " Ultisnips
-
 let g:UltiSnipsExpandTrigger="<c-Space>"
 let g:UltiSnipsListSnippets="<c-Tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " EasyMotion
-map <SPACE>    <Plug>(easymotion-prefix)
-nmap f         <Plug>(easymotion-s2)
-xmap f         <Plug>(easymotion-s2)
-omap f         <Plug>(easymotion-s2)
+map <SPACE> <Plug>(easymotion-prefix)
+
+nmap s         <Plug>(easymotion-s2)
+xmap s         <Plug>(easymotion-s2)
+omap s         <Plug>(easymotion-s2)
+
+nmap f         <Plug>(easymotion-f)
+xmap f         <Plug>(easymotion-f)
+omap f         <Plug>(easymotion-f)
+
+nmap F         <Plug>(easymotion-F)
+xmap F         <Plug>(easymotion-F)
+omap F         <Plug>(easymotion-F)
+
+nmap t         <Plug>(easymotion-t)
+xmap t         <Plug>(easymotion-t)
+omap t         <Plug>(easymotion-t)
+
+nmap T         <Plug>(easymotion-T)
+xmap T         <Plug>(easymotion-T)
+omap T         <Plug>(easymotion-T)
+
 nmap <Leader>f <Plug>(easymotion-sn)
 xmap <Leader>f <Plug>(easymotion-sn)
 omap <Leader>f <Plug>(easymotion-sn)
@@ -599,3 +690,5 @@ noremap <silent><Leader>sc <Esc>:Khuno show<CR>
 " Ctrlspace
 noremap `<Space> :CtrlSpace<CR>
 
+" Markology
+noremap <silent> m<SPACE> <Plug>MarkologyPlaceMarkToggle
