@@ -28,6 +28,10 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " Bundles
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" In order to avoid this kind of errors when using fish:
+" 'E484: Can’t open file /tmp/vRDNVqe/0'
+set shell=/bin/bash
+
 NeoBundle 'Shougo/vimproc', {
     \ 'build' : {
     \     'windows' : 'make -f make_mingw32.mak',
@@ -51,15 +55,13 @@ NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neossh.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler.vim'
-NeoBundle 'Shougo/wildfire.vim'
+NeoBundle 'gcmt/wildfire.vim'
 
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'danro/rename.vim'
-" NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'edkolev/promptline.vim'
 NeoBundle 'edkolev/tmuxline.vim'
-NeoBundle 'flazz/vim-colorschemes'
 NeoBundle 'hdima/python-syntax'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'jmcantrell/vim-virtualenv'
@@ -78,13 +80,22 @@ NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-scripts/loremipsum'
 NeoBundle 'jeetsukumaran/vim-markology'
+NeoBundle 'mtth/scratch.vim'
+" NeoBundle 'dhruvasagar/vim-table-mode'
+"NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'xolox/vim-misc'
+NeoBundle 'justinmk/vim-gtfo'
+" NeoBundle 'flazz/vim-colorschemes'
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'daddye/soda.vim'
+" NeoBundle 'godlygeek/csapprox'
+" NeoBundle 'carlobaldassi/vim-colorschemedegrade'
 
-NeoBundle 'chrisbra/NrrwRgn'
-NeoBundle 'suan/vim-instant-markdown'
-" NeoBundle 'vim-scripts/YankRing.vim'
+NeoBundle 'itspriddle/vim-marked'
 NeoBundle 'maxbrunsfeld/vim-yankstack'
-NeoBundle 'wikimatze/hammer.vim'
-NeoBundle 'wmvanvliet/vim-ipython'
+" NeoBundle 'chrisbra/NrrwRgn'
+" NeoBundle 'wikimatze/hammer.vim'
+" NeoBundle 'wmvanvliet/vim-ipython'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NeoBundle end
@@ -120,6 +131,14 @@ if has("gui_running")
     set guioptions=acimgr
 endif
 
+" Colors
+syntax on
+set background=dark
+colorscheme solarized
+
+highlight LineNr     ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
+highlight SignColumn ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
+
 set macmeta
 
 " GUI
@@ -138,7 +157,7 @@ set showmode
 set laststatus=2
 set splitbelow
 set splitright
-" Enable hiddenn buffers
+" Enable hidden buffers
 set hidden
 " Do not store global and local values in a session.
 set ssop-=options
@@ -164,26 +183,6 @@ set wildignore+=*.o,*.so
 set wildignore+=*.swp,*.dump,*.dmp,*.hi,*.zip
 set wildignore+=*.db,*.sqlite
 
-" Colors
-syntax on
-set background=dark
-colorscheme Monokai
-
-" highlight Search      ctermfg=235     ctermbg=186     cterm=NONE
-"                     \ guifg=#272822   guibg=#e6db74   gui=NONE
-" highlight IncSearch   ctermfg=235     ctermbg=186     cterm=NONE
-"                     \ guifg=#272822   guibg=#e6db74   gui=NONE
-highlight LineNr        ctermfg=DarkGrey ctermbg=NONE   cterm=NONE
-                      \ guifg=DarkGrey  guibg=NONE      gui=NONE
-highlight SignColumn    ctermfg=DarkGrey ctermbg=NONE   cterm=NONE
-                      \ guifg=DarkGrey  guibg=NONE      gui=NONE
-highlight WildMenu      ctermfg=148     ctermbg=240     cterm=bold
-                      \ guifg=#a6e22e   guibg=#585858   gui=bold
-highlight StatusLine    ctermfg=15      ctermbg=236     cterm=NONE
-                      \ guifg=#ffffff   guibg=#303030   gui=NONE
-highlight Pmenu         ctermfg=NONE    ctermbg=237     cterm=NONE
-                      \ guifg=NONE      guibg=#3a3a3a   gui=NONE
-
 " Indentation
 set nowrap
 set copyindent
@@ -204,12 +203,12 @@ set foldlevel=99
 " Navigation
 set number
 set relativenumber
-set numberwidth=4
+set numberwidth=5
 set cursorline
 set nocursorcolumn
 set colorcolumn=80,100
 set scrolloff=3
-set virtualedit=block,onemore
+set virtualedit=block
 
 " Regexes and al.
 if v:version >= 704
@@ -312,6 +311,8 @@ let g:unite_source_history_yank_limit = 40
 let g:unite_winheight = 12
 let g:unite_update_time = 100
 
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+
 if executable('ag')
     set grepprg=ag\ --nogroup\ --nocolor
     let g:unite_source_grep_command = 'ag'
@@ -338,7 +339,7 @@ let g:yankring_manual_clipboard_check = 1
 
 " '⋮', '⁞', '┊', '┆', '│'
 let g:lightline = {
-      \ 'colorscheme': 'powerline',
+      \ 'colorscheme': 'solarized',
       \ 'enable': { 'tabline': 0 },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
@@ -553,19 +554,21 @@ let mapleader=','
 set pastetoggle=<F2>
 " I can type :help on my own, thanks.
 noremap <F1> <Esc>
-inoremap jk <Esc>
-inoremap kj <Esc>
 
 nnoremap ; :
 vnoremap ; :
 
-nnoremap ,cd :cd %:p:h<CR>
+nnoremap <C-W>w :w<CR>
+nnoremap <C-W><C-W> :w<CR>
+
+nnoremap <leader>cd :cd %:p:h<CR>
+nnoremap <leader>lcd :lcd %:p:h<CR>
 
 map Y y$
 noremap <Leader>A ggVG
 
 nnoremap <leader>ss :source $MYVIMRC<CR>
-nnoremap <leader>se :split  $MYVIMRC<CR>
+nnoremap <leader>se :tabnew $MYVIMRC<CR>
 
 " TODO:
 " Bind :set wrap linebreak nolist
@@ -577,9 +580,6 @@ nnoremap K i<CR><Esc>
 inoremap <C-e> <C-o>$
 inoremap <C-a> <C-o>0
 inoremap <C-d> <C-o>dd
-
-"" Set working directory
-nnoremap <leader>. :lcd %:p:h<CR>
 
 "" Tabs
 nmap <Tab> gt
@@ -602,7 +602,7 @@ map <leader>[ :BB<CR>
 map <leader>x :BD<CR>
 map <leader>X :bd<CR>
 
-nmap <Leader>/ :set hlsearch! hlsearch?<CR>
+nmap <Leader>h :set hlsearch! hlsearch?<CR>
 nmap <Leader>w :set wrap! wrap?<CR>
 
 " Don't loose selection after indenting in visual mode.
@@ -629,8 +629,8 @@ cmap w!! w !sudo tee % >/dev/null
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Unite.vim
-nnoremap <Leader>b  :Unite -no-split -buffer-name=buffers buffer<CR>
-nnoremap <Leader>tt :Unite -no-split -buffer-name=fb -input=** -start-insert buffer file_rec/async<CR>
+nnoremap <Leader>b :Unite -no-split -buffer-name=buffers buffer<CR>
+nnoremap <Leader>t :Unite -no-split -buffer-name=fb -input=** -start-insert buffer file_rec/async<CR>
 
 " YankRing and yankstack
 " nnoremap <silent> <leader>y :YRShow<CR>
@@ -673,7 +673,10 @@ xmap <Leader>f <Plug>(easymotion-sn)
 omap <Leader>f <Plug>(easymotion-sn)
 
 " Maximizer
-noremap <F3> :MaximizerToggle<CR>
+noremap <F3>       :MaximizerToggle<CR>
+noremap <C-W><C-Z> :MaximizerToggle<CR>
+noremap <C-W>z     :MaximizerToggle<CR>
+noremap <C-W>Z     :MaximizerToggle<CR>
 
 " Vimfiler
 noremap <F4> :VimFiler -toggle<CR>
@@ -691,4 +694,13 @@ noremap <silent><Leader>sc <Esc>:Khuno show<CR>
 noremap `<Space> :CtrlSpace<CR>
 
 " Markology
-noremap <silent> m<SPACE> <Plug>MarkologyPlaceMarkToggle
+noremap <silent> mm :MarkologyPlaceMarkToggle<CR>
+
+" Marked
+noremap <leader>md :MarkedOpen<CR>
+noremap <leader>mq :MarkedQuit<CR>
+
+" tcomment
+let g:tcommentMapLeaderOp1='<leader>c'
+let g:tcommentMapLeaderUncommentAnyway='<leader><'
+let g:tcommentMapLeaderCommentAnyway='<leader>>'
