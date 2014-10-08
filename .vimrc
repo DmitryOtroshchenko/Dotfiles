@@ -81,15 +81,20 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-scripts/loremipsum'
 NeoBundle 'jeetsukumaran/vim-markology'
 NeoBundle 'mtth/scratch.vim'
+NeoBundle 'JuliaLang/julia-vim'
+NeoBundle 'Raimondi/delimitMate'
+NeoBundle 'ervandew/screen'
+NeoBundle 'alfredodeza/khuno.vim'
 " NeoBundle 'dhruvasagar/vim-table-mode'
 "NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'justinmk/vim-gtfo'
-" NeoBundle 'flazz/vim-colorschemes'
+NeoBundle 'flazz/vim-colorschemes'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'daddye/soda.vim'
 " NeoBundle 'godlygeek/csapprox'
 " NeoBundle 'carlobaldassi/vim-colorschemedegrade'
+" NeoBundle 'calebsmith/vim-lambdify'
 
 NeoBundle 'itspriddle/vim-marked'
 NeoBundle 'maxbrunsfeld/vim-yankstack'
@@ -127,14 +132,29 @@ if &term =~ '256color'
 endif
 
 if has("gui_running")
-    set guifont=Source\ Code\ Pro\ for\ Powerline:h16
+    " set guifont=Source\ Code\ Pro:h16
+    set guifont=Input\ Mono:h16
+    set linespace=4
     set guioptions=acimgr
+endif
+
+if exists("+undofile")
+    " undofile - This allows you to use undos after exiting and restarting
+    " This, like swap and backups, uses .vim-undo first, then ~/.vim/undo
+    " Do not forget to create the direectory
+    silent !mkdir -p ~/.vim/undo/
+    set undodir=~/.vim/undo/
+    set undofile
 endif
 
 " Colors
 syntax on
 set background=dark
+let g:solarized_contrast="normal"
+let g:solarized_diffmode="normal"
+let g:solarized_menu=0
 colorscheme solarized
+" colorscheme Monokai-dmitry
 
 highlight LineNr     ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
 highlight SignColumn ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
@@ -176,7 +196,8 @@ set wildmenu
 set wildmode=longest:full,full
 set completeopt=menuone
 " Ignore
-set wildignore=*/tmp/*
+set wildignore=*.log
+set wildignore+=*/tmp/*
 set wildignore+=.svn,.git,.hg
 set wildignore+=*.pyc,*.pyo,__pycache__
 set wildignore+=*.o,*.so
@@ -263,6 +284,11 @@ augroup markdown
     autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 augroup END " markdown
 
+augroup text_files
+    autocmd!
+    autocmd BufNewFile,BufReadPost *.md,*.txt set wrap
+augroup END " markdown
+
 augroup git_diff
     autocmd!
     " Show Git diff in window split when commiting git diff.
@@ -280,7 +306,7 @@ endfunction
 
 augroup trim_trailing_whitespace
     autocmd!
-    autocmd FileType c,cpp,java,php,python,markdown,r,sql,vim autocmd BufWritePre <buffer> :call TrimTrailingWS()
+    autocmd FileType c,cpp,java,php,python,markdown,r,julia,sql,vim autocmd BufWritePre <buffer> :call TrimTrailingWS()
 augroup END " trim_trailing_whitespace
 
 augroup misc
@@ -319,6 +345,14 @@ if executable('ag')
     let g:unite_source_grep_default_opts = '--nocolor --nogroup --hidden --ignore ''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'' '
     let g:unite_source_grep_recursive_opt = ''
 endif
+
+
+" Set "-no-quit" automatically in grep unite source.
+call unite#custom#profile('source/grep', 'context', {
+\   'no_quit' : 1
+\ })
+
+call unite#custom#source('file,file/new,buffer,file_rec', 'matchers', 'matcher_fuzzy')
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " YankRing.vim
@@ -536,6 +570,9 @@ let markology_hlline_other = 0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 let g:rainbow_active = 1
+let g:rainbow_conf = {
+    \ 'guifgs':   ['#e6dfce', '#b58900', '#d33682', '#859900'] }
+    " \ 'ctermfgs': ['Red3', 'cyan', 'DarkOrange', 'green'] }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Abbreviations
@@ -566,6 +603,7 @@ nnoremap <leader>lcd :lcd %:p:h<CR>
 
 map Y y$
 noremap <Leader>A ggVG
+nnoremap gp `[v`]
 
 nnoremap <leader>ss :source $MYVIMRC<CR>
 nnoremap <leader>se :tabnew $MYVIMRC<CR>
@@ -704,3 +742,18 @@ noremap <leader>mq :MarkedQuit<CR>
 let g:tcommentMapLeaderOp1='<leader>c'
 let g:tcommentMapLeaderUncommentAnyway='<leader><'
 let g:tcommentMapLeaderCommentAnyway='<leader>>'
+
+" For tmux support
+let g:ScreenImpl = 'Tmux'
+let vimrplugin_screenvsplit = 1 " For vertical tmux split
+let g:ScreenShellInitialFocus = 'shell'
+" instruct to use your own .screenrc file
+let g:vimrplugin_noscreenrc = 1
+
+set langmap=яq,ьw,фf,пp,гg,жj,лl,уu,ыy,ш[,э],аa,рr,сs,тt,дd,хh,нn,еe,иi,оo,зz,чx,цc,вv,бb,кk,мm,ЯQ,ЬW,ФF,ПP,ГG,ЖJ,ЛL,УU,ЫY,Ш[,Э],АA,РR,СS,ТT,ДD,ХH,НN,ЕE,ИI,ОO,ЗZ,ЧX,ЦC,ВV,БB,КK,МM
+" from __future__ import division, unicode_literals, print_function
+" eng = 'qwfpgjluy[]arstdhneiozxcvbkm'
+" ru  = 'яьфпгжлуышэарстдхнеиозчцвбкм'
+" langmap_lower = ','.join('{}{}'.format(e, r) for e, r in zip(ru, eng))
+" langmap = ','.join((langmap_lower, langmap_lower.upper()))
+" print(langmap)

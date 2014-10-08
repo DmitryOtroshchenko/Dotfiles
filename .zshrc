@@ -62,8 +62,13 @@ PATH="/Applications/Postgres.app/Contents/Versions/9.3/bin:$PATH"
 # MongoDB
 PATH="/Applications/MongoDB/bin:$PATH"
 
+# Ruby
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
 # Russian
 export LANG=en_US.utf8
+export LC_ALL=en_US.UTF-8
+export LANG="en_US.utf8"
 
 # IPython
 alias ipnb="ipython notebook --matplotlib=inline --notebook-dir=/Users/dmitryotroshchenko/Documents/ipython"
@@ -79,3 +84,5 @@ export TERM=xterm-256color
 export DEFAULT_USER=dmitryotroshchenko
 
 alias detect_encoding='file -bi'
+
+alias join_pdf="/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py"
