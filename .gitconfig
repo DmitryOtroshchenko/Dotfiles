@@ -1,6 +1,7 @@
 
 [core]
     pager = less -r
+    editor = vim
 
 [color]
     ui = auto
@@ -13,11 +14,11 @@
     s = status
     a = add
     c = commit
-    
+
     unstage = reset HEAD --
-    restore = checkout -- 
-	dd = diff
-	dt = difftool
+    restore = checkout --
+    dd = diff
+    dt = difftool
 
     l = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
     ll = log --stat --abbrev-commit --decorate
@@ -28,7 +29,14 @@
     lg = !git lg2
 
 [diff]
-	tool = vimdiff
+    tool = vimdiff
 
 [difftool]
-	prompt = false
+    prompt = false
+
+[user]
+    email = dmitry.otroshchenko@gmail.com
+    name = Dmitry Otroshchenko
+
+[github]
+    user = DmitryOtroshchenko
