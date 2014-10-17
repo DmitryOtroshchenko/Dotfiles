@@ -29,12 +29,12 @@ command -v apt-get && sudo apt-get install $DEPENDENCIES
 
 # Get Python sources
 
-URL="http://www.python.org/ftp/python/$VERSION/Python-$VERSION.tgz"
+PYTHON_URL="http://www.python.org/ftp/python/$VERSION/Python-$VERSION.tgz"
 
-FILENAME=$(basename $URL)
+FILENAME=$(basename $PYTHON_URL)
 if [ ! -f $FILENAME ]
 then
-    wget $URL
+    wget $PYTHON_URL
 fi
 
 DIRNAME=${FILENAME%.tgz}
@@ -66,7 +66,7 @@ PYTHON=$TARGETDIR/bin/python${VERSION::3}
 
 PIP_URL="https://github.com/pypa/pip/raw/master/contrib/get-pip.py"
 wget --no-check-certificate --no-clobber $PIP_URL
-sudo $PYTHON $(basename $URL)
+sudo $PYTHON $(basename $PIP_URL)
 
 sudo chmod o+r $TARGETDIR/lib/python${VERSION::3}/site-packages/pip-*/top_level.txt
 sudo chmod o+r $TARGETDIR/lib/python${VERSION::3}/site-packages/pip-*/entry_points.txt
@@ -86,4 +86,4 @@ sudo $PYTHON $(basename $PIP_URL)
 
 # Install system-wide virtualenvwrapper
 
-sudo apt-get install --reinstall virtualenvwrapper
+sudo apt-get install --reinstall virtualenvwrapper -y
