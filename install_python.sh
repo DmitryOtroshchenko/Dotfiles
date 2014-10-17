@@ -86,4 +86,4 @@ sudo $PYTHON $(basename $PIP_URL)
 
 # Install system-wide virtualenvwrapper
 
-sudo apt-get install --reinstall virtualenvwrapper
+sudo apt-get install --reinstall virtualenvwrapper -y
