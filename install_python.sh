@@ -34,13 +34,13 @@ PYTHON_URL="http://www.python.org/ftp/python/$VERSION/Python-$VERSION.tgz"
 FILENAME=$(basename $PYTHON_URL)
 if [ ! -f $FILENAME ]
 then
-    wget $PYTHON_URL
+    wget --quiet $PYTHON_URL
 fi
 
 DIRNAME=${FILENAME%.tgz}
 if [ ! -d $DIRNAME ]
 then
-    tar xvzf $FILENAME
+    tar xzf $FILENAME
 fi
 
 
@@ -65,7 +65,7 @@ PYTHON=$TARGETDIR/bin/python${VERSION::3}
 # Install pip package installer
 
 PIP_URL="https://github.com/pypa/pip/raw/master/contrib/get-pip.py"
-wget --no-check-certificate --no-clobber $PIP_URL
+wget --no-check-certificate --no-clobber --quiet $PIP_URL
 sudo $PYTHON $(basename $PIP_URL)
 
 sudo chmod o+r $TARGETDIR/lib/python${VERSION::3}/site-packages/pip-*/top_level.txt
