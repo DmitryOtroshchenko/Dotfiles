@@ -24,7 +24,7 @@ DEPENDENCIES="
     libbz2-dev
     libssl-dev
 "
-command -v apt-get && sudo apt-get install $DEPENDENCIES
+command -v apt-get && sudo apt-get install $DEPENDENCIES -y
 
 
 # Get Python sources
