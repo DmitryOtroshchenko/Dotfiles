@@ -85,6 +85,7 @@ NeoBundle 'JuliaLang/julia-vim'
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'ervandew/screen'
 NeoBundle 'alfredodeza/khuno.vim'
+NeoBundle 'haya14busa/incsearch.vim'
 " NeoBundle 'dhruvasagar/vim-table-mode'
 "NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'xolox/vim-misc'
@@ -98,6 +99,11 @@ NeoBundle 'daddye/soda.vim'
 
 NeoBundle 'itspriddle/vim-marked'
 NeoBundle 'maxbrunsfeld/vim-yankstack'
+NeoBundle 'vim-pandoc/vim-pandoc'
+NeoBundle 'vim-pandoc/vim-pandoc-syntax'
+NeoBundle 'vim-voom/VOoM'
+" NeoBundle 'Rykka/riv.vim'
+NeoBundle 'Rykka/InstantRst'
 " NeoBundle 'chrisbra/NrrwRgn'
 " NeoBundle 'wikimatze/hammer.vim'
 " NeoBundle 'wmvanvliet/vim-ipython'
@@ -109,7 +115,7 @@ NeoBundle 'maxbrunsfeld/vim-yankstack'
 call neobundle#end()
 
 " Required:
-filetype plugin indent on
+" filetype plugin indent on
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
@@ -132,8 +138,7 @@ if &term =~ '256color'
 endif
 
 if has("gui_running")
-    " set guifont=Source\ Code\ Pro:h16
-    set guifont=Input\ Mono:h16
+    set guifont=Source\ Code\ Pro\ for\ Powerline:h17
     set linespace=4
     set guioptions=acimgr
 endif
@@ -281,13 +286,16 @@ augroup END
 
 augroup markdown
     autocmd!
-    autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+    autocmd BufNewFile,BufReadPost,BufWritePost *.md set filetype=pandoc
+    autocmd BufNewFile,BufReadPost,BufWritePost *.md set syntax=pandoc
+    autocmd BufNewFile,BufReadPost,BufWritePost *.md set syntax=pandoc
+    autocmd BufNewFile,BufReadPost,BufWritePost *.md hi Conceal cterm=NONE ctermbg=NONE ctermfg=red gui=NONE guifg=red guibg=NONE
 augroup END " markdown
 
 augroup text_files
     autocmd!
-    autocmd BufNewFile,BufReadPost *.md,*.txt set wrap
-augroup END " markdown
+    autocmd BufNewFile,BufReadPost *.md,*.txt,*.rst set wrap linebreak nolist
+augroup END
 
 augroup git_diff
     autocmd!
@@ -650,9 +658,10 @@ vnoremap > >gv
 " Up-down through long lines chunks.
 map j gj
 map <down> gj
+imap <down> <C-o>gj
 map k gk
 map <up> gk
-map h j
+imap <up> <C-o>gk
 
 " Redo with U
 noremap U <C-r>
@@ -750,6 +759,11 @@ let g:ScreenShellInitialFocus = 'shell'
 " instruct to use your own .screenrc file
 let g:vimrplugin_noscreenrc = 1
 
+" incsearch.vim
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
 set langmap=яq,ьw,фf,пp,гg,жj,лl,уu,ыy,ш[,э],аa,рr,сs,тt,дd,хh,нn,еe,иi,оo,зz,чx,цc,вv,бb,кk,мm,ЯQ,ЬW,ФF,ПP,ГG,ЖJ,ЛL,УU,ЫY,Ш[,Э],АA,РR,СS,ТT,ДD,ХH,НN,ЕE,ИI,ОO,ЗZ,ЧX,ЦC,ВV,БB,КK,МM
 " from __future__ import division, unicode_literals, print_function
 " eng = 'qwfpgjluy[]arstdhneiozxcvbkm'
@@ -757,3 +771,8 @@ set langmap=яq,ьw,фf,пp,гg,жj,лl,уu,ыy,ш[,э],аa,рr,сs,тt,дd,хh,
 " langmap_lower = ','.join('{}{}'.format(e, r) for e, r in zip(ru, eng))
 " langmap = ','.join((langmap_lower, langmap_lower.upper()))
 " print(langmap)
+
+noremap @; @:
+
+" Required:
+filetype plugin indent on
