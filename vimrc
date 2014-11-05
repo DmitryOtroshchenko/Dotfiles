@@ -1,125 +1,97 @@
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" NeoBundle core
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 if has('vim_starting')
     set nocompatible
-    " Required:
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
-let vundle_readme=expand('~/.vim/bundle/neobundle.vim/README.md')
-" Install neobundle if not found`
-if !filereadable(vundle_readme)
-  echo "Installing NeoBundle..."
-  echo ""
-  silent !mkdir -p ~/.vim/bundle
-  silent !git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim/
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugins
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Automatically install vim-plug if absent.
+let plug_script=expand('~/.vim/autoload/plug.vim')
+if !filereadable(plug_script)
+  echo "Installing vim-plug..."
+  silent !mkdir -p ~/.vim/autoload
+  silent !curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
-" Required:
-call neobundle#begin(expand('~/.vim/bundle/'))
+call plug#begin('~/.vim/plugged')
 
-" Required:
-NeoBundleFetch 'Shougo/neobundle.vim'
+Plug 'Shougo/vimproc',         { 'do': 'make -f make_mac.mak' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer --system-libclang' }
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Bundles
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Plug 'ervandew/supertab'
+Plug 'sirver/ultisnips'
+Plug 'honza/vim-snippets'
 
-" In order to avoid this kind of errors when using fish:
-" 'E484: Can’t open file /tmp/vRDNVqe/0'
-set shell=/bin/bash
+Plug 'Shougo/neomru.vim'
+Plug 'Shougo/neossh.vim'
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimfiler.vim'
+Plug 'gcmt/wildfire.vim'
 
-NeoBundle 'Shougo/vimproc', {
-    \ 'build' : {
-    \     'windows' : 'make -f make_mingw32.mak',
-    \     'cygwin' : 'make -f make_cygwin.mak',
-    \     'mac' : 'make -f make_mac.mak',
-    \     'unix' : 'make -f make_unix.mak',
-    \    },
-    \ }
+Plug 'Lokaltog/vim-easymotion'
+Plug 'danro/rename.vim'
+Plug 'edkolev/promptline.vim'
+Plug 'edkolev/tmuxline.vim'
+Plug 'hdima/python-syntax'
+Plug 'itchyny/lightline.vim'
+Plug 'jmcantrell/vim-virtualenv'
+Plug 'luochen1990/rainbow'
+Plug 'majutsushi/tagbar'
+Plug 'mattdbridges/bufkill.vim'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'sjl/gundo.vim/'
+Plug 'szw/vim-maximizer'
+Plug 'thinca/vim-visualstar'
+Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'vim-scripts/loremipsum'
+Plug 'mtth/scratch.vim'
+Plug 'JuliaLang/julia-vim'
+Plug 'Raimondi/delimitMate'
+Plug 'alfredodeza/khuno.vim'
+Plug 'haya14busa/incsearch.vim'
+Plug 'flazz/vim-colorschemes'
+Plug 'daddye/soda.vim'
+Plug 'justinmk/vim-gtfo'
+Plug 'airblade/vim-gitgutter'
 
-NeoBundle 'Valloric/YouCompleteMe', {
-    \ 'build' : {
-    \      'mac' : './install.sh --clang-completer --system-libclang',
-    \      'unix' : './install.sh --clang-completer --system-libclang',
-    \     },
-    \ }
-NeoBundle 'ervandew/supertab'
-NeoBundle 'sirver/ultisnips'
-NeoBundle 'honza/vim-snippets'
+Plug 'itspriddle/vim-marked'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'vim-voom/VOoM'
+Plug 'Rykka/riv.vim'
+Plug 'Rykka/InstantRst'
 
-NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/neossh.vim'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimfiler.vim'
-NeoBundle 'gcmt/wildfire.vim'
+" Plug 'xolox/vim-misc'
+" Plug 'altercation/vim-colors-solarized'
+" Plug 'jeetsukumaran/vim-markology'
+" Plug 'Yggdroot/indentLine'
+" Plug 'maxbrunsfeld/vim-yankstack'
 
-NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'Yggdroot/indentLine'
-NeoBundle 'danro/rename.vim'
-NeoBundle 'edkolev/promptline.vim'
-NeoBundle 'edkolev/tmuxline.vim'
-NeoBundle 'hdima/python-syntax'
-NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'jmcantrell/vim-virtualenv'
-NeoBundle 'luochen1990/rainbow'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'mattdbridges/bufkill.vim'
-NeoBundle 'michaeljsmith/vim-indent-object'
-NeoBundle 'rking/ag.vim'
-NeoBundle 'sjl/gundo.vim/'
-NeoBundle 'szw/vim-ctrlspace'
-NeoBundle 'szw/vim-maximizer'
-NeoBundle 'thinca/vim-visualstar'
-NeoBundle 'tomtom/tcomment_vim'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-repeat'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'vim-scripts/loremipsum'
-NeoBundle 'jeetsukumaran/vim-markology'
-NeoBundle 'mtth/scratch.vim'
-NeoBundle 'JuliaLang/julia-vim'
-NeoBundle 'Raimondi/delimitMate'
-NeoBundle 'ervandew/screen'
-NeoBundle 'alfredodeza/khuno.vim'
-NeoBundle 'haya14busa/incsearch.vim'
-" NeoBundle 'dhruvasagar/vim-table-mode'
-"NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'xolox/vim-misc'
-NeoBundle 'justinmk/vim-gtfo'
-NeoBundle 'flazz/vim-colorschemes'
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'daddye/soda.vim'
-" NeoBundle 'godlygeek/csapprox'
-" NeoBundle 'carlobaldassi/vim-colorschemedegrade'
-" NeoBundle 'calebsmith/vim-lambdify'
+" " Plug 'chrisbra/NrrwRgn'
+" " Plug 'wikimatze/hammer.vim'
+" " Plug 'wmvanvliet/vim-ipython'
+" " Plug 'godlygeek/csapprox'
+" " Plug 'carlobaldassi/vim-colorschemedegrade'
+" " Plug 'calebsmith/vim-lambdify'
+" " Plug 'dhruvasagar/vim-table-mode'
+" " Plug 'szw/vim-ctrlspace'
 
-NeoBundle 'itspriddle/vim-marked'
-NeoBundle 'maxbrunsfeld/vim-yankstack'
-NeoBundle 'vim-pandoc/vim-pandoc'
-NeoBundle 'vim-pandoc/vim-pandoc-syntax'
-NeoBundle 'vim-voom/VOoM'
-" NeoBundle 'Rykka/riv.vim'
-NeoBundle 'Rykka/InstantRst'
-" NeoBundle 'chrisbra/NrrwRgn'
-" NeoBundle 'wikimatze/hammer.vim'
-" NeoBundle 'wmvanvliet/vim-ipython'
+if has("gui_running")
+    " GUI-only plugins
+else
+    " Terminal-only plugins
+    Plug 'ervandew/screen'
+endif
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" NeoBundle end
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-call neobundle#end()
+call plug#end()
 
 " Required:
 " filetype plugin indent on
-
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck
 
 " TODO
 call yankstack#setup()
@@ -127,6 +99,8 @@ call yankstack#setup()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+filetype plugin indent on
 
 set t_Co=256
 set ttyfast
@@ -273,6 +247,9 @@ set backspace=indent,eol,start
 if has('mouse')
     set mouse=a
 endif
+
+" Colemak langmap
+set langmap=яq,ьw,фf,пp,гg,жj,лl,уu,ыy,ш[,э],аa,рr,сs,тt,дd,хh,нn,еe,иi,оo,зz,чx,цc,вv,бb,кk,мm,ЯQ,ЬW,ФF,ПP,ГG,ЖJ,ЛL,УU,ЫY,Ш[,Э],АA,РR,СS,ТT,ДD,ХH,НN,ЕE,ИI,ОO,ЗZ,ЧX,ЦC,ВV,БB,КK,МM
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " autocmd
@@ -583,6 +560,12 @@ let g:rainbow_conf = {
     " \ 'ctermfgs': ['Red3', 'cyan', 'DarkOrange', 'green'] }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-gtfo
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:gtfo#terminals = { 'mac' : 'iterm' }
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Abbreviations
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -602,6 +585,7 @@ noremap <F1> <Esc>
 
 nnoremap ; :
 vnoremap ; :
+noremap @; @:
 
 nnoremap <C-W>w :w<CR>
 nnoremap <C-W><C-W> :w<CR>
@@ -763,16 +747,3 @@ let g:vimrplugin_noscreenrc = 1
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
-
-set langmap=яq,ьw,фf,пp,гg,жj,лl,уu,ыy,ш[,э],аa,рr,сs,тt,дd,хh,нn,еe,иi,оo,зz,чx,цc,вv,бb,кk,мm,ЯQ,ЬW,ФF,ПP,ГG,ЖJ,ЛL,УU,ЫY,Ш[,Э],АA,РR,СS,ТT,ДD,ХH,НN,ЕE,ИI,ОO,ЗZ,ЧX,ЦC,ВV,БB,КK,МM
-" from __future__ import division, unicode_literals, print_function
-" eng = 'qwfpgjluy[]arstdhneiozxcvbkm'
-" ru  = 'яьфпгжлуышэарстдхнеиозчцвбкм'
-" langmap_lower = ','.join('{}{}'.format(e, r) for e, r in zip(ru, eng))
-" langmap = ','.join((langmap_lower, langmap_lower.upper()))
-" print(langmap)
-
-noremap @; @:
-
-" Required:
-filetype plugin indent on
