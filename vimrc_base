@@ -1,0 +1,359 @@
+"
+" This file contains vanilla vim settings (without plugins).
+" Tested on vim 7.4.
+"
+
+if has('vim_starting')
+    set nocompatible
+endif
+
+filetype plugin indent on
+
+if has('gui_running')
+    set guifont=Source\ Code\ Pro\ for\ Powerline:h17,Source\ Code\ Pro:h17,Consolas:h17,Inconsolata:h17,Courier:h17
+    " Number of pixel lines inserted between lines in addition to base lineheight.
+    set linespace=4
+    " a - "just works (tm)"
+    " c - use console dialogs for simple choices.
+    " i - use vim icon.
+    " m - menubar is present.
+    " g - grey nonactive menu items.
+    " r - right scrollbar is always present.
+    set guioptions=acimgr
+else
+    " 256 colors in terminal.
+    set t_Co=256
+    " Smooth redraw for fast terminal connections.
+    set ttyfast
+    " Don't redraw while executing scripts.
+    set lazyredraw
+    " Disable Background Color Erase (BCE) so that color schemes
+    " render properly when inside 256-color tmux and GNU screen.
+    " See also http://snk.tuxfamily.org/log/vim-256color-bce.html
+    if &term =~ '256color'
+        set t_ut=
+    endif
+endif
+
+if exists('+undofile')
+    " undofile permits to use undos after exiting and restarting.
+    set undofile
+    " Don't forget to create a directory for undo files.
+    silent !mkdir -p ~/.vim/undo/
+    set undodir=~/.vim/undo/
+endif
+
+if has("cryptv")
+    " Use more secure encryption method.
+    set cryptmethod=blowfish
+endif
+
+if has('mac')
+    " Option -> Meta on mac.
+    set macmeta
+endif
+
+if has('mouse')
+    set mouse=a
+    set mousemodel=popup_setpos
+endif
+
+if has('wildmenu')
+    set wildmenu
+    set wildignorecase
+    " Complete to the longest common match and open wildmenu.
+    " Then iterate over the wildmenu items.
+    set wildmode=longest:full,full
+    " Ignored by wildmenu completion.
+    set wildignore=''
+    " Logs.
+    set wildignore+=*.log
+    " Temp files.
+    set wildignore+=*/tmp/*
+    " Version control.
+    set wildignore+=.svn,.git,.hg
+    " Python stuff.
+    set wildignore+=*.pyc,*.pyo,__pycache__
+    " C stuff.
+    set wildignore+=*.o,*.so
+    " Binary files.
+    set wildignore+=*.swp,*.dump,*.dmp,*.zip,*.tar,*.gz,*.7z
+    " DB files.
+    set wildignore+=*.db,*.sqlite
+endif
+
+" Regexes and al.
+if v:version >= 704
+    " The new Vim regex engine is currently slooooow as hell which makes syntax
+    " highlighting slow, which introduces typing latency.
+    " Consider removing this in the future when the new regex engine becomes
+    " faster.
+    set regexpengine=1
+endif
+
+" Colorscheme.
+syntax on
+set background=dark
+
+" No cursor blinking.
+set guicursor+=a:blinkon0
+
+" Turns off ALL error bells. Don't fuck my brain!
+set noerrorbells
+set visualbell
+set t_vb=
+
+" Set title of the window.
+set title
+" Set window title to "<filename> @ <filepath>"
+function! MakeVimTitle()
+    let new_title = expand("%:t") . ' @ ' . expand("%:p:h")
+    return new_title
+endfunction
+" Update window title when changing buffers.
+augroup set_window_title
+    autocmd!
+    au BufEnter * let &titlestring=MakeVimTitle()
+augroup END " set_window_title
+
+" Always show tabline.
+set showtabline=2
+
+" Always show statusline.
+set laststatus=2
+" Show currently edited ex command.
+set showcmd
+" Show current mode.
+set showmode
+" 1 line for ex command.
+set cmdheight=1
+
+" Split to the right and bottom of the current window
+set splitbelow
+set splitright
+" Enable hidden buffers
+set hidden
+" A window can be reduced to its statusline.
+set winminheight=0
+
+" Indentation.
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set smarttab
+set shiftround
+set copyindent
+set autoindent
+
+" Code folding
+set foldmethod=indent
+set foldlevel=99
+
+" Navigation
+set number
+set norelativenumber
+set numberwidth=6
+set cursorline
+augroup autotoggle_cursorline
+    autocmd!
+    " Toggle cursor line.
+    autocmd WinLeave * set nocursorline
+    autocmd WinEnter * set cursorline
+    " Toggle paste and cursorline in insert mode.
+    autocmd InsertEnter * set nocursorline
+    autocmd InsertLeave * set cursorline nopaste
+    " Don't move cursor 1 chaa back when leaving insert mode.
+    autocmd InsertLeave * normal l
+augroup END
+set nocursorcolumn
+set colorcolumn=80,100
+" Show at least 3 lines below/above the cursor.
+set scrolloff=3
+" Show at least 10 columns befor/after the cursor.
+set sidescroll=1
+set sidescrolloff=10
+" Line and column rulers in statusline.
+set ruler
+set rulerformat="%l\:%c %P"
+" Allow to put cursor outside of the text in V-Block mode only.
+set virtualedit=block
+
+" Search options.
+" By default substitute all occurences - not only the first one.
+set gdefault
+" Highlight last searched pattern occurences.
+set hlsearch
+" Highlight as you type.
+set incsearch
+" Ignore pattern case when searching.
+set ignorecase
+" Don't ignore case if uppercase letters present in a pattern.
+set smartcase
+
+" Flash matching brackets.
+set showmatch
+set matchtime=3
+
+" Vim internal encoding.
+set encoding=utf-8
+set fileformats=unix,dos,mac
+
+" Don't wrap lines.
+set nowrap
+" But if we wrap them - wrap them by word boundaries
+set linebreak
+" Don't show invisible symbols.
+set nolist
+" Wrap lines in text files.
+augroup write_mode
+    autocmd!
+    autocmd BufNewFile,BufReadPost *.md,*.txt,*.rst set wrap linebreak nolist
+augroup END
+" Sets replacements for invisible characters + scrolloff characters.
+set listchars=tab:▸⋅,nbsp:⋅,trail:⋅,eol:¬,extends:❯,precedes:❮
+" Backspace can erase anything.
+set backspace=indent,eol,start
+
+" Misc
+set clipboard=unnamed
+" Ask for confirmation when doing hard stuff...
+set confirm
+" Don't polluti system with temporary files.
+set nobackup
+set nowritebackup
+set noswapfile
+" Automatically read files modified outside of vim.
+set autoread
+" Write changes when switching files.
+set autowrite
+" Once upon a time...
+set history=1000
+set undolevels=1000
+
+" CursorHold event frequency in ms. Used for UI updates by some plugins.
+set updatetime=100
+
+" Show completion menu in insert mode even if there is only one item in the
+" completion list.
+set completeopt=menuone
+
+" Do not store global and local values in a session.
+set ssop-=options
+" Do not store folds.
+set ssop-=folds
+
+"
+" Key mappings.
+"
+
+let mapleader=','
+
+" I can type :help on my own, thanks.
+noremap  <F1> <Esc>
+noremap! <F1> <Esc>
+lnoremap <F1> <Esc>
+
+" Up-down through long lines chunks.
+noremap j gj
+noremap <down> gj
+inoremap <down> <C-o>gj
+noremap k gk
+noremap <up> gk
+inoremap <up> <C-o>gk
+
+" Use ; to entex ex commands.
+noremap ; :
+" Repeat the last ex command by typing @; or @:.
+noremap @; @:
+
+
+" Redo with U.
+noremap U <C-r>
+" Copy until the end of line.
+noremap Y y$
+" Select all.
+noremap <Leader>A ggVG
+" Reselect the last visual area.
+nnoremap <Leader>v gv
+" Select the last pasted or changed chunk.
+nnoremap <Leader>p `[v`]
+
+" Don't loose selection after indenting in visual mode.
+vnoremap < <gv
+vnoremap > >gv
+
+" Turn search patterns highlight on and off.
+nmap <Leader>h :set hlsearch! hlsearch?<CR>
+
+" Toggle between text editing and code editing.
+function! ToggleWordWrap()
+    if &wrap
+        set nowrap
+        echo 'No wrap'
+    else
+        set wrap linebreak nolist
+        echo 'Wrap'
+    endif
+endfunction
+nmap <Leader>w :call ToggleWordWrap()<CR>
+
+" TODO:
+" nmap <C-J> o<Esc>
+" nmap <C-K> O<Esc>
+" nnoremap <C-J> m`o<Esc>``
+" nnoremap <C-K> m`O<Esc>``
+nnoremap K i<CR><Esc>
+inoremap <C-e> <C-o>$
+inoremap <C-a> <C-o>0
+inoremap <C-d> <C-o>dd
+
+" Tabs and buffers.
+nnoremap <Leader>n gt
+nnoremap <Leader>N gT
+nnoremap <silent> <S-t> :tabnew<CR>
+" nnoremap <leader>] :BF<CR>
+" nnoremap <leader>[ :BB<CR>
+" nnoremap <leader>x :BD<CR>
+nnoremap <leader>X :bd<CR>
+
+" Easy window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+map <M-h> :vertical resize -5<CR>
+map <M-j> :resize +5<CR>
+map <M-k> :resize -5<CR>
+map <M-l> :vertical resize +5<CR>
+
+" Expand currend file path in command mode
+cnoremap <C-SPACE> <C-R>=expand("%:p:h") . "/" <CR>
+" Sudo write
+cmap w!! w !sudo tee % >/dev/null
+
+nnoremap <C-W>w :w<CR>
+nnoremap <C-W><C-W> :w<CR>
+
+nnoremap <leader>cd :cd %:p:h<CR>
+nnoremap <leader>lcd :lcd %:p:h<CR>
+
+set pastetoggle=<F2>
+
+"
+" Some additional autocommands.
+"
+
+augroup git_diff
+    autocmd!
+    " Show Git diff in window split when commiting git diff.
+    autocmd FileType gitcommit DiffGitCached | wincmd p
+    " Turn on spellcheck.
+    autocmd BufRead COMMIT_EDITMSG setlocal spell!
+augroup END
+
+augroup _python
+    autocmd!
+    autocmd FileType python setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class,with
+augroup END
