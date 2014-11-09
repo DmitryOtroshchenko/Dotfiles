@@ -3,11 +3,18 @@ if has('vim_starting')
     set nocompatible
 endif
 
+source ~/.vimrc_base
+
+" Rulemak langmap
+set langmap=яq,ьw,фf,пp,гg,жj,лl,уu,ыy,ш[,э],аa,рr,сs,тt,дd,хh,нn,еe,иi,оo,зz,чx,цc,вv,бb,кk,мm,ЯQ,ЬW,ФF,ПP,ГG,ЖJ,ЛL,УU,ЫY,Ш[,Э],АA,РR,СS,ТT,ДD,ХH,НN,ЕE,ИI,ОO,ЗZ,ЧX,ЦC,ВV,БB,КK,МM
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"
 " Automatically install vim-plug if absent.
+"
 let plug_script=expand('~/.vim/autoload/plug.vim')
 if !filereadable(plug_script)
   echo "Installing vim-plug..."
@@ -15,6 +22,7 @@ if !filereadable(plug_script)
   silent !curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
+" Plugin declarations.
 call plug#begin('~/.vim/plugged')
 
 Plug 'Shougo/vimproc',         { 'do': 'make -f make_mac.mak' }
@@ -31,235 +39,86 @@ Plug 'Shougo/vimfiler.vim'
 Plug 'gcmt/wildfire.vim'
 
 Plug 'Lokaltog/vim-easymotion'
-Plug 'danro/rename.vim'
-Plug 'edkolev/promptline.vim'
-Plug 'edkolev/tmuxline.vim'
-Plug 'hdima/python-syntax'
+Plug 'danro/rename.vim' " OK
+Plug 'hdima/python-syntax' " OK
 Plug 'itchyny/lightline.vim'
-Plug 'jmcantrell/vim-virtualenv'
-Plug 'luochen1990/rainbow'
+Plug 'jmcantrell/vim-virtualenv' " OK
+Plug 'luochen1990/rainbow' " NOK: fix terminal colors.
 Plug 'majutsushi/tagbar'
 Plug 'mattdbridges/bufkill.vim'
-Plug 'michaeljsmith/vim-indent-object'
-Plug 'sjl/gundo.vim/'
-Plug 'szw/vim-maximizer'
-Plug 'thinca/vim-visualstar'
+Plug 'michaeljsmith/vim-indent-object' " OK
+Plug 'sjl/gundo.vim'
+Plug 'szw/vim-maximizer' " OK
+Plug 'thinca/vim-visualstar' " OK
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'vim-scripts/loremipsum'
-Plug 'mtth/scratch.vim'
-Plug 'JuliaLang/julia-vim'
+Plug 'vim-scripts/loremipsum' " OK
+Plug 'mtth/scratch.vim' " NOK change mappings, make them optional
+Plug 'JuliaLang/julia-vim' " OK
 Plug 'Raimondi/delimitMate'
 Plug 'alfredodeza/khuno.vim'
 Plug 'haya14busa/incsearch.vim'
-Plug 'flazz/vim-colorschemes'
-Plug 'daddye/soda.vim'
-Plug 'justinmk/vim-gtfo'
-Plug 'airblade/vim-gitgutter'
+Plug 'flazz/vim-colorschemes' " OK
+Plug 'daddye/soda.vim' " OK
+Plug 'justinmk/vim-gtfo' " OK
+Plug 'airblade/vim-gitgutter' " OK
 
-Plug 'itspriddle/vim-marked'
+Plug 'itspriddle/vim-marked' " OK, edited
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-voom/VOoM'
 Plug 'Rykka/riv.vim'
 Plug 'Rykka/InstantRst'
+Plug 'svermeulen/vim-easyclip'
+Plug 'csexton/trailertrash.vim' " OK
 
 " Plug 'xolox/vim-misc'
 " Plug 'altercation/vim-colors-solarized'
 " Plug 'jeetsukumaran/vim-markology'
 " Plug 'Yggdroot/indentLine'
-" Plug 'maxbrunsfeld/vim-yankstack'
 
 " " Plug 'chrisbra/NrrwRgn'
 " " Plug 'wikimatze/hammer.vim'
 " " Plug 'wmvanvliet/vim-ipython'
-" " Plug 'godlygeek/csapprox'
-" " Plug 'carlobaldassi/vim-colorschemedegrade'
 " " Plug 'calebsmith/vim-lambdify'
-" " Plug 'dhruvasagar/vim-table-mode'
+Plug 'dhruvasagar/vim-table-mode'
+" Plug 'chrisbra/csv.vim'
 " " Plug 'szw/vim-ctrlspace'
 
 if has("gui_running")
     " GUI-only plugins
 else
     " Terminal-only plugins
+    Plug 'edkolev/promptline.vim'
+    Plug 'edkolev/tmuxline.vim'
     Plug 'ervandew/screen'
+    " Plug 'godlygeek/csapprox'
+    " Plug 'carlobaldassi/vim-colorschemedegrade'
 endif
 
+" End of plugin declarations.
 call plug#end()
 
-" Required:
-" filetype plugin indent on
+"
+" colorscheme is a plugin.
+"
 
-" TODO
-call yankstack#setup()
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" General
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-filetype plugin indent on
-
-set t_Co=256
-set ttyfast
-if &term =~ '256color'
-    " Disable Background Color Erase (BCE) so that color schemes
-    " render properly when inside 256-color tmux and GNU screen.
-    " See also http://snk.tuxfamily.org/log/vim-256color-bce.html
-    set t_ut=
-endif
-
-if has("gui_running")
-    set guifont=Source\ Code\ Pro\ for\ Powerline:h17
-    set linespace=4
-    set guioptions=acimgr
-endif
-
-if exists("+undofile")
-    " undofile - This allows you to use undos after exiting and restarting
-    " This, like swap and backups, uses .vim-undo first, then ~/.vim/undo
-    " Do not forget to create the direectory
-    silent !mkdir -p ~/.vim/undo/
-    set undodir=~/.vim/undo/
-    set undofile
-endif
-
-" Colors
-syntax on
-set background=dark
 let g:solarized_contrast="normal"
 let g:solarized_diffmode="normal"
 let g:solarized_menu=0
+let g:solarized_hitrail=1
 colorscheme solarized
-" colorscheme Monokai-dmitry
 
-highlight LineNr     ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
+" Line number should have the same color as the rest of the workspace.
+highlight LineNr ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
+" Sign column should have the same color as the rest of the workspace.
 highlight SignColumn ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
-
-set macmeta
-
-" GUI
-set showtabline=2
-set guicursor+=a:blinkon0
-set mousemodel=popup_setpos
-" CursorHold event frequency in ms. Used for UI updates.
-set updatetime=100
-
-" UI
-set title
-set showcmd
-set showmode
-
-" Splits tabs and sessions
-set laststatus=2
-set splitbelow
-set splitright
-" Enable hidden buffers
-set hidden
-" Do not store global and local values in a session.
-set ssop-=options
-" Do not store folds.
-set ssop-=folds
-
-" Turns off all error bells, visual or otherwise.
-set noerrorbells
-set visualbell
-set t_vb=
-" autocmd vimrc GUIEnter * set visualbell t_vb=
-
-" Wildmenu
-set wildignorecase
-set wildmenu
-set wildmode=longest:full,full
-set completeopt=menuone
-" Ignore
-set wildignore=*.log
-set wildignore+=*/tmp/*
-set wildignore+=.svn,.git,.hg
-set wildignore+=*.pyc,*.pyo,__pycache__
-set wildignore+=*.o,*.so
-set wildignore+=*.swp,*.dump,*.dmp,*.hi,*.zip
-set wildignore+=*.db,*.sqlite
-
-" Indentation
-set nowrap
-set copyindent
-set shiftround
-set autoindent
-
-" Tabs
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set expandtab
-set smarttab
-
-" Code folding
-set foldmethod=indent
-set foldlevel=99
-
-" Navigation
-set number
-set relativenumber
-set numberwidth=5
-set cursorline
-set nocursorcolumn
-set colorcolumn=80,100
-set scrolloff=3
-set virtualedit=block
-
-" Regexes and al.
-if v:version >= 704
-    " The new Vim regex engine is currently slooooow as hell which makes syntax
-    " highlighting slow, which introduces typing latency.
-    " Consider removing this in the future when the new regex engine becomes
-    " faster.
-    set regexpengine=1
-endif
-
-set gdefault
-set hlsearch
-set incsearch
-set ignorecase
-set smartcase
-set showmatch
-
-" Encodings and symbols
-set encoding=utf-8
-set fileformats=unix,dos,mac
-set list
-set listchars=tab:▸⋅,nbsp:⋅,trail:⋅,eol:¬,extends:❯,precedes:❮
-
-" Misc
-set clipboard=unnamed
-set confirm
-set nobackup
-set nowritebackup
-set noswapfile
-set autoread
-set autowrite
-set history=1000
-set undolevels=1000
-
-set backspace=indent,eol,start
-if has('mouse')
-    set mouse=a
-endif
-
-" Colemak langmap
-set langmap=яq,ьw,фf,пp,гg,жj,лl,уu,ыy,ш[,э],аa,рr,сs,тt,дd,хh,нn,еe,иi,оo,зz,чx,цc,вv,бb,кk,мm,ЯQ,ЬW,ФF,ПP,ГG,ЖJ,ЛL,УU,ЫY,Ш[,Э],АA,РR,СS,ТT,ДD,ХH,НN,ЕE,ИI,ОO,ЗZ,ЧX,ЦC,ВV,БB,КK,МM
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " autocmd
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-augroup _python
-    autocmd!
-    " autocmd FileType python setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class,with
-    " autocmd FileType pyrex setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class,with
-augroup END
 
 augroup markdown
     autocmd!
@@ -269,44 +128,16 @@ augroup markdown
     autocmd BufNewFile,BufReadPost,BufWritePost *.md hi Conceal cterm=NONE ctermbg=NONE ctermfg=red gui=NONE guifg=red guibg=NONE
 augroup END " markdown
 
-augroup text_files
-    autocmd!
-    autocmd BufNewFile,BufReadPost *.md,*.txt,*.rst set wrap linebreak nolist
-augroup END
-
-augroup git_diff
-    autocmd!
-    " Show Git diff in window split when commiting git diff.
-    autocmd FileType gitcommit DiffGitCached | wincmd p
-    " Turn on spellcheck.
-    autocmd BufRead COMMIT_EDITMSG setlocal spell!
-augroup END " git_diff
-
-function! TrimTrailingWS()
-    normal mz
-    execute '%s/\s\+$//e'
-    normal `z
-    delmarks z
-endfunction
-
 augroup trim_trailing_whitespace
     autocmd!
-    autocmd FileType c,cpp,java,php,python,markdown,r,julia,sql,vim autocmd BufWritePre <buffer> :call TrimTrailingWS()
+    autocmd FileType * autocmd BufWritePre <buffer> :TrailerTrim
 augroup END " trim_trailing_whitespace
 
-augroup misc
+augroup trail
     autocmd!
-    " Autotoggle cursor line.
-    autocmd WinLeave * set nocursorline
-    autocmd WinEnter * set cursorline
-    autocmd InsertEnter * set nocursorline
-    autocmd InsertLeave * set cursorline
-    " Paste mode auto-off.
-    autocmd InsertLeave * set nopaste
-    " Absolute line numbers in insert mode, relative otherwise for easy movement.
-    autocmd InsertEnter * :set norelativenumber
-    autocmd InsertLeave * :set relativenumber
-augroup END " misc
+    autocmd InsertEnter * TrailerHide
+    autocmd InsertLeave * TrailerShow
+augroup END " trail
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
@@ -338,19 +169,6 @@ call unite#custom#profile('source/grep', 'context', {
 \ })
 
 call unite#custom#source('file,file/new,buffer,file_rec', 'matchers', 'matcher_fuzzy')
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" YankRing.vim
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:yankring_max_history = 20
-let g:yankring_min_element_length = 2
-let g:yankring_paste_using_g = 1
-let g:yankring_window_height = 12
-let g:yankring_window_use_bottom = 0
-let g:yankring_manage_numbered_reg = 1
-let g:yankring_clipboard_monitor = 1
-let g:yankring_manual_clipboard_check = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " lightline
@@ -566,94 +384,18 @@ let g:rainbow_conf = {
 let g:gtfo#terminals = { 'mac' : 'iterm' }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" trailertrash
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+hi UnwantedTrailerTrash guibg=#DA3435 ctermbg=red
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Abbreviations
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 iabbrev teh the
 iabbrev fo of
 iabbrev @@ dmitry.otroshchenko@gmail.com
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Keymap
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let mapleader=','
-
-set pastetoggle=<F2>
-" I can type :help on my own, thanks.
-noremap <F1> <Esc>
-
-nnoremap ; :
-vnoremap ; :
-noremap @; @:
-
-nnoremap <C-W>w :w<CR>
-nnoremap <C-W><C-W> :w<CR>
-
-nnoremap <leader>cd :cd %:p:h<CR>
-nnoremap <leader>lcd :lcd %:p:h<CR>
-
-map Y y$
-noremap <Leader>A ggVG
-nnoremap gp `[v`]
-
-nnoremap <leader>ss :source $MYVIMRC<CR>
-nnoremap <leader>se :tabnew $MYVIMRC<CR>
-
-" TODO:
-" Bind :set wrap linebreak nolist
-" nmap <C-J> o<Esc>
-" nmap <C-K> O<Esc>
-" nnoremap <C-J> m`o<Esc>``
-" nnoremap <C-K> m`O<Esc>``
-nnoremap K i<CR><Esc>
-inoremap <C-e> <C-o>$
-inoremap <C-a> <C-o>0
-inoremap <C-d> <C-o>dd
-
-"" Tabs
-nmap <Tab> gt
-nmap <S-Tab> gT
-nnoremap <silent> <S-t> :tabnew<CR>
-
-" Easy window navigation
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
-
-map <M-h> :vertical resize -5<CR>
-map <M-j> :resize +5<CR>
-map <M-k> :resize -5<CR>
-map <M-l> :vertical resize +5<CR>
-
-map <leader>] :BF<CR>
-map <leader>[ :BB<CR>
-map <leader>x :BD<CR>
-map <leader>X :bd<CR>
-
-nmap <Leader>h :set hlsearch! hlsearch?<CR>
-nmap <Leader>w :set wrap! wrap?<CR>
-
-" Don't loose selection after indenting in visual mode.
-vnoremap < <gv
-vnoremap > >gv
-
-" Up-down through long lines chunks.
-map j gj
-map <down> gj
-imap <down> <C-o>gj
-map k gk
-map <up> gk
-imap <up> <C-o>gk
-
-" Redo with U
-noremap U <C-r>
-
-" Expand currend file path in command mode
-cnoremap <C-SPACE> <C-R>=expand("%:p:h") . "/" <CR>
-" Sudo write
-cmap w!! w !sudo tee % >/dev/null
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin mappings.
@@ -663,8 +405,7 @@ cmap w!! w !sudo tee % >/dev/null
 nnoremap <Leader>b :Unite -no-split -buffer-name=buffers buffer<CR>
 nnoremap <Leader>t :Unite -no-split -buffer-name=fb -input=** -start-insert buffer file_rec/async<CR>
 
-" YankRing and yankstack
-" nnoremap <silent> <leader>y :YRShow<CR>
+" EasyClip
 nnoremap <silent> <leader>y :Yanks<CR>
 
 " YouCompleteMe
@@ -704,7 +445,6 @@ xmap <Leader>f <Plug>(easymotion-sn)
 omap <Leader>f <Plug>(easymotion-sn)
 
 " Maximizer
-noremap <F3>       :MaximizerToggle<CR>
 noremap <C-W><C-Z> :MaximizerToggle<CR>
 noremap <C-W>z     :MaximizerToggle<CR>
 noremap <C-W>Z     :MaximizerToggle<CR>
@@ -725,7 +465,7 @@ noremap <silent><Leader>sc <Esc>:Khuno show<CR>
 noremap `<Space> :CtrlSpace<CR>
 
 " Markology
-noremap <silent> mm :MarkologyPlaceMarkToggle<CR>
+" noremap <silent> mm :MarkologyPlaceMarkToggle<CR>
 
 " Marked
 noremap <leader>md :MarkedOpen<CR>
@@ -747,3 +487,14 @@ let g:vimrplugin_noscreenrc = 1
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
+
+" surround
+let g:surround_{char2nr("d")} = "\\text{\r}"
+
+" TODO: Add a map to alternate buffers.
+" TODO: change statusline color.
+
+" After all the initialization toggle rainbow parentheses twice -- ow it may
+" not work
+" :RainbowToggle
+" :RainbowToggle
