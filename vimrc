@@ -177,7 +177,6 @@ call unite#custom#source('file,file/new,buffer,file_rec', 'matchers', 'matcher_f
 " '⋮', '⁞', '┊', '┆', '│'
 let g:lightline = {
       \ 'colorscheme': 'solarized',
-      \ 'enable': { 'tabline': 0 },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'filename', 'modified' ],
@@ -196,7 +195,8 @@ let g:lightline = {
       \   'reg': 'winwidth(0) > 70'
       \ },
       \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '⋮', 'right': '⋮' }
+      \ 'subseparator': { 'left': '⋮', 'right': '⋮' },
+      \ 'tabline': { 'right': [] },
       \ }
 
 let g:max_statusline_reg_contents_len = 25
