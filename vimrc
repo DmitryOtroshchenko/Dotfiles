@@ -176,28 +176,38 @@ call unite#custom#source('file,file/new,buffer,file_rec', 'matchers', 'matcher_f
 
 " '⋮', '⁞', '┊', '┆', '│'
 let g:lightline = {
-      \ 'colorscheme': 'solarized',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'filename', 'modified' ],
-      \             [ 'reg' ] ]
-      \ },
-      \ 'component_function': {
-      \   'reg': 'MyRegisterContents'
-      \ },
-      \ 'component': {
-      \   'readonly': '%{&filetype=="help"?"":&readonly?"":""}',
-      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
-      \ },
-      \ 'component_visible_condition': {
-      \   'readonly': '(&filetype!="help"&& &readonly)',
-      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-      \   'reg': 'winwidth(0) > 70'
-      \ },
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '⋮', 'right': '⋮' },
-      \ 'tabline': { 'right': [] },
-      \ }
+    \ 'colorscheme': 'solarized',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'readonly', 'filename', 'modified' ],
+    \             [ 'reg' ] ]
+    \ },
+    \ 'component_function': {
+    \   'reg': 'MyRegisterContents',
+    \   'fileformat': 'MyFileformat',
+    \   'fileencoding': 'MyFileencoding',
+    \ },
+    \ 'component': {
+    \   'readonly': '%{ &filetype == "help" ? "" : &readonly? "\u2716" : "" }',
+    \   'modified': '%{ &filetype == "help" ? "" : &modified ? "+" : &modifiable ? "" : "-" }'
+    \ },
+    \ 'component_visible_condition': {
+    \   'readonly': '(&filetype!="help"&& &readonly)',
+    \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+    \   'reg': 'winwidth(0) > 70'
+    \ },
+    \ 'separator': { 'left': '', 'right': '' },
+    \ 'subseparator': { 'left': '⋮', 'right': '⋮' },
+    \ 'tabline': { 'right': [] },
+    \ }
+
+function! MyFileformat()
+    return &fileformat =~ 'unix' ? '' : &fileformat
+endfunction
+
+function! MyFileencoding()
+    return &fenc =~ 'utf-8' ? '' : &fenc
+endfunction
 
 let g:max_statusline_reg_contents_len = 25
 
