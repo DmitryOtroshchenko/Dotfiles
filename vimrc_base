@@ -319,6 +319,11 @@ inoremap <C-e> <C-o>$
 inoremap <C-a> <C-o>0
 inoremap <C-d> <C-o>dd
 
+" CTRL+A moves to start of line in command mode
+cnoremap <C-a> <home>
+" CTRL+E moves to end of line in command mode
+cnoremap <C-e> <end>
+
 " Tabs and buffers.
 nnoremap <Leader>n gt
 nnoremap <Leader>N gT
