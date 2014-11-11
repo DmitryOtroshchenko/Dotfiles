@@ -307,7 +307,7 @@ nmap <Leader>w :call ToggleWordWrap()<CR>
 " nmap <C-K> O<Esc>
 " nnoremap <C-J> m`o<Esc>``
 " nnoremap <C-K> m`O<Esc>``
-nnoremap K i<CR><Esc>
+nnoremap K i<CR><Esc>h
 inoremap <C-e> <C-o>$
 inoremap <C-a> <C-o>0
 inoremap <C-d> <C-o>dd
