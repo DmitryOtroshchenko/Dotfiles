@@ -254,6 +254,10 @@ noremap  <F1> <Esc>
 noremap! <F1> <Esc>
 lnoremap <F1> <Esc>
 
+"
+nnoremap Q q
+nnoremap q <NOP>
+
 " Up-down through long lines chunks.
 noremap j gj
 noremap <down> gj
