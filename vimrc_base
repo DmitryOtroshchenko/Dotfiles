@@ -20,6 +20,8 @@ if has('gui_running')
     " g - grey nonactive menu items.
     " r - right scrollbar is always present.
     set guioptions=acimgr
+    " No cursor blinking.
+    set guicursor+=a:blinkon0
 else
     " 256 colors in terminal.
     set t_Co=256
@@ -94,9 +96,6 @@ endif
 " Colorscheme.
 syntax on
 set background=dark
-
-" No cursor blinking.
-set guicursor+=a:blinkon0
 
 " Turns off ALL error bells. Don't fuck my brain!
 set noerrorbells
@@ -254,7 +253,6 @@ noremap  <F1> <Esc>
 noremap! <F1> <Esc>
 lnoremap <F1> <Esc>
 
-"
 nnoremap Q q
 nnoremap q <NOP>
 
@@ -270,7 +268,6 @@ inoremap <up> <C-o>gk
 noremap ; :
 " Repeat the last ex command by typing @; or @:.
 noremap @; @:
-
 
 " Redo with U.
 noremap U <C-r>
