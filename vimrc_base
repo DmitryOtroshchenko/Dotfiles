@@ -296,7 +296,7 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Turn search patterns highlight on and off.
-nmap <Leader>h :set hlsearch! hlsearch?<CR>
+noremap <Leader>h :set hlsearch! hlsearch?<CR>
 
 " Toggle between text editing and code editing.
 function! ToggleWordWrap()
@@ -308,7 +308,7 @@ function! ToggleWordWrap()
         echo 'Wrap'
     endif
 endfunction
-nmap <Leader>w :call ToggleWordWrap()<CR>
+noremap <Leader>w :call ToggleWordWrap()<CR>
 
 " TODO:
 " nmap <C-J> o<Esc>
@@ -335,20 +335,20 @@ nnoremap <silent> <S-t> :tabnew<CR>
 nnoremap <leader>X :bd<CR>
 
 " Easy window navigation
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
 
-map <M-h> :vertical resize -5<CR>
-map <M-j> :resize +5<CR>
-map <M-k> :resize -5<CR>
-map <M-l> :vertical resize +5<CR>
+noremap <M-h> :vertical resize -5<CR>
+noremap <M-j> :resize +5<CR>
+noremap <M-k> :resize -5<CR>
+noremap <M-l> :vertical resize +5<CR>
 
 " Expand currend file path in command mode
 cnoremap <C-SPACE> <C-R>=expand("%:p:h") . "/" <CR>
 " Sudo write
-cmap w!! w !sudo tee % >/dev/null
+cnoremap w!! w !sudo tee % >/dev/null
 
 nnoremap <C-W>w :w<CR>
 nnoremap <C-W><C-W> :w<CR>
