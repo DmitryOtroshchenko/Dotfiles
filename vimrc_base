@@ -267,10 +267,11 @@ nnoremap Q q
 nnoremap q <NOP>
 
 " Up-down through long lines chunks.
-noremap j gj
+noremap j h
+noremap k gj
 noremap <down> gj
 inoremap <down> <C-o>gj
-noremap k gk
+noremap h gk
 noremap <up> gk
 inoremap <up> <C-o>gk
 
