@@ -62,7 +62,7 @@ Plug 'alfredodeza/khuno.vim'
 Plug 'haya14busa/incsearch.vim'
 Plug 'flazz/vim-colorschemes' " OK
 Plug 'daddye/soda.vim' " OK
-Plug 'justinmk/vim-gtfo' " OK
+Plug 'justinmk/vim-gtfo' " NOK, tune mappings
 Plug 'airblade/vim-gitgutter' " OK
 
 Plug 'itspriddle/vim-marked' " OK, edited
@@ -271,6 +271,27 @@ let g:ycm_filepath_completion_use_working_dir = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ultisnips
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-pandoc
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:pandoc#filetypes#handled = ['markdown', 'textile']
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" riv
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! RivSetup()
+    setl foldmethod=expr
+    setl foldexpr=riv#fold#expr(v:lnum)
+    setl foldtext=riv#fold#text()
+endfunction
+
+augroup rest
+    au!
+    au FileType rst call RivSetup()
+augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Lokaltog/vim-easymotion
