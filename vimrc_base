@@ -335,15 +335,15 @@ nnoremap <silent> <S-t> :tabnew<CR>
 nnoremap <leader>X :bd<CR>
 
 " Easy window navigation
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
+noremap <C-h> <C-w>k
+noremap <C-j> <C-w>h
+noremap <C-k> <C-w>j
 noremap <C-l> <C-w>l
 
-noremap <M-h> :vertical resize -5<CR>
-noremap <M-j> :resize +5<CR>
-noremap <M-k> :resize -5<CR>
-noremap <M-l> :vertical resize +5<CR>
+noremap <m-j> :vertical resize -5<cr>
+noremap <m-l> :vertical resize +5<cr>
+noremap <m-h> :resize +5<cr>
+noremap <m-k> :resize -5<cr>
 
 " Expand currend file path in command mode
 cnoremap <C-SPACE> <C-R>=expand("%:p:h") . "/" <CR>
