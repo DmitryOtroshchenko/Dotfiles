@@ -83,7 +83,6 @@ Plug 'csexton/trailertrash.vim' " OK
 " " Plug 'wikimatze/hammer.vim'
 " " Plug 'wmvanvliet/vim-ipython'
 " " Plug 'calebsmith/vim-lambdify'
-Plug 'dhruvasagar/vim-table-mode'
 " Plug 'chrisbra/csv.vim'
 " " Plug 'szw/vim-ctrlspace'
 
