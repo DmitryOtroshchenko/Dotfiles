@@ -439,11 +439,12 @@ iabbrev @@ dmitry.otroshchenko@gmail.com
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Unite.vim
-nnoremap <Leader>b :Unite -no-split -buffer-name=buffers buffer<CR>
-nnoremap <Leader>t :Unite -no-split -buffer-name=fb -input=** -start-insert buffer file_rec/async<CR>
+noremap <Leader>b :Unite -no-split -buffer-name=buffers buffer<CR>
+noremap <Leader>t :Unite -no-split -buffer-name=fb -input=** -start-insert buffer file_rec/async<CR>
 
 " EasyClip
-nnoremap <silent> <leader>y :Yanks<CR>
+noremap <silent> <leader>y :Yanks<CR>
+map M m$
 
 " YouCompleteMe
 " nnoremap tg :YcmCompleter GoToDefinitionElseDeclaration<CR>
