@@ -45,7 +45,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'jmcantrell/vim-virtualenv' " OK
 Plug 'luochen1990/rainbow' " NOK: fix terminal colors.
 Plug 'majutsushi/tagbar'
-Plug 'mattdbridges/bufkill.vim'
+Plug 'moll/vim-bbye'
 Plug 'michaeljsmith/vim-indent-object' " OK
 Plug 'sjl/gundo.vim'
 Plug 'szw/vim-maximizer' " OK
@@ -54,6 +54,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-dispatch'
 Plug 'vim-scripts/loremipsum' " OK
 Plug 'mtth/scratch.vim' " NOK change mappings, make them optional
 Plug 'JuliaLang/julia-vim' " OK
@@ -65,6 +66,14 @@ Plug 'daddye/soda.vim' " OK
 Plug 'justinmk/vim-gtfo' " NOK, tune mappings
 Plug 'airblade/vim-gitgutter' " OK
 
+Plug 'mileszs/ack.vim'
+
+let g:ack_default_options = " -s -H --nocolor --nogroup --smart-case --sort-files --follow"
+let g:ackhighlight = 1
+" let g:ack_autofold_results = 1
+let g:ackpreview = 1
+let g:ack_use_dispatch = 1
+
 Plug 'itspriddle/vim-marked' " OK, edited
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
@@ -73,7 +82,9 @@ Plug 'Rykka/riv.vim'
 Plug 'Rykka/InstantRst'
 Plug 'svermeulen/vim-easyclip'
 Plug 'csexton/trailertrash.vim' " OK
+Plug 'junegunn/vim-easy-align'
 
+" Plug 'mattdbridges/bufkill.vim'
 " Plug 'xolox/vim-misc'
 " Plug 'altercation/vim-colors-solarized'
 " Plug 'jeetsukumaran/vim-markology'
@@ -367,11 +378,12 @@ let g:khuno_ignore="E202,E128"
 let g:khuno_max_line_length=100
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" bufkill
+" bufkill and bbye
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:BufKillCreateMappings = 0
-noremap <Leader>x :BD<CR>
+" let g:BufKillCreateMappings = 0
+" noremap <Leader>x :BD<CR>
+noremap <Leader>x :Bdelete<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ctrlspace
