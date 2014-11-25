@@ -478,6 +478,16 @@ nmap T         <Plug>(easymotion-T)
 xmap T         <Plug>(easymotion-T)
 omap T         <Plug>(easymotion-T)
 
+nmap k <Plug>(easymotion-j)
+xmap k <Plug>(easymotion-j)
+omap k <Plug>(easymotion-j)
+
+nmap h <Plug>(easymotion-k)
+xmap h <Plug>(easymotion-k)
+omap h <Plug>(easymotion-k)
+
+" noremap <Plug>(easymotion-lineanywhere)
+
 nmap <Leader>f <Plug>(easymotion-sn)
 xmap <Leader>f <Plug>(easymotion-sn)
 omap <Leader>f <Plug>(easymotion-sn)
