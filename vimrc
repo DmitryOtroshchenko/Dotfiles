@@ -223,7 +223,7 @@ function! MyRegisterContents()
     let reg_contents = @"
     let reg_contents = ShrinkWS(reg_contents)
     let reg_contents = StripWS(reg_contents)
-    let reg_contents = substitute(reg_contents, '\n', '¬ ', '')
+    let reg_contents = strtrans(reg_contents) " substitute(reg_contents, '\n', '¬ ', '')
     if strlen(reg_contents) >= g:max_statusline_reg_contents_len
         let trimmed = strpart(reg_contents, 0, g:max_statusline_reg_contents_len)
         let trimmed = trimmed . '…'
