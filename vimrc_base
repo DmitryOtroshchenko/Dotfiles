@@ -345,8 +345,6 @@ noremap <m-l> :vertical resize +5<cr>
 noremap <m-h> :resize +5<cr>
 noremap <m-k> :resize -5<cr>
 
-" Expand currend file path in command mode
-cnoremap <C-SPACE> <C-R>=expand("%:p:h") . "/" <CR>
 " Sudo write
 cnoremap w!! w !sudo tee % >/dev/null
 
@@ -375,3 +373,5 @@ augroup _python
     autocmd FileType python setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class,with
     autocmd FileType python setlocal tabstop=4
 augroup END
+
+" TODO: add a shortcut to toggle completeopt preview
