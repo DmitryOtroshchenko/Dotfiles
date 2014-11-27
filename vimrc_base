@@ -60,7 +60,7 @@ if has("cryptv")
     set cryptmethod=blowfish
 endif
 
-if has('mac')
+if has('mac') && !has('nvim')
     " Option -> Meta on mac.
     set macmeta
 endif
