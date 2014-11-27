@@ -490,13 +490,13 @@ nmap T         <Plug>(easymotion-T)
 xmap T         <Plug>(easymotion-T)
 omap T         <Plug>(easymotion-T)
 
-nmap k <Plug>(easymotion-j)
-xmap k <Plug>(easymotion-j)
-omap k <Plug>(easymotion-j)
+nmap <Plug>(easymotion-prefix)k <Plug>(easymotion-j)
+xmap <Plug>(easymotion-prefix)k <Plug>(easymotion-j)
+omap <Plug>(easymotion-prefix)k <Plug>(easymotion-j)
 
-nmap h <Plug>(easymotion-k)
-xmap h <Plug>(easymotion-k)
-omap h <Plug>(easymotion-k)
+nmap <Plug>(easymotion-prefix)h <Plug>(easymotion-k)
+xmap <Plug>(easymotion-prefix)h <Plug>(easymotion-k)
+omap <Plug>(easymotion-prefix)h <Plug>(easymotion-k)
 
 " noremap <Plug>(easymotion-lineanywhere)
 
@@ -553,8 +553,3 @@ let g:surround_{char2nr("d")} = "\\text{\r}"
 
 " TODO: Add a map to alternate buffers.
 " TODO: change statusline color.
-
-" After all the initialization toggle rainbow parentheses twice -- ow it may
-" not work
-" :RainbowToggle
-" :RainbowToggle
