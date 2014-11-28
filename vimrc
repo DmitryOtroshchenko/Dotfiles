@@ -56,7 +56,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-dispatch'
 Plug 'vim-scripts/loremipsum' " OK
-Plug 'mtth/scratch.vim' " NOK change mappings, make them optional
+" Plug 'mtth/scratch.vim' " NOK change mappings, make them optional
 Plug 'JuliaLang/julia-vim' " OK
 Plug 'Raimondi/delimitMate'
 Plug 'alfredodeza/khuno.vim'
@@ -457,6 +457,11 @@ noremap <Leader>t :Unite -no-split -buffer-name=fb -input=** -start-insert buffe
 " EasyClip
 noremap <silent> <leader>y :Yanks<CR>
 map M m$
+
+let g:EasyClipUseSubstituteDefaults = 0
+nmap <silent> gs <plug>SubstituteOverMotionMap
+nmap gss <plug>SubstituteLine
+xmap gs <plug>XEasyClipPaste
 
 " YouCompleteMe
 " nnoremap tg :YcmCompleter GoToDefinitionElseDeclaration<CR>
