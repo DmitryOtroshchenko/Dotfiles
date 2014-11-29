@@ -61,6 +61,7 @@ Plug 'JuliaLang/julia-vim' " OK
 Plug 'Raimondi/delimitMate'
 Plug 'alfredodeza/khuno.vim'
 Plug 'haya14busa/incsearch.vim'
+Plug 'osyo-manga/vim-anzu'
 Plug 'flazz/vim-colorschemes' " OK
 Plug 'daddye/soda.vim' " OK
 Plug 'justinmk/vim-gtfo' " NOK, tune mappings
@@ -552,6 +553,11 @@ let g:vimrplugin_noscreenrc = 1
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
+
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
 
 " surround
 let g:surround_{char2nr("d")} = "\\text{\r}"
