@@ -28,6 +28,10 @@ call plug#begin('~/.vim/plugged')
 Plug 'Shougo/vimproc',         { 'do': 'make -f make_mac.mak' }
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer --system-libclang' }
 
+Plug 'fs111/pydoc.vim'
+Plug 'gregsexton/gitv'
+Plug 'thinca/vim-ref'
+Plug 'gosukiwi/vim-atom-dark'
 Plug 'ervandew/supertab'
 Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
@@ -36,6 +40,7 @@ Plug 'Shougo/neomru.vim'
 Plug 'Shougo/neossh.vim'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimfiler.vim'
+Plug 'Shougo/vimshell.vim'
 Plug 'gcmt/wildfire.vim'
 
 Plug 'Lokaltog/vim-easymotion'
