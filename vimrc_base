@@ -296,7 +296,7 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Turn search patterns highlight on and off.
-noremap <Leader>h :set hlsearch! hlsearch?<CR>
+noremap <Leader><SPACE> :set hlsearch! hlsearch?<CR>
 
 " Toggle between text editing and code editing.
 function! ToggleWordWrap()
