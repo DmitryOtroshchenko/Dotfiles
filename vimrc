@@ -69,7 +69,6 @@ Plug 'moll/vim-bbye'
 Plug 'michaeljsmith/vim-indent-object' " OK
 Plug 'sjl/gundo.vim'
 Plug 'szw/vim-maximizer' " OK
-Plug 'thinca/vim-visualstar' " OK
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
@@ -80,8 +79,16 @@ Plug 'vim-scripts/loremipsum' " OK
 Plug 'JuliaLang/julia-vim' " OK
 Plug 'Raimondi/delimitMate'
 Plug 'alfredodeza/khuno.vim'
+
+" Search and substitution "{{{
 Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/vim-asterisk'
 Plug 'osyo-manga/vim-anzu'
+
+" An alternative to vim-asterisk
+" Plug 'thinca/vim-visualstar'
+"}}}
+
 Plug 'flazz/vim-colorschemes' " OK
 Plug 'daddye/soda.vim' " OK
 Plug 'justinmk/vim-gtfo' " NOK, tune mappings
@@ -173,6 +180,49 @@ augroup END " trail
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" haya14busa/incsearch.vim "{{{
+
+let g:incsearch#consistent_n_direction = 1
+let g:incsearch#do_not_save_error_message_history = 1
+let g:incsearch#magic = '\v' " very magic
+let g:incsearch#smart_backward_word = 1
+let g:incsearch#separate_highlight = 1
+
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-stay)
+map g/ <Plug>(incsearch-stay)
+
+augroup incsearch-keymap
+    autocmd!
+    autocmd VimEnter * call s:incsearch_keymap()
+augroup END
+
+function! s:incsearch_keymap()
+    IncSearchNoreMap <Tab>   <Over>(buffer-complete)
+    IncSearchNoreMap <S-Tab> <Over>(buffer-complete-prev)
+endfunction
+
+"}}}
+
+" haya14busa/vim-asterisk "{{{
+
+" Do not move cursor when searching
+map *  <Plug>(asterisk-z*)
+map #  <Plug>(asterisk-z#)
+map g* <Plug>(asterisk-gz*)
+map g# <Plug>(asterisk-gz#)
+
+" osyo-manga/vim-anzu "{{{
+
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+" nmap * <Plug>(anzu-star-with-echo)
+" nmap # <Plug>(anzu-sharp-with-echo)
+
+" "}}}
+
+"}}}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Unite.vim
