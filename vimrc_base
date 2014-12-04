@@ -298,6 +298,11 @@ vnoremap > >gv
 
 " Turn search patterns highlight on and off.
 noremap <Leader><SPACE> :set hlsearch! hlsearch?<CR>
+" Turn of highlight by searching for a nonexistent (incorrect) pattern.
+function! ResetSearchPattern()
+    let @/ = ""
+endfunction
+noremap <Leader>, :call ResetSearchPattern()<CR>
 
 " Toggle between text editing and code editing.
 function! ToggleWordWrap()
