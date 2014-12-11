@@ -36,7 +36,7 @@ let g:ycm_filepath_completion_use_working_dir = 1
 
 " nnoremap tg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
-Plug 'fs111/pydoc.vim'
+" Plug 'fs111/pydoc.vim'
 Plug 'gregsexton/gitv'
 Plug 'thinca/vim-ref'
 Plug 'gosukiwi/vim-atom-dark'
