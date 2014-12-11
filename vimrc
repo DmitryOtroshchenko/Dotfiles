@@ -58,6 +58,16 @@ Plug 'Shougo/vimfiler.vim'
 Plug 'Shougo/vimshell.vim'
 Plug 'gcmt/wildfire.vim'
 
+Plug 'jimsei/winresizer'
+
+let g:winresizer_keycode_left = 106 " j
+let g:winresizer_keycode_right = 108 " l
+let g:winresizer_keycode_down = 107 " k
+let g:winresizer_keycode_up = 104 " h
+let g:winresizer_keycode_finish = 13 " ENTER
+let g:winresizer_keycode_cancel = 27 " ESC
+
+Plug 'tshirtman/vim-cython'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'danro/rename.vim' " OK
 Plug 'hdima/python-syntax' " OK
