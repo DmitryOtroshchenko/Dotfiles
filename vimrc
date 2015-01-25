@@ -64,15 +64,19 @@ Plug 'gosukiwi/vim-atom-dark'
 Plug 'ervandew/supertab'
 Plug 'sirver/ultisnips'
 
-let g:UltiSnipsExpandTrigger="<c-Space>"
-let g:UltiSnipsListSnippets="<c-Tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsExpandTrigger='<c-Space>'
+let g:UltiSnipsListSnippets='<c-Tab>'
+let g:UltiSnipsJumpForwardTrigger='<c-j>'
+let g:UltiSnipsJumpBackwardTrigger='<c-k>'
 
 Plug 'honza/vim-snippets'
 
+" Plug 'fmoralesc/vim-pad'
+
+" let g:pad#dir = '~/testnotes/'
+" let g:pad#default_format = 'pandoc'
+
 Plug 'Shougo/neomru.vim'
-Plug 'Shougo/neossh.vim'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimfiler.vim'
 Plug 'Shougo/vimshell.vim'
