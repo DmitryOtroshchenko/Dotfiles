@@ -33,6 +33,29 @@ let g:ycm_filepath_completion_use_working_dir = 1
 
 " nnoremap tg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
+Plug 't9md/vim-choosewin'
+
+nmap - <Plug>(choosewin)
+let g:choosewin_tablabel = 'qwfpluy'
+let g:choosewin_label = 'arstneio'
+let g:choosewin_statusline_replace = 0
+let g:choosewin_tabline_replace = 0
+let g:choosewin_blink_on_land = 0
+let g:choosewin_overlay_enable = 1
+let g:choosewin_overlay_clear_multibyte = 1
+let g:choosewin_overlay_shade = 1
+" TODO: for now it does not work: no choosewin appears
+" even if there are other tabs to choose.
+let g:choosewin_return_on_single_win = 0
+
+let g:choosewin_color_label = { 'gui': ['#596E75', '#EEE8D6', 'bold'], 'cterm': [] }
+let g:choosewin_color_label_current = { 'gui': ['#0A3641', '#EEE8D6', 'bold'], 'cterm': [] }
+let g:choosewin_color_other = { 'gui': ['#EEE8D6', 'black'], 'cterm': [] }
+let g:choosewin_color_overlay = { 'gui': ['DarkGreen', 'DarkGreen' ], 'cterm': [ 22, 22 ] }
+let g:choosewin_color_overlay_current = { 'gui': ['LimeGreen', 'LimeGreen' ], 'cterm': [ 40, 40 ] }
+let g:choosewin_color_land = { 'gui':[ 'LawnGreen', 'Black', 'bold,underline'], 'cterm': ['magenta', 'white'] }
+let g:choosewin_color_shade = { 'gui':[ '', '#777777'], 'cterm': ['', 'grey'] }
+
 " Plug 'fs111/pydoc.vim'
 Plug 'gregsexton/gitv'
 Plug 'thinca/vim-ref'
