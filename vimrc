@@ -635,6 +635,36 @@ let g:vimrplugin_noscreenrc = 1
 " surround
 let g:surround_{char2nr("d")} = "\\text{\r}"
 
+" Ask to precise file name if not sure.
+function! s:didyoumean()
+    " as of Vim 7.4, glob() has an optional parameter to split, but not
+    " everybody is using 7.4 yet
+    let matching_files = split(glob(expand('%') . '*', 1), '\n')
+    if empty(matching_files)
+        return
+    endif
+
+    let initial_file_name = expand('%:p')
+    let empty_buffer_nr = bufnr('%')
+    let unite_params = {
+        \ 'path': expand('%:p:h'),
+        \ 'input': expand('%:t'),
+        \ 'start_insert': 1,
+        \ 'buffer_name': 'Did you mean..?',
+        \ 'immediately': 1,
+        \ 'is_async': 1,
+        \ 'no_empty': 1,
+        \ 'no_split': 1
+    \ }
+    call unite#start(['file'], unite_params)
+    execute ':silent bdelete ' . empty_buffer_nr
+endfunction
+
+augroup didyoumean
+    autocmd!
+    autocmd BufNewFile * call s:didyoumean()
+augroup END " didyoumean
+
 " TODO: Add a map to alternate buffers.
 " TODO: change statusline color.
 " TODO: change cursor color to white.
