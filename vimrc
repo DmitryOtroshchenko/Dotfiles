@@ -91,9 +91,26 @@ let g:winresizer_keycode_up = 104 " h
 let g:winresizer_keycode_finish = 13 " ENTER
 let g:winresizer_keycode_cancel = 27 " ESC
 
+Plug 'osyo-manga/vim-watchdogs'
+
+let g:watchdogs_check_BufWritePost_enable = 1
+
+Plug 'osyo-manga/shabadou.vim'
+Plug 'thinca/vim-quickrun'
+Plug 'jceb/vim-hier'
+Plug 'rhysd/committia.vim'
+
+" Plug 'wellle/targets.vim'
+" Plug 'paradigm/TextObjectify'
+"
+" let g:textobjectify = {
+"     \ '-': {'left': '\v\s|\n|_', 'right': '\v\s|\n|_', 'same': 1, 'seek': 0, 'line': 0},
+" \ }
+
+Plug 'tpope/vim-eunuch'
+Plug 'mhinz/vim-startify'
 Plug 'tshirtman/vim-cython'
 Plug 'Lokaltog/vim-easymotion'
-Plug 'danro/rename.vim' " OK
 Plug 'hdima/python-syntax' " OK
 Plug 'itchyny/lightline.vim'
 Plug 'jmcantrell/vim-virtualenv' " OK
@@ -635,6 +652,7 @@ let g:vimrplugin_noscreenrc = 1
 " surround
 let g:surround_{char2nr("d")} = "\\text{\r}"
 
+" Inspired by 'EinfachToll/DidYouMean'
 " Ask to precise file name if not sure.
 function! s:didyoumean()
     " as of Vim 7.4, glob() has an optional parameter to split, but not
