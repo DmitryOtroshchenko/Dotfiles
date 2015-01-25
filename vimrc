@@ -143,6 +143,7 @@ Plug 'vim-voom/VOoM'
 Plug 'Rykka/riv.vim'
 Plug 'Rykka/InstantRst'
 Plug 'svermeulen/vim-easyclip'
+" Highlights and removes trailing whitespaces.
 Plug 'csexton/trailertrash.vim' " OK
 " A good plugit for code and text tables alignment.
 Plug 'junegunn/vim-easy-align' " OK
@@ -267,6 +268,7 @@ let g:unite_winheight = 12
 let g:unite_update_time = 100
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
 
 if executable('ag')
     set grepprg=ag\ --nogroup\ --nocolor
@@ -521,6 +523,7 @@ let g:gtfo#terminals = { 'mac' : 'iterm' }
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 hi UnwantedTrailerTrash guibg=#DA3435 ctermbg=red
+let g:trailertrash_blacklist = ['unite']
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter
