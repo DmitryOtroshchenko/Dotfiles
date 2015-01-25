@@ -7,6 +7,9 @@ if has('vim_starting')
     set nocompatible
 endif
 
+set encoding=utf-8
+scriptencoding utf-8
+
 filetype plugin indent on
 
 if has('gui_running')
