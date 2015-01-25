@@ -112,7 +112,7 @@ Plug 'vim-scripts/loremipsum' " OK
 " Plug 'mtth/scratch.vim' " NOK change mappings, make them optional
 Plug 'JuliaLang/julia-vim' " OK
 Plug 'Raimondi/delimitMate'
-Plug 'alfredodeza/khuno.vim'
+" Plug 'alfredodeza/khuno.vim'
 
 " Search and substitution "{{{
 Plug 'haya14busa/incsearch.vim'
@@ -123,8 +123,8 @@ Plug 'osyo-manga/vim-anzu'
 " Plug 'thinca/vim-visualstar'
 "}}}
 
+" A lot of vim colorschemes including solarized.
 Plug 'flazz/vim-colorschemes' " OK
-Plug 'daddye/soda.vim' " OK
 Plug 'justinmk/vim-gtfo' " NOK, tune mappings
 Plug 'airblade/vim-gitgutter' " OK
 
@@ -144,18 +144,16 @@ Plug 'Rykka/riv.vim'
 Plug 'Rykka/InstantRst'
 Plug 'svermeulen/vim-easyclip'
 Plug 'csexton/trailertrash.vim' " OK
-Plug 'junegunn/vim-easy-align'
+" A good plugit for code and text tables alignment.
+Plug 'junegunn/vim-easy-align' " OK
 
 " Plug 'mattdbridges/bufkill.vim'
 " Plug 'xolox/vim-misc'
-" Plug 'altercation/vim-colors-solarized'
 " Plug 'jeetsukumaran/vim-markology'
 " Plug 'Yggdroot/indentLine'
 
 " " Plug 'chrisbra/NrrwRgn'
 " " Plug 'wikimatze/hammer.vim'
-" " Plug 'wmvanvliet/vim-ipython'
-" " Plug 'calebsmith/vim-lambdify'
 " Plug 'chrisbra/csv.vim'
 " " Plug 'szw/vim-ctrlspace'
 
