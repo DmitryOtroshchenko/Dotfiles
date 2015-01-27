@@ -145,6 +145,9 @@ Plug 'flazz/vim-colorschemes' " OK
 Plug 'justinmk/vim-gtfo' " NOK, tune mappings
 Plug 'airblade/vim-gitgutter' " OK
 
+nmap <leader>ht <Plug>GitGutterPrevHunk
+nmap <leader>hT <Plug>GitGutterNextHunk
+
 Plug 'mileszs/ack.vim'
 
 let g:ack_default_options = " -s -H --nocolor --nogroup --smart-case --sort-files --follow"
@@ -315,23 +318,37 @@ let g:lightline = {
     \             [ 'reg' ] ]
     \ },
     \ 'component_function': {
-    \   'reg': 'MyRegisterContents',
-    \   'fileformat': 'MyFileformat',
-    \   'fileencoding': 'MyFileencoding',
+    \   'reg': 'MyRegisterContents'
+    \ },
+    \ 'component_expand': {
+    \   'cwd': 'TablineCwd'
     \ },
     \ 'component': {
     \   'readonly': '%{ &filetype == "help" ? "" : &readonly? "\u2716" : "" }',
-    \   'modified': '%{ &filetype == "help" ? "" : &modified ? "+" : &modifiable ? "" : "-" }'
+    \   'modified': '%{ &filetype == "help" ? "" : &modified ? "+" : &modifiable ? "" : "-" }',
     \ },
     \ 'component_visible_condition': {
     \   'readonly': '(&filetype!="help"&& &readonly)',
     \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
     \   'reg': 'winwidth(0) > 70'
     \ },
+    \ 'component_type': { 'cwd': 'tabsel' },
     \ 'separator': { 'left': '', 'right': '' },
     \ 'subseparator': { 'left': '⋮', 'right': '⋮' },
-    \ 'tabline': { 'right': [] },
     \ }
+
+function! TablineCwd()
+    echom "UPDATED tabline ".getcwd()
+    return pathshorten(expand(getcwd()))
+endfunction
+
+let g:lightline.tabline = {
+    \ 'left': [ [ 'tabs' ] ],
+    \ 'right': [ [ 'cwd' ] ] }
+
+let g:lightline.tab = {
+    \ 'active': [ 'tabnum', 'filename', 'modified' ],
+    \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
 
 function! MyFileformat()
     return &fileformat =~ 'unix' ? '' : &fileformat
@@ -379,6 +396,7 @@ augroup LightLine
     autocmd WinEnter,BufWinEnter,FileType,ColorScheme * call s:filtered_lightline_call('update')
     autocmd ColorScheme,SessionLoadPost * call s:filtered_lightline_call('highlight')
     autocmd CursorMoved,BufUnload * call s:filtered_lightline_call('update_once')
+    " autocmd CursorHold * call lightline#update()
 augroup END
 
 let g:tmuxline_powerline_separators = 0
