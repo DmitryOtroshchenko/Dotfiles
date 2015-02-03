@@ -167,6 +167,7 @@ set number
 set norelativenumber
 set numberwidth=6
 set cursorline
+
 augroup autotoggle_cursorline
     autocmd!
     " Toggle cursor line.
@@ -176,8 +177,10 @@ augroup autotoggle_cursorline
     autocmd InsertEnter * set nocursorline
     autocmd InsertLeave * set cursorline nopaste
     " Don't move cursor 1 chaa back when leaving insert mode.
+    " TODO: correctly handle column 0 and 1.
     autocmd InsertLeave * normal l
 augroup END
+
 set nocursorcolumn
 set colorcolumn=80,100
 " Show at least 3 lines below/above the cursor.
@@ -262,6 +265,7 @@ set ssop-=folds
 
 let mapleader=','
 
+" TODO: instantly react on <Esc> in terminal.
 " I can type :help on my own, thanks.
 noremap  <F1> <Esc>
 noremap! <F1> <Esc>
