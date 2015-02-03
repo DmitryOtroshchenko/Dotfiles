@@ -249,6 +249,9 @@ set undolevels=1000
 
 " CursorHold event frequency in ms. Used for UI updates by some plugins.
 set updatetime=100
+" Don't wait for escape codes. A fix for Esc lag in terminal.
+set ttimeout
+set ttimeoutlen=0
 
 " Show completion menu in insert mode even if there is only one item in the
 " completion list.
