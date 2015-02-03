@@ -286,7 +286,7 @@ noremap h gk
 noremap <up> gk
 inoremap <up> <C-o>gk
 
-" Use ; to entex ex commands.
+" Use ; to enter ex commands.
 noremap ; :
 " Repeat the last ex command by typing @; or @:.
 noremap @; @:
