@@ -268,7 +268,6 @@ set ssop-=folds
 
 let mapleader=','
 
-" TODO: instantly react on <Esc> in terminal.
 " I can type :help on my own, thanks.
 noremap  <F1> <Esc>
 noremap! <F1> <Esc>
