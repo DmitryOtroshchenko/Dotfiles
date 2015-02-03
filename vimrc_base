@@ -58,7 +58,7 @@ if exists('+undofile')
     set undodir=~/.vim/undo/
 endif
 
-if has("cryptv")
+if has('cryptv')
     " Use more secure encryption method.
     set cryptmethod=blowfish
 endif
@@ -119,7 +119,7 @@ set t_vb=
 set title
 " Set window title to "<filename> @ <filepath>"
 function! MakeVimTitle()
-    let new_title = expand("%:t") . ' @ ' . expand("%:p:h")
+    let new_title = expand('%:t') . ' @ ' . expand('%:p:h')
     return new_title
 endfunction
 " Update window title when changing buffers.
@@ -309,7 +309,7 @@ vnoremap > >gv
 noremap <Leader><SPACE> :set hlsearch! hlsearch?<CR>
 " Turn of highlight by searching for a nonexistent (incorrect) pattern.
 function! ResetSearchPattern()
-    let @/ = ""
+    let @/ = ''
 endfunction
 noremap <Leader>, :call ResetSearchPattern()<CR>
 

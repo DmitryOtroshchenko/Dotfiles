@@ -14,7 +14,7 @@ source ~/.vimrc_base
 "
 let plug_script=expand('~/.vim/autoload/plug.vim')
 if !filereadable(plug_script)
-  echo "Installing vim-plug..."
+  echo 'Installing vim-plug...'
   silent !mkdir -p ~/.vim/autoload
   silent !curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
@@ -151,7 +151,7 @@ nmap <leader>hT <Plug>GitGutterNextHunk
 
 Plug 'mileszs/ack.vim'
 
-let g:ack_default_options = " -s -H --nocolor --nogroup --smart-case --sort-files --follow"
+let g:ack_default_options = ' -s -H --nocolor --nogroup --smart-case --sort-files --follow'
 let g:ackhighlight = 1
 " let g:ack_autofold_results = 1
 let g:ackpreview = 1
@@ -179,7 +179,7 @@ Plug 'junegunn/vim-easy-align' " OK
 " Plug 'chrisbra/csv.vim'
 " " Plug 'szw/vim-ctrlspace'
 
-if has("gui_running")
+if has('gui_running')
     " GUI-only plugins
 else
     " Terminal-only plugins
@@ -197,8 +197,8 @@ call plug#end()
 " colorscheme is a plugin.
 "
 
-let g:solarized_contrast="normal"
-let g:solarized_diffmode="normal"
+let g:solarized_contrast='normal'
+let g:solarized_diffmode='normal'
 let g:solarized_menu=0
 let g:solarized_hitrail=1
 colorscheme solarized
@@ -339,7 +339,7 @@ let g:lightline = {
     \ }
 
 function! TablineCwd()
-    echom "UPDATED tabline ".getcwd()
+    echom 'UPDATED tabline '.getcwd()
     return pathshorten(expand(getcwd()))
 endfunction
 
@@ -450,8 +450,8 @@ let g:EasyMotion_do_shade = 1
 
 " '⋮', '⁞', '┊', '┆', '│'
 let g:indentLine_enabled = 1
-let g:indentLine_char = "⋮"
-let g:indentLine_first_char = "⋮"
+let g:indentLine_char = '⋮'
+let g:indentLine_first_char = '⋮'
 let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#4A4A4F'
 " let g:indentLine_color_gui = '#FF0000'
@@ -502,7 +502,7 @@ let g:wildfire_objects = ["i'", "a'", 'i"', 'a"', "i)", "a)", "i]", "a]", "i}", 
 " khuno
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:khuno_ignore="E202,E128"
+let g:khuno_ignore='E202,E128'
 let g:khuno_max_line_length=100
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -525,9 +525,9 @@ let g:ctrlspace_set_default_mapping = 0
 
 let markology_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.'`^<>[]\""
 
-let g:markology_textlower = "\t "
-let g:markology_textupper = "\t "
-let markology_textother = "\t "
+let g:markology_textlower = '\t '
+let g:markology_textupper = '\t '
+let markology_textother = '\t '
 
 let g:markology_hlline_lower = 0
 let g:markology_hlline_upper = 0
@@ -669,7 +669,7 @@ let g:ScreenShellInitialFocus = 'shell'
 let g:vimrplugin_noscreenrc = 1
 
 " surround
-let g:surround_{char2nr("d")} = "\\text{\r}"
+let g:surround_{char2nr('d')} = '\\text{\r}'
 
 " Inspired by 'EinfachToll/DidYouMean'
 " Ask to precise file name if not sure.
