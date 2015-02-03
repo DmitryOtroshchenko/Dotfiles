@@ -99,6 +99,7 @@ Plug 'osyo-manga/shabadou.vim'
 Plug 'thinca/vim-quickrun'
 Plug 'jceb/vim-hier'
 Plug 'rhysd/committia.vim'
+Plug 'AlxHnr/clear_colors'
 
 " Plug 'wellle/targets.vim'
 " Plug 'paradigm/TextObjectify'
