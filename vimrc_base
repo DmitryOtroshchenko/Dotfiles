@@ -168,7 +168,9 @@ set norelativenumber
 set numberwidth=6
 set cursorline
 
-augroup autotoggle_cursorline
+let CursorColumnI = 0 " The cursor column position in INSERT.
+
+augroup insert_mode_tweaks
     autocmd!
     " Toggle cursor line.
     autocmd WinLeave * set nocursorline
@@ -176,10 +178,12 @@ augroup autotoggle_cursorline
     " Toggle paste and cursorline in insert mode.
     autocmd InsertEnter * set nocursorline
     autocmd InsertLeave * set cursorline nopaste
-    " Don't move cursor 1 chaa back when leaving insert mode.
-    " TODO: correctly handle column 0 and 1.
-    autocmd InsertLeave * normal l
-augroup END
+
+    " Don't move cursor 1 char back when leaving insert mode.
+    autocmd InsertEnter * let CursorColumnI = col('.')
+    autocmd CursorMovedI * let CursorColumnI = col('.')
+    autocmd InsertLeave * if col('.') != CursorColumnI | call cursor(0, col('.')+1) | endif
+augroup END " insert_mode_tweaks
 
 set nocursorcolumn
 set colorcolumn=80,100
