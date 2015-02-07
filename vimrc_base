@@ -364,9 +364,6 @@ noremap <m-l> :vertical resize +5<cr>
 noremap <m-h> :resize +5<cr>
 noremap <m-k> :resize -5<cr>
 
-" Sudo write
-cnoremap w!! w !sudo tee % >/dev/null
-
 nnoremap <C-W>w :w<CR>
 nnoremap <C-W><C-W> :w<CR>
 
