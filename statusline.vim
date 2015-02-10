@@ -44,29 +44,6 @@ function! Status(winnum)
 
   let stat = ''
 
-  " this handles alternative statuslines
-  let usealt = 0
-  let altstat = Color(active, 4, ' »')
-
-  let type = getbufvar(bufnum, '&buftype')
-  let name = bufname(bufnum)
-
-  if type ==# 'help'
-    let altstat .= ' ' . fnamemodify(name, ':t:r')
-    let usealt = 1
-  elseif name ==# '__Gundo__'
-    let altstat .= ' Gundo'
-    let usealt = 1
-  elseif name ==# '__Gundo_Preview__'
-    let altstat .= ' Gundo Preview'
-    let usealt = 1
-  endif
-
-  if usealt
-    let altstat .= Color(active, 4, ' «')
-    return altstat
-  endif
-
   " An expression is needed because expressions are evaluated within
   " the context of the window for which the statusline is being prepared
   " this is crucial because the line and virtcol functions otherwise
@@ -77,6 +54,8 @@ function! Status(winnum)
   let stat .= Color(active, 1, Column())
 
   " file name
+  let name = bufname(bufnum)
+
   let stat .= Color(active, 4, active ? ' » ' : ' « ')
   let directory = fnamemodify(name, ':p:h:~')
   let directory = pathshorten(directory)
@@ -161,25 +140,55 @@ function! FileTypeNameMatcher(winnum, params)
 endfunction
 
 
-" [matcher, args, statusline]
-let s:alternative_statuslines = [['FileTypeNameMatcher', {'name': '__Gundo__'}, 'GundoStatus']]
+function! GundoStatus(winnum)
+  return 'Undo tree'
+endfunction
 
-function! PickStatus(winnum)
+
+function! GundoPreview(winnum)
+  return 'Undo state preview'
+endfunction
+
+
+function! HelpStatus(winnum)
+  return 'Help'
+endfunction
+
+
+" [matcher, args, statusline]
+let s:alternative_statuslines = [
+  \ ['FileTypeNameMatcher', {'name': '__Gundo__'}, 'GundoStatus'],
+  \ ['FileTypeNameMatcher', {'name': '__Gundo_Preview__'}, 'GundoPreview'],
+  \ ['FileTypeNameMatcher', {'ft': 'help'}, 'HelpStatus']
+  \ ]
+
+let s:default_status = 'Status'
+
+function! <SID>PickStatus(winnum)
   " This function goes through the lists of alternative statuslines
   " and matches window <winnum> to each of the matchers.
   " It picks the first matching statusline.
   "
   for block in s:alternative_statuslines
     " TODO: check block len.
-    let call_str = 'echo ' . block[0] . '(a:winnum, block[1])'
-    echo call_str
+    let call_str = 'let is_matching = ' . block[0] . '(a:winnum, block[1])'
     execute call_str
+    if is_matching
+      return block[2]
+    endif
   endfor
+
+  " No match found -> use the default statusline.
+  return s:default_status
 endfunction
 
-function! RefreshStatus()
+
+function! <SID>RefreshStatus()
   for nr in range(1, winnr('$'))
-    call setwinvar(nr, '&statusline', '%!Status(' . nr . ')')
+    " TODO: fallback to default.
+    " call setwinvar(nr, '&statusline', '%!Status(' . nr . ')')
+    let statusline_func = <SID>PickStatus(nr)
+    call setwinvar(nr, '&statusline', '%!' . statusline_func . '(' . nr . ')')
   endfor
 endfunction
 
