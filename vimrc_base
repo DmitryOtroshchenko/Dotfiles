@@ -23,8 +23,6 @@ if has('gui_running')
     " g - grey nonactive menu items.
     " r - right scrollbar is always present.
     set guioptions=acimgr
-    " No cursor blinking.
-    set guicursor+=a:blinkon0
 else
     " 256 colors in terminal.
     set t_Co=256

@@ -113,7 +113,7 @@ Plug 'mhinz/vim-startify'
 Plug 'tshirtman/vim-cython'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'hdima/python-syntax' " OK
-Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/lightline.vim'
 Plug 'jmcantrell/vim-virtualenv' " OK
 Plug 'luochen1990/rainbow' " NOK: fix terminal colors.
 Plug 'majutsushi/tagbar'
@@ -701,6 +701,9 @@ augroup didyoumean
     autocmd!
     autocmd BufNewFile * call s:didyoumean()
 augroup END " didyoumean
+
+source ~/Dotfiles/cursor.vim
+source ~/Dotfiles/statusline.vim
 
 " TODO: Add a map to alternate buffers.
 " TODO: change statusline color.
