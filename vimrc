@@ -22,6 +22,8 @@ endif
 " Plugin declarations.
 call plug#begin('~/.vim/plugged')
 
+Plug 'gelguy/Cmd2.vim'
+
 Plug 'Shougo/vimproc',         { 'do': 'make -f make_mac.mak' }
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer --system-libclang' }
@@ -100,6 +102,7 @@ Plug 'thinca/vim-quickrun'
 Plug 'jceb/vim-hier'
 Plug 'rhysd/committia.vim'
 Plug 'AlxHnr/clear_colors'
+Plug 'neitanod/vim-ondemandhighlight'
 
 " Plug 'wellle/targets.vim'
 " Plug 'paradigm/TextObjectify'
@@ -176,7 +179,7 @@ Plug 'junegunn/vim-easy-align' " OK
 " " Plug 'chrisbra/NrrwRgn'
 " " Plug 'wikimatze/hammer.vim'
 " Plug 'chrisbra/csv.vim'
-" " Plug 'szw/vim-ctrlspace'
+Plug 'szw/vim-ctrlspace'
 
 if has('gui_running')
     " GUI-only plugins
@@ -556,7 +559,7 @@ noremap <F6> :TagbarOpenAutoClose<CR>
 noremap <silent><Leader>sc <Esc>:Khuno show<CR>
 
 " Ctrlspace
-noremap `<Space> :CtrlSpace<CR>
+noremap <C-T> :CtrlSpace<CR>
 
 " Markology
 " noremap <silent> mm :MarkologyPlaceMarkToggle<CR>
