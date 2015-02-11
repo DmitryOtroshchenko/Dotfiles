@@ -222,11 +222,13 @@ function! <SID>RefreshStatus()
         try
             let statusline_func = <SID>PickStatus(nr)
         catch
+            echomsg 'One of statusline selectors has thrown an exception: \n' . v:exception
             " Fallback to the default statusline in case of errors.
             let statusline_func = s:default_status
         endtry
         " Set the chosen statusline for window <nr>.
-        call setwinvar(nr, '&statusline', '%!' . statusline_func . '(' . nr . ')')
+        let status_expr = '%!' . statusline_func . '(' . nr . ')'
+        call setwinvar(nr, '&statusline', status_expr)
     endfor
 endfunction
 
