@@ -113,7 +113,6 @@ Plug 'mhinz/vim-startify'
 Plug 'tshirtman/vim-cython'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'hdima/python-syntax' " OK
-" Plug 'itchyny/lightline.vim'
 Plug 'jmcantrell/vim-virtualenv' " OK
 Plug 'luochen1990/rainbow' " NOK: fix terminal colors.
 Plug 'majutsushi/tagbar'
@@ -307,98 +306,8 @@ call unite#custom#profile('source/grep', 'context', {
 call unite#custom#source('file,file/new,buffer,file_rec', 'matchers', 'matcher_fuzzy')
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" lightline
+" Tmuxline and promptline
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" '⋮', '⁞', '┊', '┆', '│'
-let g:lightline = {
-    \ 'colorscheme': 'solarized',
-    \ 'active': {
-    \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'readonly', 'filename', 'modified' ],
-    \             [ 'reg' ] ]
-    \ },
-    \ 'component_function': {
-    \   'reg': 'MyRegisterContents'
-    \ },
-    \ 'component_expand': {
-    \   'cwd': 'TablineCwd'
-    \ },
-    \ 'component': {
-    \   'readonly': '%{ &filetype == "help" ? "" : &readonly? "\u2716" : "" }',
-    \   'modified': '%{ &filetype == "help" ? "" : &modified ? "+" : &modifiable ? "" : "-" }',
-    \ },
-    \ 'component_visible_condition': {
-    \   'readonly': '(&filetype!="help"&& &readonly)',
-    \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-    \   'reg': 'winwidth(0) > 70'
-    \ },
-    \ 'component_type': { 'cwd': 'tabsel' },
-    \ 'separator': { 'left': '', 'right': '' },
-    \ 'subseparator': { 'left': '⋮', 'right': '⋮' },
-    \ }
-
-function! TablineCwd()
-    echom 'UPDATED tabline '.getcwd()
-    return pathshorten(expand(getcwd()))
-endfunction
-
-let g:lightline.tabline = {
-    \ 'left': [ [ 'tabs' ] ],
-    \ 'right': [ [ 'cwd' ] ] }
-
-let g:lightline.tab = {
-    \ 'active': [ 'tabnum', 'filename', 'modified' ],
-    \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
-
-function! MyFileformat()
-    return &fileformat =~ 'unix' ? '' : &fileformat
-endfunction
-
-function! MyFileencoding()
-    return &fenc =~ 'utf-8' ? '' : &fenc
-endfunction
-
-let g:max_statusline_reg_contents_len = 25
-
-function! StripWS(input_string)
-    return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
-endfunction
-
-function! ShrinkWS(input_string)
-    return substitute(a:input_string, '\s\+', ' ', 'g')
-endfunction
-
-function! MyRegisterContents()
-    " TODO: add caching.
-    let reg_contents = @"
-    let reg_contents = ShrinkWS(reg_contents)
-    let reg_contents = StripWS(reg_contents)
-    let reg_contents = strtrans(reg_contents) " substitute(reg_contents, '\n', '¬ ', '')
-    if strlen(reg_contents) >= g:max_statusline_reg_contents_len
-        let trimmed = strpart(reg_contents, 0, g:max_statusline_reg_contents_len)
-        let trimmed = trimmed . '…'
-        let prepared = trimmed
-    else
-        let prepared = reg_contents
-    endif
-    return winwidth(0) > 78 ? prepared : ''
-endfunction
-
-function! s:filtered_lightline_call(funcname)
-    if bufname('%') == '__CS__'
-        return
-    endif
-    execute 'call lightline#' . a:funcname . '()'
-endfunction
-
-augroup LightLine
-    autocmd!
-    autocmd WinEnter,BufWinEnter,FileType,ColorScheme * call s:filtered_lightline_call('update')
-    autocmd ColorScheme,SessionLoadPost * call s:filtered_lightline_call('highlight')
-    autocmd CursorMoved,BufUnload * call s:filtered_lightline_call('update_once')
-    " autocmd CursorHold * call lightline#update()
-augroup END
 
 let g:tmuxline_powerline_separators = 0
 let g:tmuxline_separators = {
