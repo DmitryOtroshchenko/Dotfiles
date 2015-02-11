@@ -38,6 +38,37 @@ function! Column()
 endfunction
 
 
+" '⋮', '⁞', '┊', '┆', '│'
+let g:max_statusline_reg_contents_len = 25
+
+
+function! StripWS(input_string)
+    return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
+endfunction
+
+
+function! ShrinkWS(input_string)
+    return substitute(a:input_string, '\s\+', ' ', 'g')
+endfunction
+
+
+function! MyRegisterContents()
+    " TODO: add caching.
+    let reg_contents = @"
+    let reg_contents = ShrinkWS(reg_contents)
+    let reg_contents = StripWS(reg_contents)
+    let reg_contents = strtrans(reg_contents) " substitute(reg_contents, '\n', '¬ ', '')
+    if strlen(reg_contents) >= g:max_statusline_reg_contents_len
+        let trimmed = strpart(reg_contents, 0, g:max_statusline_reg_contents_len)
+        let trimmed = trimmed . '…'
+        let prepared = trimmed
+    else
+        let prepared = reg_contents
+    endif
+    return winwidth(0) > 78 ? prepared : ''
+endfunction
+
+
 function! Status(winnum)
   let active = (a:winnum == winnr())
   let bufnum = winbufnr(a:winnum)
