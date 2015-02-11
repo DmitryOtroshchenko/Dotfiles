@@ -38,7 +38,6 @@ function! Column()
 endfunction
 
 
-" '⋮', '⁞', '┊', '┆', '│'
 let g:max_statusline_reg_contents_len = 25
 
 
@@ -238,6 +237,9 @@ augroup status
     autocmd VimEnter,WinEnter,BufWinEnter * call <SID>RefreshStatus()
 augroup END
 
+
+" Some separators and pipes for those who like whistles and ribbons.
+" '⋮', '⁞', '┊', '┆', '│'
 
 hi User1 ctermfg=33  guifg=#268bd2  ctermbg=15 guibg=#fdf6e3
 hi User2 ctermfg=125 guifg=#d33682  ctermbg=7  guibg=#d9d3c2
