@@ -184,12 +184,16 @@ endfunction
 
 
 function! <SID>RefreshStatus()
-  for nr in range(1, winnr('$'))
-    " TODO: fallback to default.
-    " call setwinvar(nr, '&statusline', '%!Status(' . nr . ')')
-    let statusline_func = <SID>PickStatus(nr)
-    call setwinvar(nr, '&statusline', '%!' . statusline_func . '(' . nr . ')')
-  endfor
+    for nr in range(1, winnr('$'))
+        try
+            let statusline_func = <SID>PickStatus(nr)
+        catch
+            " Fallback to the default statusline in case of errors.
+            let statusline_func = s:default_status
+        endtry
+        " Set the chosen statusline for window <nr>.
+        call setwinvar(nr, '&statusline', '%!' . statusline_func . '(' . nr . ')')
+    endfor
 endfunction
 
 
