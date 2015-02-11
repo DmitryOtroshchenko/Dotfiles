@@ -181,7 +181,24 @@ endfunction
 
 
 function! HelpStatus(winnum)
-    return 'Help'
+    let bufnum = winbufnr(a:winnum)
+    let active = (a:winnum == winnr())
+
+    let status = ''
+    " file name
+    let status .= Color(active, 4, active ? ' » ' : ' « ')
+    let fname = bufname(bufnum)
+    let fname = fnamemodify(fname, ':p:t')
+    let status .= Color(active, 2, fname)
+
+    " file modified
+    let modified = getbufvar(bufnum, '&modified')
+    let status .= Color(active, 2, modified ? ' +' : '')
+    let status .= Color(active, 4, active ? ' « ' : ' » ')
+
+    let status .= Color(active, 2, ' %=')
+
+    return status
 endfunction
 
 
