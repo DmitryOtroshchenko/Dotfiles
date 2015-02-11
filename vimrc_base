@@ -157,6 +157,8 @@ set copyindent
 set autoindent
 
 " Code folding
+" I don't want to see fold level markers.
+set foldcolumn=0
 set foldmethod=indent
 set foldlevel=99
 
