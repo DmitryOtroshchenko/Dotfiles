@@ -326,13 +326,11 @@ noremap <Leader>w :call ToggleWordWrap()<CR>
 " nnoremap <C-J> m`o<Esc>``
 " nnoremap <C-K> m`O<Esc>``
 nnoremap K i<CR><Esc>h
-inoremap <C-e> <C-o>$
-inoremap <C-a> <C-o>0
 inoremap <C-d> <C-o>dd
 
-" CTRL+A moves to start of line in command mode
+inoremap <C-e> <C-o>$
+inoremap <C-a> <C-o>0
 cnoremap <C-a> <home>
-" CTRL+E moves to end of line in command mode
 cnoremap <C-e> <end>
 
 " Tabs and buffers.
