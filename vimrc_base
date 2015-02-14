@@ -320,18 +320,14 @@ function! ToggleWordWrap()
 endfunction
 noremap <Leader>w :call ToggleWordWrap()<CR>
 
-" TODO:
-" nmap <C-J> o<Esc>
-" nmap <C-K> O<Esc>
-" nnoremap <C-J> m`o<Esc>``
-" nnoremap <C-K> m`O<Esc>``
 nnoremap K i<CR><Esc>h
-inoremap <C-d> <C-o>dd
 
 inoremap <C-e> <C-o>$
+cnoremap <C-e> <end>
 inoremap <C-a> <C-o>0
 cnoremap <C-a> <home>
-cnoremap <C-e> <end>
+inoremap <C-k> <C-o>d$
+inoremap <C-u> <C-o>d^
 
 " Tabs and buffers.
 nnoremap <Leader>n gt
