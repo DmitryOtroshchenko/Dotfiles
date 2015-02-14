@@ -353,13 +353,19 @@ noremap <m-l> :vertical resize +5<cr>
 noremap <m-h> :resize +5<cr>
 noremap <m-k> :resize -5<cr>
 
-nnoremap <C-W>w :w<CR>
-nnoremap <C-W><C-W> :w<CR>
+" Write it, matafaka!
+nnoremap <C-W>e :w<CR>
+nnoremap <C-W><C-E> :w<CR>
+" Open alternative buffer in a split.
+nnoremap <C-W>6 <C-W><C-^>
+nnoremap <C-W><C-6> <C-W><C-^>
 
 nnoremap <leader>cd :cd %:p:h<CR>
 nnoremap <leader>lcd :lcd %:p:h<CR>
 
+" TODO: it does not work after sourcing vimrc. Some plugin overrides it?
 set pastetoggle=<F2>
+" TODO: add a shortcut to toggle completeopt preview
 
 "
 " Some additional autocommands.
@@ -378,5 +384,3 @@ augroup vimrc_base_python
     autocmd FileType python setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class,with
     autocmd FileType python setlocal tabstop=4
 augroup END
-
-" TODO: add a shortcut to toggle completeopt preview
