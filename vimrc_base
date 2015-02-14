@@ -344,11 +344,6 @@ noremap <C-j> <C-w>h
 noremap <C-k> <C-w>j
 noremap <C-l> <C-w>l
 
-noremap <m-j> :vertical resize -5<cr>
-noremap <m-l> :vertical resize +5<cr>
-noremap <m-h> :resize +5<cr>
-noremap <m-k> :resize -5<cr>
-
 " Write it, matafaka!
 nnoremap <C-W>e :w<CR>
 nnoremap <C-W><C-E> :w<CR>
