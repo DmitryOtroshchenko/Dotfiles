@@ -121,10 +121,10 @@ function! MakeVimTitle()
     return new_title
 endfunction
 " Update window title when changing buffers.
-augroup set_window_title
+augroup vimrc_base_set_window_title
     autocmd!
-    au BufEnter * let &titlestring=MakeVimTitle()
-augroup END " set_window_title
+    autocmd BufEnter * let &titlestring=MakeVimTitle()
+augroup END
 
 " Always show tabline.
 set showtabline=2
@@ -170,7 +170,7 @@ set cursorline
 
 let CursorColumnI = 0 " The cursor column position in INSERT.
 
-augroup insert_mode_tweaks
+augroup vimrc_base_insert_mode_tweaks
     autocmd!
     " Toggle cursor line.
     autocmd WinLeave * set nocursorline
@@ -182,8 +182,8 @@ augroup insert_mode_tweaks
     " Don't move cursor 1 char back when leaving insert mode.
     autocmd InsertEnter * let CursorColumnI = col('.')
     autocmd CursorMovedI * let CursorColumnI = col('.')
-    autocmd InsertLeave * if col('.') != CursorColumnI | call cursor(0, col('.')+1) | endif
-augroup END " insert_mode_tweaks
+    autocmd InsertLeave * if col('.') != CursorColumnI | call cursor(0, col('.') + 1) | endif
+augroup END
 
 set nocursorcolumn
 set colorcolumn=80,100
@@ -226,7 +226,7 @@ set linebreak
 " Don't show invisible symbols.
 set nolist
 " Wrap lines in text files.
-augroup write_mode
+augroup vimrc_base_write_mode
     autocmd!
     autocmd BufNewFile,BufReadPost *.md,*.txt,*.rst set wrap linebreak nolist
 augroup END
@@ -239,7 +239,7 @@ set backspace=indent,eol,start
 set clipboard=unnamed
 " Ask for confirmation when doing hard stuff...
 set confirm
-" Don't polluti system with temporary files.
+" Don't pollute system with temporary files.
 set nobackup
 set nowritebackup
 set noswapfile
@@ -376,7 +376,7 @@ set pastetoggle=<F2>
 " Some additional autocommands.
 "
 
-augroup git_diff
+augroup vimrc_base_git_diff
     autocmd!
     " Show Git diff in window split when commiting git diff.
     autocmd FileType gitcommit DiffGitCached | wincmd p
@@ -384,7 +384,7 @@ augroup git_diff
     autocmd BufRead COMMIT_EDITMSG setlocal spell!
 augroup END
 
-augroup _python
+augroup vimrc_base_python
     autocmd!
     autocmd FileType python setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class,with
     autocmd FileType python setlocal tabstop=4
