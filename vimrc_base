@@ -390,8 +390,9 @@ augroup END
 
 
 function! BufferIsEmpty(n_buf)
+    let is_modified = getbufvar(4, '&modified')
     let first_two_lines = getbufline(a:n_buf, 1, 2)
-    return len(first_two_lines) == 1 && first_two_lines[0] == ''
+    return !is_modified && len(first_two_lines) == 1 && first_two_lines[0] == ''
 endfunction
 
 function! s:CloseHiddenBuffers()
