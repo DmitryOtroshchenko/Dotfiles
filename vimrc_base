@@ -381,10 +381,43 @@ augroup vimrc_base_git_diff
     autocmd BufRead COMMIT_EDITMSG setlocal spell!
 augroup END
 
+
 augroup vimrc_base_python
     autocmd!
     autocmd FileType python setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class,with
     autocmd FileType python setlocal tabstop=4
+augroup END
+
+
+function! s:CloseHiddenBuffers()
+    let visible_buffers = {}
+    " Check buffers on every tabpage.
+    for n_tab in range(1, tabpagenr('$'))
+        " Mark every buffer attached to at least one window.
+        for n_buf in tabpagebuflist(n_tab)
+            let visible_buffers[n_buf] = 1
+        endfor
+    endfor
+
+    " Check every buffer.
+    let invisible_empty_buffers = []
+    for n_buf in range(1, bufnr('$'))
+        let is_invisible = bufexists(n_buf) && !has_key(visible_buffers, n_buf)
+        let is_empty = empty(bufname(n_buf))
+        let is_not_service = buflisted(n_buf)
+        if is_invisible && is_empty && is_not_service
+            call add(invisible_empty_buffers, n_buf)
+        endif
+    endfor
+
+    if !empty(invisible_empty_buffers)
+        execute 'bwipeout ' . join(invisible_empty_buffers, ' ')
+    endif
+endfun
+
+augroup vimrc_base_close_hidden_empty_buffers
+    autocmd!
+    autocmd BufEnter * call s:CloseHiddenBuffers()
 augroup END
 
 " TODO:
