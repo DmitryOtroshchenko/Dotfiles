@@ -356,7 +356,18 @@ nnoremap <leader>lcd :lcd %:p:h<CR>
 
 " TODO: it does not work after sourcing vimrc. Some plugin overrides it?
 set pastetoggle=<F2>
-" TODO: add a shortcut to toggle completeopt preview
+
+function! ToggleCompletionPreview()
+    if &completeopt =~? 'preview'
+        set completeopt-=preview
+        echo 'Preview off'
+    else
+        set completeopt+=preview
+        echo 'Preview on'
+    endif
+endfunction
+inoremap <C-Z> <C-o>:call ToggleCompletionPreview()<CR>
+" TODO: previewheight
 
 "
 " Some additional autocommands.
@@ -375,3 +386,6 @@ augroup vimrc_base_python
     autocmd FileType python setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class,with
     autocmd FileType python setlocal tabstop=4
 augroup END
+
+" TODO:
+" <C-W> a, m, u, y
