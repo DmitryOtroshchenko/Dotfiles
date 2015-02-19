@@ -268,6 +268,16 @@ noremap  <F1> <Esc>
 noremap! <F1> <Esc>
 lnoremap <F1> <Esc>
 
+" Allow to make mistakes when wq'ing.
+cabbrev fw :wq
+cabbrev qw :wq
+
+" Start external commands with a single keystroke.
+nnoremap ! :!
+
+" Quit vim easily
+nnoremap ZX :qall!<CR>
+
 nnoremap Q q
 nnoremap q <NOP>
 
