@@ -23,13 +23,19 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'gelguy/Cmd2.vim'
+Plug 'bling/vim-airline'
+Plug 'sjl/vitality.vim'
+Plug 'tpope/vim-scriptease'
+Plug 'kana/vim-submode'
+Plug 'tomtom/tinykeymap_vim'
 
 Plug 'Shougo/vimproc',         { 'do': 'make -f make_mac.mak' }
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer --system-libclang' }
 
 let g:ycm_add_preview_to_completeopt = 0
-let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_completion = 0
+let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_min_num_of_chars_for_completion = 1
 let g:ycm_filepath_completion_use_working_dir = 1
 
@@ -216,6 +222,7 @@ highlight SignColumn ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE 
 
 augroup markdown
     autocmd!
+    autocmd BufNewFile,BufReadPost,BufWritePost *.md set wrap
     autocmd BufNewFile,BufReadPost,BufWritePost *.md set filetype=pandoc
     autocmd BufNewFile,BufReadPost,BufWritePost *.md set syntax=pandoc
     autocmd BufNewFile,BufReadPost,BufWritePost *.md set syntax=pandoc
@@ -542,9 +549,9 @@ xmap <Leader>f <Plug>(easymotion-sn)
 omap <Leader>f <Plug>(easymotion-sn)
 
 " Maximizer
-noremap <C-W><C-Z> :MaximizerToggle<CR>
-noremap <C-W>z     :MaximizerToggle<CR>
-noremap <C-W>Z     :MaximizerToggle<CR>
+" noremap <C-W><C-Z> :MaximizerToggle<CR>
+" noremap <C-W>z     :MaximizerToggle<CR>
+" noremap <C-W>Z     :MaximizerToggle<CR>
 
 " Vimfiler
 noremap <F4> :VimFiler -toggle<CR>
@@ -579,6 +586,12 @@ let vimrplugin_screenvsplit = 1 " For vertical tmux split
 let g:ScreenShellInitialFocus = 'shell'
 " instruct to use your own .screenrc file
 let g:vimrplugin_noscreenrc = 1
+
+augroup vimrc_ft_python
+    autocmd!
+    " Allow triple quotes.
+    autocmd FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
+augroup END " vimrc_ft_python
 
 " surround
 let g:surround_{char2nr('d')} = '\\text{\r}'
@@ -615,8 +628,35 @@ augroup didyoumean
 augroup END " didyoumean
 
 source ~/Dotfiles/cursor.vim
-source ~/Dotfiles/statusline.vim
+" source ~/Dotfiles/statusline.vim
+source ~/Dotfiles/airline.conf.vim
 
 " TODO: Add a map to alternate buffers.
 " TODO: change statusline color.
 " TODO: change cursor color to white.
+let g:pandoc#syntax#conceal#blacklist = [
+  \ 'titleblock ',
+  \ 'image',
+  \ 'block',
+  \ 'subscript',
+  \ 'superscript',
+  \ 'strikeout',
+  \ 'atx',
+  \ 'codeblock_start',
+  \ 'codeblock_delim',
+  \ 'footnote',
+  \ 'definition',
+  \ 'list',
+  \ 'newline',
+  \ 'dashes',
+  \ 'ellipses',
+  \ 'quotes',
+  \ ]
+
+let g:tinykeymaps_default = []
+let g:tinykeymap#resolution = 10
+call tinykeymap#EnterMap('splits', '<C-W>m', {'name': 'Splits mode'})
+call tinykeymap#Map('splits', 'n', 'vertical resize -3')
+call tinykeymap#Map('splits', 'e', 'resize -3')
+call tinykeymap#Map('splits', 'i', 'resize +3')
+call tinykeymap#Map('splits', 'o', 'vertical resize +3')
