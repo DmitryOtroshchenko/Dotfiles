@@ -13,7 +13,7 @@ scriptencoding utf-8
 filetype plugin indent on
 
 if has('gui_running')
-    set guifont=Source\ Code\ Pro:h17,Consolas:h17,Inconsolata:h17,Courier:h17
+    set guifont=Source\ Code\ Pro:h18,Consolas:h18,Inconsolata:h18,Courier:h18
     " Number of pixel lines inserted between lines in addition to base lineheight.
     set linespace=4
     " a - "just works (tm)"
