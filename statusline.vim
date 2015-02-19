@@ -2,14 +2,15 @@
 "
 " Helper functions
 "
-
-function! Color(active, num, content)
+function! Color(active, higroup, content)
     " This function just outputs the content colored by the
     " supplied colorgroup number, e.g. num = 2 -> User2.
     " It only colors the input if the window is currently active.
     "
     if a:active
-        return '%' . a:num . '*' . a:content . '%*'
+        " setlocal statusline+=%#StatuslineBufNr#%-1.2n%h
+        " return '%#' . a:higroup . '#%' . a:content . '%'
+        return '%' . a:higroup . '*' . a:content . '%*'
     else
         return a:content
     endif
@@ -264,3 +265,7 @@ hi User3 ctermfg=64  guifg=#719e07  ctermbg=7  guibg=#d9d3c2
 hi User4 ctermfg=37  guifg=#2aa198  ctermbg=7  guibg=#d9d3c2
 
 nnoremap q :source %<CR>
+
+" http://stackoverflow.com/questions/14544618/is-there-a-way-to-get-the-number-of-lines-of-a-buffer-in-vim-script
+" python import vim
+" let numlines=pyeval('len(vim.buffers['.({expr}-1).'])')')'
