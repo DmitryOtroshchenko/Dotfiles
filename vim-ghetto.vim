@@ -2,11 +2,13 @@
 Plug 'gelguy/Cmd2.vim'
 Plug 'bling/vim-airline'
 
+"{{{
 let g:airline_powerline_fonts = 0
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 let g:airline_theme='solarized'
 let g:airline#extensions#tabline#enabled = 0
+"}}}
 
 " Plug 'fs111/pydoc.vim'
 
@@ -35,11 +37,18 @@ let g:winresizer_keycode_cancel = 27 " ESC
 
 " Plug 'alfredodeza/khuno.vim'
 
+let g:khuno_ignore='E202,E128'
+let g:khuno_max_line_length=100
+
+noremap <silent><Leader>sc <Esc>:Khuno show<CR>
+
 " An alternative to vim-asterisk
 " Plug 'thinca/vim-visualstar'
 
 " Plug 'mattdbridges/bufkill.vim'
 " Plug 'jeetsukumaran/vim-markology'
+
+noremap <silent> mm :MarkologyPlaceMarkToggle<CR>
 
 let markology_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.'`^<>[]\""
 
@@ -87,6 +96,14 @@ let g:tmuxline_separators = {
 let g:promptline_powerline_symbols = 0
 
 Plug 'ervandew/screen'
+
+" For tmux support
+let g:ScreenImpl = 'Tmux'
+let vimrplugin_screenvsplit = 1 " For vertical tmux split
+let g:ScreenShellInitialFocus = 'shell'
+" instruct to use your own .screenrc file
+let g:vimrplugin_noscreenrc = 1
+
 " Plug 'godlygeek/csapprox'
 " Plug 'carlobaldassi/vim-colorschemedegrade'
 
@@ -140,3 +157,20 @@ augroup rest
     au!
     au FileType rst call RivSetup()
 augroup END
+
+Plug 'rhysd/committia.vim'
+Plug 'neitanod/vim-ondemandhighlight'
+
+Plug 'justinmk/vim-gtfo' " NOK, tune mappings
+
+let g:gtfo#terminals = { 'mac' : 'iterm' }
+
+Plug 'szw/vim-ctrlspace'
+
+let g:ctrlspace_set_default_mapping = 0
+noremap <C-T> :CtrlSpace<CR>
+
+Plug 'thinca/vim-ref'
+Plug 'gcmt/wildfire.vim'
+
+let g:wildfire_objects = ["i'", "a'", 'i"', 'a"', "i)", "a)", "i]", "a]", "i}", "a}", "ip", "it"]
