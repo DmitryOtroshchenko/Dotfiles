@@ -1,0 +1,339 @@
+
+if has('vim_starting')
+    set nocompatible
+endif
+
+source ~/.vimrc_base
+
+"{{{ Automatically install vim-plug if absent.
+
+let plug_script=expand('~/.vim/autoload/plug.vim')
+if !filereadable(plug_script)
+  echo 'Installing vim-plug...'
+  silent !mkdir -p ~/.vim/autoload
+  silent !curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+"}}}
+
+" Plugin declarations.
+call plug#begin('~/.vim/plugged')
+
+"{{{ Metaplugins and libs
+
+" Asynchronous execution library for Vim.
+Plug 'Shougo/vimproc', { 'do': 'make -f make_mac.mak' }
+
+" Plugin developer goodies lib.
+Plug 'xolox/vim-misc'
+
+" Plugin developer tools.
+Plug 'tpope/vim-scriptease'
+
+"}}}
+
+"{{{ Autocompletion
+
+" Autocompletion engine.
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer --system-libclang' }
+
+" Snippet manager.
+Plug 'sirver/ultisnips'
+
+" A collection of snippets.
+Plug 'honza/vim-snippets'
+
+" Avoid oldfag-style C-xC-uC-p
+Plug 'ervandew/supertab'
+
+"}}}
+
+"{{{ Markdown and ReST
+
+" Vim pandoc integration.
+Plug 'vim-pandoc/vim-pandoc'
+
+" Vim syntax for pandoc-markdown dialect.
+Plug 'vim-pandoc/vim-pandoc-syntax'
+
+" Open Maked 2 App from vim.
+" TODO: remove?
+Plug 'itspriddle/vim-marked'
+
+"}}}
+
+"{{{ Unite et al
+
+" Vim list interface.
+Plug 'Shougo/unite.vim'
+
+" 2-pannel file manager.
+Plug 'Shougo/vimfiler.vim'
+
+" A vimscript-only shell implementation.
+Plug 'Shougo/vimshell.vim'
+
+" MRU Unite source for files and directories.
+Plug 'Shougo/neomru.vim'
+
+"}}}
+
+"{{{ Language plugins
+
+Plug 'hdima/python-syntax'
+
+Plug 'jmcantrell/vim-virtualenv'
+
+Plug 'JuliaLang/julia-vim'
+
+Plug 'tshirtman/vim-cython'
+
+"}}}
+
+"{{{ Git
+
+Plug 'tpope/vim-fugitive'
+
+Plug 'gregsexton/gitv'
+
+Plug 'airblade/vim-gitgutter'
+
+"}}}
+
+"{{{ Text editing
+
+" Clipboard management + distinction delete / cut.
+Plug 'svermeulen/vim-easyclip'
+
+" A good plugin for code and text tables alignment.
+Plug 'junegunn/vim-easy-align'
+
+" Highlights and removes trailing whitespaces.
+Plug 'csexton/trailertrash.vim'
+
+" Insert Lorems and Ipsums on demand.
+Plug 'vim-scripts/loremipsum'
+
+" Surrounding tags/markers/quotes text objects.
+Plug 'tpope/vim-surround'
+
+"}}}
+
+"{{{ Colorschemes
+
+" A lot of vim colorschemes including solarized.
+Plug 'flazz/vim-colorschemes'
+
+Plug 'gosukiwi/vim-atom-dark'
+
+Plug 'AlxHnr/clear_colors'
+
+"}}}
+
+" End of plugin declarations.
+call plug#end()
+
+
+"{{{ Valloric/YouCompleteMe
+let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_autoclose_preview_window_after_completion = 0
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_min_num_of_chars_for_completion = 1
+let g:ycm_filepath_completion_use_working_dir = 1
+
+" nnoremap tg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"}}}
+
+
+"{{{ sirver/ultisnips
+" TODO: the expansion does not work in iTerm.
+let g:UltiSnipsExpandTrigger='<c-Space>'
+let g:UltiSnipsListSnippets='<c-Tab>'
+let g:UltiSnipsJumpForwardTrigger='<c-j>'
+let g:UltiSnipsJumpBackwardTrigger='<c-k>'
+"}}}
+
+
+"{{{ vim-pandoc/vim-pandoc
+let g:pandoc#filetypes#handled = ['markdown', 'textile']
+"}}}
+
+
+"{{{ vim-pandoc/vim-pandoc-syntax
+let g:pandoc#syntax#conceal#blacklist = [
+  \ 'titleblock ',
+  \ 'image',
+  \ 'block',
+  \ 'subscript',
+  \ 'superscript',
+  \ 'strikeout',
+  \ 'atx',
+  \ 'codeblock_start',
+  \ 'codeblock_delim',
+  \ 'footnote',
+  \ 'definition',
+  \ 'list',
+  \ 'newline',
+  \ 'dashes',
+  \ 'ellipses',
+  \ 'quotes',
+  \ ]
+"}}}
+
+
+"{{{ Shougo/unite.vim
+let g:unite_source_yank_history_save_clipboard = 1
+let g:unite_source_history_yank_enable = 1
+let g:unite_source_history_yank_limit = 40
+let g:unite_winheight = 12
+let g:unite_update_time = 100
+
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+
+" TODO: use ack?
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor
+    let g:unite_source_grep_command = 'ag'
+    let g:unite_source_grep_default_opts = '--nocolor --nogroup --hidden --ignore ''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'' '
+    let g:unite_source_grep_recursive_opt = ''
+endif
+
+" Set "-no-quit" automatically in grep unite source.
+call unite#custom#profile('source/grep', 'context', {
+\   'no_quit' : 1
+\ })
+
+call unite#custom#source('file,file/new,buffer,file_rec', 'matchers', 'matcher_fuzzy')
+
+noremap <Leader>b :Unite -no-split -buffer-name=buffers buffer<CR>
+noremap <Leader>t :Unite -no-split -buffer-name=fb -input=** -start-insert buffer file_rec/async<CR>
+"}}}
+
+
+"{{{ Did you mean?
+" Ask to precise file name if not sure.
+" Inspired by 'EinfachToll/DidYouMean'
+function! s:didyoumean()
+    " as of Vim 7.4, glob() has an optional parameter to split, but not
+    " everybody is using 7.4 yet
+    let matching_files = split(glob(expand('%') . '*', 1), '\n')
+    if empty(matching_files)
+        return
+    endif
+
+    let initial_file_name = expand('%:p')
+    let empty_buffer_nr = bufnr('%')
+    let unite_params = {
+        \ 'path': expand('%:p:h'),
+        \ 'input': expand('%:t'),
+        \ 'start_insert': 1,
+        \ 'buffer_name': 'Did you mean..?',
+        \ 'immediately': 1,
+        \ 'is_async': 1,
+        \ 'no_empty': 1,
+        \ 'no_split': 1
+    \ }
+    call unite#start(['file'], unite_params)
+    execute ':silent bdelete ' . empty_buffer_nr
+endfunction
+
+augroup didyoumean
+    autocmd!
+    autocmd BufNewFile * call s:didyoumean()
+augroup END " didyoumean
+"}}}
+
+
+"{{{ Shougo/vimfiler.vim
+let g:vimfiler_as_default_explorer = 1
+
+noremap <F4> :VimFiler -toggle<CR>
+"}}}
+
+
+"{{{ hdima/python-syntax
+let python_highlight_all = 1
+"}}}
+
+
+"{{{ airblade/vim-gitgutter
+let g:gitgutter_sign_column_always = 1
+
+" TODO: choose better mappings. Use easymotion prefix?
+nmap <leader>ht <Plug>GitGutterPrevHunk
+nmap <leader>hT <Plug>GitGutterNextHunk
+"}}}
+
+
+"{{{ svermeulen/vim-easyclip
+
+noremap <silent> <leader>y :Yanks<CR>
+map M m$
+
+let g:EasyClipUseSubstituteDefaults = 0
+nmap <silent> gs <plug>SubstituteOverMotionMap
+nmap gss <plug>SubstituteLine
+xmap gs <plug>XEasyClipPaste
+
+"}}}
+
+
+"{{{ csexton/trailertrash.vim
+hi UnwantedTrailerTrash guibg=#DA3435 ctermbg=red
+let g:trailertrash_blacklist = ['unite']
+
+augroup vimrc_trim_trailing_whitespaces
+    autocmd!
+    autocmd FileType * autocmd BufWritePre <buffer> :TrailerTrim
+augroup END " trim_trailing_whitespace
+
+augroup vimrc_show_hide_trailing_whitespaces
+    autocmd!
+    autocmd InsertEnter * TrailerHide
+    autocmd InsertLeave * TrailerShow
+augroup END " trail
+"}}}
+
+
+"{{{ tpope/vim-surround
+let g:surround_{char2nr('d')} = '\\text{\r}'
+"}}}
+
+
+"{{{ Colorscheme tweaks
+let g:solarized_contrast = 'normal'
+let g:solarized_diffmode = 'normal'
+let g:solarized_menu = 0
+let g:solarized_hitrail = 1
+
+colorscheme solarized
+
+" Line number should have the same color as the rest of the workspace.
+highlight LineNr ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
+" Sign column should have the same color as the rest of the workspace.
+highlight SignColumn ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
+
+"{{{ Change cursor color depending on current mode
+hi Cursor        guifg=#fdf6e3 guibg=#2aa198
+hi NormalCursor  guifg=#fdf6e3 guibg=#2aa198 " #5489ce
+hi InsertCursor  guifg=#fdf6e3 guibg=#b58900 " #8a9824
+hi VisualCursor  guifg=#fdf6e3 guibg=#d33682
+hi ReplaceCursor guifg=#fdf6e3 guibg=#dc322f
+hi CommandCursor guifg=#fdf6e3 guibg=#cb4b16
+
+" Turn off blinking.
+set guicursor=a:block-Cursor
+
+" Mode aware cursors.
+set guicursor+=o:hor50-NormalCursor
+set guicursor+=n:NormalCursor
+set guicursor+=i-ci-sm:InsertCursor
+set guicursor+=r-cr:ReplaceCursor-hor20
+set guicursor+=c:InsertCursor
+set guicursor+=v-ve:VisualCursor
+
+" I said NO blinking!
+set guicursor+=a:blinkon0
+"}}}
+"}}}
