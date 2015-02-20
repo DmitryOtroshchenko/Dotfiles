@@ -25,6 +25,9 @@ Plug 'Shougo/vimproc', { 'do': 'make -f make_mac.mak' }
 " Plugin developer goodies lib.
 Plug 'xolox/vim-misc'
 
+" Google lib for plugin development.
+Plug 'google/vim-maktaba'
+
 " Plugin developer tools.
 Plug 'tpope/vim-scriptease'
 
