@@ -34,9 +34,12 @@ Plug 'tpope/vim-repeat'
 " Async execution.
 Plug 'tpope/vim-dispatch'
 
+" Some weird japaneese shit. If only these fags could write docs in English...
+Plug 'osyo-manga/shabadou.vim'
+
 "}}}
 
-"{{{ Autocompletion
+"{{{ Autocompletion, linters and code navigation
 
 " Autocompletion engine.
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer --system-libclang' }
@@ -50,11 +53,41 @@ Plug 'honza/vim-snippets'
 " Avoid oldfag-style C-xC-uC-p
 Plug 'ervandew/supertab'
 
+" Code outliner.
+Plug 'majutsushi/tagbar'
+
+" Permits to execute a part of edited file.
+Plug 'thinca/vim-quickrun'
+
+" Quickfix errors highlighter.
+Plug 'jceb/vim-hier'
+
+" Shows quickfix errors of the current line in the statusline.
+Plug 'dannyob/quickfixstatus'
+
+" Async syntax checker.
+Plug 'osyo-manga/vim-watchdogs'
+
 "}}}
 
 "{{{ Window management
 
+" Maximize and unmaximize windows.
 Plug 'szw/vim-maximizer'
+
+" Delete buffers without closing splits and tabs.
+Plug 'moll/vim-bbye'
+
+"}}}
+
+
+"{{{ Misc
+
+Plug 'tpope/vim-eunuch'
+
+Plug 'mhinz/vim-startify'
+
+Plug 'sjl/gundo.vim'
 
 "}}}
 
@@ -67,7 +100,6 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 
 " Open Maked 2 App from vim.
-" TODO: remove?
 Plug 'itspriddle/vim-marked'
 
 "}}}
@@ -102,10 +134,13 @@ Plug 'tshirtman/vim-cython'
 
 "{{{ Git
 
+" Git ops from vim command line.
 Plug 'tpope/vim-fugitive'
 
+" Git history visualization.
 Plug 'gregsexton/gitv'
 
+" Mark changed lines by diff signs.
 Plug 'airblade/vim-gitgutter'
 
 "}}}
@@ -118,6 +153,9 @@ Plug 'svermeulen/vim-easyclip'
 " Commenter with comment templates for multiple languages.
 Plug 'tomtom/tcomment_vim'
 
+" Insert delimiters intelligently.
+Plug 'Raimondi/delimitMate'
+
 " A good plugin for code and text tables alignment.
 Plug 'junegunn/vim-easy-align'
 
@@ -129,6 +167,9 @@ Plug 'vim-scripts/loremipsum'
 
 " Surrounding tags/markers/quotes text objects.
 Plug 'tpope/vim-surround'
+
+" Equally indented lines block text object.
+Plug 'michaeljsmith/vim-indent-object'
 
 "}}}
 
@@ -180,12 +221,35 @@ let g:ycm_filepath_completion_use_working_dir = 1
 "}}}
 
 
+"{{{ majutsushi/tagbar
+let g:tagbar_autofocus = 1
+let g:tagbar_sort = 1
+noremap <F6> :TagbarOpenAutoClose<CR>
+"}}}
+
+
 "{{{ sirver/ultisnips
 " TODO: the expansion does not work in iTerm.
 let g:UltiSnipsExpandTrigger='<c-Space>'
 let g:UltiSnipsListSnippets='<c-Tab>'
 let g:UltiSnipsJumpForwardTrigger='<c-j>'
 let g:UltiSnipsJumpBackwardTrigger='<c-k>'
+"}}}
+
+
+"{{{ osyo-manga/vim-watchdogs
+let g:watchdogs_check_BufWritePost_enable = 1
+"}}}
+
+
+"{{{ sjl/gundo.vim
+let g:gundo_preview_bottom = 1
+let g:gundo_right = 1
+let g:gundo_help = 0
+let g:gundo_preview_statusline = 'history preview'
+let g:gundo_tree_statusline = 'undo tree'
+
+noremap <F5> :GundoToggle<CR>
 "}}}
 
 
@@ -197,6 +261,11 @@ let g:pandoc#filetypes#handled = ['markdown', 'textile']
 "{{{ szw/vim-maximizer
 noremap <C-W><C-,> :MaximizerToggle<CR>
 noremap <C-W>,     :MaximizerToggle<CR>
+"}}}
+
+
+"{{{ moll/vim-bbye
+noremap <Leader>x :Bdelete<CR>
 "}}}
 
 
