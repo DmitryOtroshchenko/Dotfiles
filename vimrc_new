@@ -208,6 +208,24 @@ let g:pandoc#syntax#conceal#blacklist = [
 "}}}
 
 
+"{{{ Setup markdown file
+function! SetupMarkdownFt()
+    setlocal filetype=pandoc
+    setlocal syntax=pandoc
+    setlocal foldcolumn=0
+    setlocal wrap
+    noremap <buffer> <localleader>md :MarkedOpen<CR>
+    noremap <buffer> <localleader>mq :MarkedQuit<CR>
+    " autocmd BufNewFile,BufReadPost,BufWritePost *.md hi Conceal cterm=NONE ctermbg=NONE ctermfg=red gui=NONE guifg=red guibg=NONE
+endfunction
+
+augroup markdown
+    autocmd!
+    autocmd BufNewFile,BufReadPost,BufWritePost *.md call SetupMarkdownFt()
+augroup END " markdown
+"}}}
+
+
 "{{{ Shougo/unite.vim
 let g:unite_source_yank_history_save_clipboard = 1
 let g:unite_source_history_yank_enable = 1
