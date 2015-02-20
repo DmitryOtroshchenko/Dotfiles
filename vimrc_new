@@ -6,7 +6,6 @@ endif
 source ~/.vimrc_base
 
 "{{{ Automatically install vim-plug if absent.
-
 let plug_script=expand('~/.vim/autoload/plug.vim')
 if !filereadable(plug_script)
   echo 'Installing vim-plug...'
@@ -32,6 +31,9 @@ Plug 'tpope/vim-scriptease'
 " Dot repeat functionality for other plugins.
 Plug 'tpope/vim-repeat'
 
+" Async execution.
+Plug 'tpope/vim-dispatch'
+
 "}}}
 
 "{{{ Autocompletion
@@ -47,6 +49,12 @@ Plug 'honza/vim-snippets'
 
 " Avoid oldfag-style C-xC-uC-p
 Plug 'ervandew/supertab'
+
+"}}}
+
+"{{{ Window management
+
+Plug 'szw/vim-maximizer'
 
 "}}}
 
@@ -183,6 +191,12 @@ let g:UltiSnipsJumpBackwardTrigger='<c-k>'
 
 "{{{ vim-pandoc/vim-pandoc
 let g:pandoc#filetypes#handled = ['markdown', 'textile']
+"}}}
+
+
+"{{{ szw/vim-maximizer
+noremap <C-W><C-,> :MaximizerToggle<CR>
+noremap <C-W>,     :MaximizerToggle<CR>
 "}}}
 
 
@@ -493,3 +507,10 @@ set guicursor+=v-ve:VisualCursor
 set guicursor+=a:blinkon0
 "}}}
 "}}}
+
+
+augroup vimrc_ft_python
+    autocmd!
+    " Allow triple quotes.
+    autocmd FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
+augroup END
