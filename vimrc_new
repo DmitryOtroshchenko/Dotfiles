@@ -209,7 +209,7 @@ let g:pandoc#syntax#conceal#blacklist = [
 
 
 "{{{ Setup markdown file
-function! SetupMarkdownFt()
+function! s:SetupMarkdownFt()
     setlocal filetype=pandoc
     setlocal syntax=pandoc
     setlocal foldcolumn=0
@@ -219,9 +219,9 @@ function! SetupMarkdownFt()
     " autocmd BufNewFile,BufReadPost,BufWritePost *.md hi Conceal cterm=NONE ctermbg=NONE ctermfg=red gui=NONE guifg=red guibg=NONE
 endfunction
 
-augroup markdown
+augroup vimrc_markdown
     autocmd!
-    autocmd BufNewFile,BufReadPost,BufWritePost *.md call SetupMarkdownFt()
+    autocmd BufNewFile,BufReadPost,BufWritePost *.md call s:SetupMarkdownFt()
 augroup END " markdown
 "}}}
 
@@ -283,10 +283,10 @@ function! s:didyoumean()
     execute ':silent bdelete ' . empty_buffer_nr
 endfunction
 
-augroup didyoumean
+augroup vimrc_didyoumean
     autocmd!
     autocmd BufNewFile * call s:didyoumean()
-augroup END " didyoumean
+augroup END
 "}}}
 
 
@@ -415,7 +415,7 @@ function! s:incsearch_keymap()
     IncSearchNoreMap <S-Tab> <Over>(buffer-complete-prev)
 endfunction
 
-augroup incsearch-keymap
+augroup vimrc_incsearch_keymap
     autocmd!
     autocmd VimEnter * call s:incsearch_keymap()
 augroup END
