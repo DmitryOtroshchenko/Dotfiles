@@ -75,6 +75,17 @@ let g:indentLine_noConcealCursor = 1
 " Terminal-only plugins
 Plug 'edkolev/promptline.vim'
 Plug 'edkolev/tmuxline.vim'
+
+let g:tmuxline_powerline_separators = 0
+let g:tmuxline_separators = {
+    \ 'left' : '',
+    \ 'left_alt': '⋮',
+    \ 'right' : '',
+    \ 'right_alt' : '⋮',
+    \ 'space' : ' '}
+
+let g:promptline_powerline_symbols = 0
+
 Plug 'ervandew/screen'
 " Plug 'godlygeek/csapprox'
 " Plug 'carlobaldassi/vim-colorschemedegrade'
@@ -114,3 +125,18 @@ let g:choosewin_color_overlay = { 'gui': ['DarkGreen', 'DarkGreen' ], 'cterm': [
 let g:choosewin_color_overlay_current = { 'gui': ['LimeGreen', 'LimeGreen' ], 'cterm': [ 40, 40 ] }
 let g:choosewin_color_land = { 'gui':[ 'LawnGreen', 'Black', 'bold,underline'], 'cterm': ['magenta', 'white'] }
 let g:choosewin_color_shade = { 'gui':[ '', '#777777'], 'cterm': ['', 'grey'] }
+
+Plug 'vim-voom/VOoM'
+Plug 'Rykka/InstantRst'
+Plug 'Rykka/riv.vim'
+
+function! RivSetup()
+    setl foldmethod=expr
+    setl foldexpr=riv#fold#expr(v:lnum)
+    setl foldtext=riv#fold#text()
+endfunction
+
+augroup rest
+    au!
+    au FileType rst call RivSetup()
+augroup END
