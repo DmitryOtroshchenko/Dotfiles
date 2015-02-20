@@ -262,6 +262,7 @@ set ssop-=folds
 "
 
 let mapleader=','
+let maplocalleader=','
 
 " I can type :help on my own, thanks.
 noremap  <F1> <Esc>
