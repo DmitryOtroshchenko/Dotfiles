@@ -209,6 +209,8 @@ Plug 'luochen1990/rainbow'
 
 "}}}
 
+source ~/Dotfiles/vim-test.vim
+
 " End of plugin declarations.
 call plug#end()
 
