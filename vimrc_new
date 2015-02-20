@@ -107,6 +107,9 @@ Plug 'airblade/vim-gitgutter'
 " Clipboard management + distinction delete / cut.
 Plug 'svermeulen/vim-easyclip'
 
+" Commenter with comment templates for multiple languages.
+Plug 'tomtom/tcomment_vim'
+
 " A good plugin for code and text tables alignment.
 Plug 'junegunn/vim-easy-align'
 
@@ -135,6 +138,9 @@ Plug 'haya14busa/vim-asterisk'
 " Counts number of occurences when performing search.
 Plug 'osyo-manga/vim-anzu'
 
+" Use ack-grep for multifile searches.
+Plug 'mileszs/ack.vim'
+
 "}}}
 
 "{{{ Colorschemes
@@ -145,6 +151,9 @@ Plug 'flazz/vim-colorschemes'
 Plug 'gosukiwi/vim-atom-dark'
 
 Plug 'AlxHnr/clear_colors'
+
+" Colors nested parentheses in different colors.
+Plug 'luochen1990/rainbow'
 
 "}}}
 
@@ -285,7 +294,6 @@ nmap <leader>hT <Plug>GitGutterNextHunk
 
 
 "{{{ svermeulen/vim-easyclip
-
 noremap <silent> <leader>y :Yanks<CR>
 map M m$
 
@@ -293,9 +301,14 @@ let g:EasyClipUseSubstituteDefaults = 0
 nmap <silent> gs <plug>SubstituteOverMotionMap
 nmap gss <plug>SubstituteLine
 xmap gs <plug>XEasyClipPaste
-
 "}}}
 
+
+"{{{ tomtom/tcomment_vim
+let g:tcommentMapLeaderOp1='<leader>c'
+let g:tcommentMapLeaderUncommentAnyway='<leader><'
+let g:tcommentMapLeaderCommentAnyway='<leader>>'
+"}}}
 
 "{{{ csexton/trailertrash.vim
 hi UnwantedTrailerTrash guibg=#DA3435 ctermbg=red
@@ -406,6 +419,23 @@ nmap N <Plug>(anzu-N-with-echo)
 " TODO: why commented?
 " nmap * <Plug>(anzu-star-with-echo)
 " nmap # <Plug>(anzu-sharp-with-echo)
+"}}}
+
+
+"{{{ mileszs/ack.vim
+let g:ack_default_options = ' -s -H --nocolor --nogroup --smart-case --sort-files --follow'
+let g:ackhighlight = 1
+" let g:ack_autofold_results = 1
+let g:ackpreview = 1
+let g:ack_use_dispatch = 1
+"}}}
+
+
+"{{{ luochen1990/rainbow
+let g:rainbow_active = 1
+let g:rainbow_conf = {
+    \ 'guifgs':   ['#e6dfce', '#b58900', '#d33682', '#859900'] }
+    " \ 'ctermfgs': ['Red3', 'cyan', 'DarkOrange', 'green'] }
 "}}}
 
 
