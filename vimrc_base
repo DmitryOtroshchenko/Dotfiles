@@ -439,3 +439,12 @@ augroup END
 
 " TODO:
 " <C-W> a, m, u, y
+
+"
+" Abbreviations
+"
+
+iabbrev teh the
+iabbrev fo of
+iabbrev @@ dmitry.otroshchenko@gmail.com
+" iabbrev @me Dmitry Otroshchenko
