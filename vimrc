@@ -228,7 +228,8 @@ let g:ycm_filepath_completion_use_working_dir = 1
 
 "{{{ majutsushi/tagbar
 let g:tagbar_autofocus = 1
-let g:tagbar_sort = 1
+let g:tagbar_autopreview = 1
+let g:tagbar_show_linenumbers = 1
 noremap <F6> :TagbarOpenAutoClose<CR>
 "}}}
 
