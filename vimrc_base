@@ -14,7 +14,8 @@ filetype plugin indent on
 
 if has('gui_running')
     set guifont=Source\ Code\ Pro:h18,Consolas:h18,Inconsolata:h18,Courier:h18
-    " Number of pixel lines inserted between lines in addition to base lineheight.
+    " Number of pixel lines inserted between lines in addition to the
+    " base line height.
     set linespace=4
     " a - "just works (tm)"
     " c - use console dialogs for simple choices.
@@ -85,7 +86,7 @@ if has('wildmenu')
     set wildignore+=*.db,*.sqlite
 endif
 
-" Regexes and al.
+" Regexps and al.
 if v:version >= 704
     " The new Vim regex engine is currently slooooow as hell which makes syntax
     " highlighting slow, which introduces typing latency.
@@ -180,7 +181,7 @@ set nocursorcolumn
 set colorcolumn=80,100
 " Show at least 3 lines below/above the cursor.
 set scrolloff=3
-" Show at least 10 columns befor/after the cursor.
+" Show at least 10 columns before/after the cursor.
 set sidescroll=1
 set sidescrolloff=10
 " Line and column rulers in statusline.
@@ -190,9 +191,9 @@ set rulerformat="%l\:%c %P"
 set virtualedit=block
 
 " Search options.
-" By default substitute all occurences - not only the first one.
+" By default substitute all occurrences - not only the first one.
 set gdefault
-" Highlight last searched pattern occurences.
+" Highlight last searched pattern occurrences.
 set hlsearch
 " Highlight as you type.
 set incsearch
@@ -382,7 +383,7 @@ function! ToggleCompletionPreview()
     endif
 endfunction
 inoremap <C-Z> <C-o>:call ToggleCompletionPreview()<CR>
-" TODO: previewheight
+" TODO: set fixed previewheight.
 
 "
 " Some additional autocommands.
@@ -390,7 +391,7 @@ inoremap <C-Z> <C-o>:call ToggleCompletionPreview()<CR>
 
 augroup vimrc_base_git_diff
     autocmd!
-    " Show Git diff in window split when commiting git diff.
+    " Show Git diff in window split when committing git diff.
     autocmd FileType gitcommit DiffGitCached | wincmd p
     " Turn on spellcheck.
     autocmd BufRead COMMIT_EDITMSG setlocal spell!
@@ -443,7 +444,7 @@ augroup vimrc_base_close_hidden_empty_buffers
 augroup END
 
 " TODO:
-" <C-W> a, m, u, y
+" <C-W> a, m, u, y are not mapped - map them!
 
 "
 " Abbreviations

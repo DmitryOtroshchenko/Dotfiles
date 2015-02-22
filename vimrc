@@ -17,7 +17,7 @@ endif
 " Plugin declarations.
 call plug#begin('~/.vim/plugged')
 
-"{{{ Metaplugins and libs
+"{{{ Meta-plugins and libs
 
 " Asynchronous execution library for Vim.
 Plug 'Shougo/vimproc', { 'do': 'make -f make_mac.mak' }
@@ -37,7 +37,7 @@ Plug 'tpope/vim-repeat'
 " Async execution.
 Plug 'tpope/vim-dispatch'
 
-" Some weird japaneese shit. If only these fags could write docs in English...
+" Some weird Japanese shit. If only these fags could write docs in English...
 Plug 'osyo-manga/shabadou.vim'
 
 "}}}
@@ -83,7 +83,6 @@ Plug 'moll/vim-bbye'
 
 "}}}
 
-
 "{{{ Misc
 
 Plug 'tpope/vim-eunuch'
@@ -102,7 +101,7 @@ Plug 'vim-pandoc/vim-pandoc'
 " Vim syntax for pandoc-markdown dialect.
 Plug 'vim-pandoc/vim-pandoc-syntax'
 
-" Open Maked 2 App from vim.
+" Open Marked 2 App from vim.
 Plug 'itspriddle/vim-marked'
 
 "}}}
@@ -112,7 +111,7 @@ Plug 'itspriddle/vim-marked'
 " Vim list interface.
 Plug 'Shougo/unite.vim'
 
-" 2-pannel file manager.
+" 2-panel file manager.
 Plug 'Shougo/vimfiler.vim'
 
 " A vimscript-only shell implementation.
@@ -162,7 +161,7 @@ Plug 'Raimondi/delimitMate'
 " A good plugin for code and text tables alignment.
 Plug 'junegunn/vim-easy-align'
 
-" Highlights and removes trailing whitespaces.
+" Highlights and removes trailing whitespace.
 Plug 'csexton/trailertrash.vim'
 
 " Insert Lorems and Ipsums on demand.
@@ -187,10 +186,10 @@ Plug 'haya14busa/incsearch.vim'
 " Visual star.
 Plug 'haya14busa/vim-asterisk'
 
-" Counts number of occurences when performing search.
+" Counts number of occurrences when performing search.
 Plug 'osyo-manga/vim-anzu'
 
-" Use ack-grep for multifile searches.
+" Use ack-grep for multi-file searches.
 Plug 'mileszs/ack.vim'
 
 "}}}
@@ -265,6 +264,7 @@ let g:pandoc#filetypes#handled = ['markdown', 'textile']
 
 
 "{{{ szw/vim-maximizer
+let g:maximizer_set_default_mapping = 0
 noremap <C-W><C-,> :MaximizerToggle<CR>
 noremap <C-W>,     :MaximizerToggle<CR>
 "}}}
@@ -416,6 +416,7 @@ let g:tcommentMapLeaderOp1='<leader>c'
 let g:tcommentMapLeaderUncommentAnyway='<leader><'
 let g:tcommentMapLeaderCommentAnyway='<leader>>'
 "}}}
+
 
 "{{{ csexton/trailertrash.vim
 highlight UnwantedTrailerTrash guibg=#DA3435 ctermbg=red
