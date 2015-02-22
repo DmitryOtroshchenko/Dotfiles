@@ -106,14 +106,14 @@ set t_vb=
 " Set title of the window.
 set title
 " Set window title to "<filename> @ <filepath>"
-function! MakeVimTitle()
+function! s:MakeVimTitle()
     let new_title = expand('%:t') . ' @ ' . expand('%:p:h')
     return new_title
 endfunction
 " Update window title when changing buffers.
 augroup vimrc_base_set_window_title
     autocmd!
-    autocmd BufEnter * let &titlestring=MakeVimTitle()
+    autocmd BufEnter * let &titlestring = s:MakeVimTitle()
 augroup END
 
 " Always show tabline.
