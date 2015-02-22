@@ -269,6 +269,10 @@ noremap  <F1> <Esc>
 noremap! <F1> <Esc>
 lnoremap <F1> <Esc>
 
+" Make marks navigation easier.
+noremap ' `
+noremap ` '
+
 " Allow to make mistakes when wq'ing.
 cabbrev fw :wq
 cabbrev qw :wq
