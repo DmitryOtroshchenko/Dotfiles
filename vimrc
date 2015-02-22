@@ -417,7 +417,7 @@ let g:tcommentMapLeaderCommentAnyway='<leader>>'
 "}}}
 
 "{{{ csexton/trailertrash.vim
-hi UnwantedTrailerTrash guibg=#DA3435 ctermbg=red
+highlight UnwantedTrailerTrash guibg=#DA3435 ctermbg=red
 let g:trailertrash_blacklist = ['unite']
 
 augroup vimrc_trim_trailing_whitespaces
@@ -553,18 +553,26 @@ let g:solarized_hitrail = 1
 
 colorscheme solarized
 
-" Line number should have the same color as the rest of the workspace.
-highlight LineNr ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
-" Sign column should have the same color as the rest of the workspace.
-highlight SignColumn ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
+function! s:UpdateColorscheme()
+    " Line number should have the same color as the rest of the workspace.
+    highlight LineNr ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
+    " Sign column should have the same color as the rest of the workspace.
+    highlight SignColumn ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
+endfunction
+
+augroup vimrc_fix_colorscheme
+    autocmd VimEnter,ColorScheme * call s:UpdateColorscheme()
+augroup END
+"}}}
+
 
 "{{{ Change cursor color depending on current mode
-hi Cursor        guifg=#fdf6e3 guibg=#2aa198
-hi NormalCursor  guifg=#fdf6e3 guibg=#2aa198 " #5489ce
-hi InsertCursor  guifg=#fdf6e3 guibg=#b58900 " #8a9824
-hi VisualCursor  guifg=#fdf6e3 guibg=#d33682
-hi ReplaceCursor guifg=#fdf6e3 guibg=#dc322f
-hi CommandCursor guifg=#fdf6e3 guibg=#cb4b16
+highlight Cursor        guifg=#fdf6e3 guibg=#2aa198
+highlight NormalCursor  guifg=#fdf6e3 guibg=#2aa198 " #5489ce
+highlight InsertCursor  guifg=#fdf6e3 guibg=#b58900 " #8a9824
+highlight VisualCursor  guifg=#fdf6e3 guibg=#d33682
+highlight ReplaceCursor guifg=#fdf6e3 guibg=#dc322f
+highlight CommandCursor guifg=#fdf6e3 guibg=#cb4b16
 
 " Turn off blinking.
 set guicursor=a:block-Cursor
@@ -579,7 +587,6 @@ set guicursor+=v-ve:VisualCursor
 
 " I said NO blinking!
 set guicursor+=a:blinkon0
-"}}}
 "}}}
 
 
