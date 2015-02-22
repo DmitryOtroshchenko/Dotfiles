@@ -347,7 +347,7 @@ noremap <Leader>t :Unite -no-split -buffer-name=fb -input=** -start-insert buffe
 "{{{ Did you mean?
 " Ask to precise file name if not sure.
 " Inspired by 'EinfachToll/DidYouMean'
-function! s:didyoumean()
+function! s:DidYouMean()
     " as of Vim 7.4, glob() has an optional parameter to split, but not
     " everybody is using 7.4 yet
     let matching_files = split(glob(expand('%') . '*', 1), '\n')
@@ -373,7 +373,7 @@ endfunction
 
 augroup vimrc_didyoumean
     autocmd!
-    autocmd BufNewFile * call s:didyoumean()
+    autocmd BufNewFile * call s:DidYouMean()
 augroup END
 "}}}
 
@@ -498,14 +498,14 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-stay)
 map g/ <Plug>(incsearch-stay)
 
-function! s:incsearch_keymap()
+function! s:IncsearchKeymap()
     IncSearchNoreMap <Tab>   <Over>(buffer-complete)
     IncSearchNoreMap <S-Tab> <Over>(buffer-complete-prev)
 endfunction
 
 augroup vimrc_incsearch_keymap
     autocmd!
-    autocmd VimEnter * call s:incsearch_keymap()
+    autocmd VimEnter * call s:IncsearchKeymap()
 augroup END
 "}}}
 
