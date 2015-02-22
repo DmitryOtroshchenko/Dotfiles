@@ -558,6 +558,11 @@ function! s:UpdateColorscheme()
     highlight LineNr ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
     " Sign column should have the same color as the rest of the workspace.
     highlight SignColumn ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
+    " Fix gitgutter colors: it takes them from uncorrected colorscheme.
+    highlight link GitGutterAdd DiffAdd
+    highlight link GitGutterChange DiffChange
+    highlight link GitGutterDelete DiffDelete
+    highlight link GitGutterChangeDelete DiffDelete
 endfunction
 
 augroup vimrc_fix_colorscheme
@@ -567,26 +572,32 @@ augroup END
 
 
 "{{{ Change cursor color depending on current mode
-highlight Cursor        guifg=#fdf6e3 guibg=#2aa198
-highlight NormalCursor  guifg=#fdf6e3 guibg=#2aa198 " #5489ce
-highlight InsertCursor  guifg=#fdf6e3 guibg=#b58900 " #8a9824
-highlight VisualCursor  guifg=#fdf6e3 guibg=#d33682
-highlight ReplaceCursor guifg=#fdf6e3 guibg=#dc322f
-highlight CommandCursor guifg=#fdf6e3 guibg=#cb4b16
+function! s:SetModeAwareCursors()
+    highlight Cursor        guifg=#fdf6e3 guibg=#2aa198
+    highlight NormalCursor  guifg=#fdf6e3 guibg=#2aa198 " #5489ce
+    highlight InsertCursor  guifg=#fdf6e3 guibg=#b58900 " #8a9824
+    highlight VisualCursor  guifg=#fdf6e3 guibg=#d33682
+    highlight ReplaceCursor guifg=#fdf6e3 guibg=#dc322f
+    highlight CommandCursor guifg=#fdf6e3 guibg=#cb4b16
 
-" Turn off blinking.
-set guicursor=a:block-Cursor
+    " Turn off blinking.
+    set guicursor=a:block-Cursor
 
-" Mode aware cursors.
-set guicursor+=o:hor50-NormalCursor
-set guicursor+=n:NormalCursor
-set guicursor+=i-ci-sm:InsertCursor
-set guicursor+=r-cr:ReplaceCursor-hor20
-set guicursor+=c:InsertCursor
-set guicursor+=v-ve:VisualCursor
+    " Mode aware cursors.
+    set guicursor+=o:hor50-NormalCursor
+    set guicursor+=n:NormalCursor
+    set guicursor+=i-ci-sm:InsertCursor
+    set guicursor+=r-cr:ReplaceCursor-hor20
+    set guicursor+=c:InsertCursor
+    set guicursor+=v-ve:VisualCursor
 
-" I said NO blinking!
-set guicursor+=a:blinkon0
+    " I said NO blinking!
+    set guicursor+=a:blinkon0
+endfunction
+
+augroup vimrc_set_mode_aware_cursors
+    autocmd VimEnter,ColorScheme * call s:SetModeAwareCursors()
+augroup END
 "}}}
 
 
