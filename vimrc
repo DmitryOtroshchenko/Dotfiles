@@ -567,6 +567,7 @@ function! s:UpdateColorscheme()
 endfunction
 
 augroup vimrc_fix_colorscheme
+    autocmd!
     autocmd VimEnter,ColorScheme * call s:UpdateColorscheme()
 augroup END
 "}}}
@@ -597,6 +598,7 @@ function! s:SetModeAwareCursors()
 endfunction
 
 augroup vimrc_set_mode_aware_cursors
+    autocmd!
     autocmd VimEnter,ColorScheme * call s:SetModeAwareCursors()
 augroup END
 "}}}
