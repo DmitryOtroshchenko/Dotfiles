@@ -132,6 +132,8 @@ Plug 'JuliaLang/julia-vim'
 
 Plug 'tshirtman/vim-cython'
 
+Plug 'ekalinin/Dockerfile.vim'
+
 "}}}
 
 "{{{ Git
