@@ -612,4 +612,6 @@ augroup vimrc_ft_python
     autocmd!
     " Allow triple quotes.
     autocmd FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
+    " Activate the default virtualenv when vim is loaded.
+    autocmd VimEnter * :VirtualEnvActivate py
 augroup END
