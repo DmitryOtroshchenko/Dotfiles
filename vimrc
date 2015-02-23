@@ -230,7 +230,7 @@ let g:ycm_path_to_python_interpreter = "/usr/local/bin/python2.7"
 
 "{{{ majutsushi/tagbar
 let g:tagbar_autofocus = 1
-let g:tagbar_autopreview = 1
+let g:tagbar_autopreview = 0
 let g:tagbar_show_linenumbers = 1
 noremap <F6> :TagbarOpenAutoClose<CR>
 "}}}
