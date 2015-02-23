@@ -222,6 +222,7 @@ let g:ycm_autoclose_preview_window_after_completion = 0
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_min_num_of_chars_for_completion = 1
 let g:ycm_filepath_completion_use_working_dir = 1
+let g:ycm_path_to_python_interpreter = "/usr/local/bin/python2.7"
 
 " nnoremap tg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "}}}
