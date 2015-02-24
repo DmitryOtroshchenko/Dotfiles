@@ -400,6 +400,11 @@ let python_highlight_all = 1
 "{{{ airblade/vim-gitgutter
 let g:gitgutter_sign_column_always = 1
 
+" This helps to avoid glitches in terminal.
+if !has('gui_running')
+    set updatetime=1000
+endif
+
 " TODO: choose better mappings. Use easymotion prefix?
 nmap <leader>ht <Plug>GitGutterPrevHunk
 nmap <leader>hT <Plug>GitGutterNextHunk
