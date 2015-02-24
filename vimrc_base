@@ -228,6 +228,8 @@ set listchars=tab:▸⋅,nbsp:⋅,trail:⋅,eol:¬,extends:❯,precedes:❮
 set backspace=indent,eol,start
 
 " Misc
+" This line permits to start vim on Mac without X11 server.
+" set clipboard=exclude:.*
 set clipboard=unnamed
 " Ask for confirmation when doing hard stuff...
 set confirm
