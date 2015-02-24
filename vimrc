@@ -145,6 +145,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv'
 
 " Mark changed lines by diff signs.
+" This plugin creates redraw artefacts in iTerm in insert mode due to
+" a vim bug. The bug was fixed in Vim 7.4.427.
+" See https://github.com/airblade/vim-gitgutter/issues/155
 Plug 'airblade/vim-gitgutter'
 
 "}}}
