@@ -326,18 +326,6 @@ function! ResetSearchPattern()
 endfunction
 noremap <Leader>, :call ResetSearchPattern()<CR>
 
-" Toggle between text editing and code editing.
-function! ToggleWordWrap()
-    if &wrap
-        setlocal nowrap
-        echo 'No wrap'
-    else
-        setlocal wrap linebreak nolist
-        echo 'Wrap'
-    endif
-endfunction
-noremap <Leader>w :call ToggleWordWrap()<CR>
-
 nnoremap K i<CR><Esc>h
 
 inoremap <C-e> <C-o>$

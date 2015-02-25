@@ -87,8 +87,13 @@ Plug 'moll/vim-bbye'
 
 Plug 'tpope/vim-eunuch'
 
+" Misc vim goodies.
+Plug 'tpope/vim-unimpaired'
+
+" Start screen with a list of recently opened files and bookmarks.
 Plug 'mhinz/vim-startify'
 
+" Undo tree visualization
 Plug 'sjl/gundo.vim'
 
 "}}}
@@ -174,6 +179,9 @@ Plug 'vim-scripts/loremipsum'
 
 " Surrounding tags/markers/quotes text objects.
 Plug 'tpope/vim-surround'
+
+" Abbreviations and word form-aware substitutions.
+Plug 'tpope/vim-abolish'
 
 " Equally indented lines block text object.
 Plug 'michaeljsmith/vim-indent-object'
