@@ -12,6 +12,10 @@ scriptencoding utf-8
 
 filetype plugin indent on
 
+" This is necessary to make some plugins work.
+" E.g. gitgutter on Ubuntu 12.04
+set shell=/bin/bash
+
 if has('gui_running')
     set guifont=Source\ Code\ Pro:h18,Consolas:h18,Inconsolata:h18,Courier:h18
     " Number of pixel lines inserted between lines in addition to the
