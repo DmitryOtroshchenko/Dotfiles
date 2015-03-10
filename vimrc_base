@@ -155,7 +155,7 @@ set autoindent
 " I don't want to see fold level markers.
 set foldcolumn=0
 set foldmethod=indent
-set foldlevel=99
+set foldlevelstart=1
 
 " Navigation
 set number
@@ -329,6 +329,9 @@ nnoremap <Leader>p `[v`]
 " Don't loose selection after indenting in visual mode.
 vnoremap < <gv
 vnoremap > >gv
+
+" Select (charwise) the contents of the current line, excluding indentation.
+nnoremap vv ^vg_
 
 " Turn search patterns highlight on and off.
 noremap <Leader><SPACE> :set hlsearch! hlsearch?<CR>
