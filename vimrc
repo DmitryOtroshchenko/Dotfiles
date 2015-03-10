@@ -257,7 +257,7 @@ let g:UltiSnipsJumpBackwardTrigger='<c-k>'
 
 
 "{{{ osyo-manga/vim-watchdogs
-let g:watchdogs_check_BufWritePost_enable = 1
+let g:watchdogs_check_BufWritePost_enable = 0
 "}}}
 
 
