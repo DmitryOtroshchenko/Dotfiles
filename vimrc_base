@@ -302,6 +302,14 @@ noremap h gk
 noremap <up> gk
 inoremap <up> <C-o>gk
 
+" Don't open folds when jumping paragraph by paragraph.
+" TODO: sometimes in operator-pending mode it jumps incorrectly, fix it.
+noremap <expr> } foldclosed(search('^$', 'Wn')) == -1 ? "}" : "}j}"
+noremap <expr> { foldclosed(search('^$', 'Wnb')) == -1 ? "{" : "{k{"
+
+" Toggle "keep current line in the center of the screen" mode.
+nnoremap <leader>C :let &scrolloff=999-&scrolloff<CR>
+
 " Use ; to enter ex commands.
 noremap ; :
 " Repeat the last ex command by typing @; or @:.
@@ -382,6 +390,20 @@ inoremap <C-Z> <C-o>:call ToggleCompletionPreview()<CR>
 "
 " Some additional autocommands.
 "
+
+function! s:ReturnToLastFilePos()
+    if line("'\"") > 0 && line("'\"") <= line('$')
+        execute 'normal! g`"zvzz'
+    endif
+endfunction
+
+
+" Make sure vim returns to the same line when you reopen a file.
+augroup vimrc_base_return_to_the_last_pos
+    autocmd!
+    autocmd BufReadPost * call s:ReturnToLastFilePos()
+augroup END
+
 
 augroup vimrc_base_git_diff
     autocmd!
