@@ -274,6 +274,7 @@ noremap <F5> :GundoToggle<CR>
 
 "{{{ vim-pandoc/vim-pandoc
 let g:pandoc#filetypes#handled = ['markdown', 'textile']
+let g:pandoc#syntax#codeblocks#embeds#langs = ["python", "bash=sh", "cpp", "c", "julia", "ruby"]
 "}}}
 
 
