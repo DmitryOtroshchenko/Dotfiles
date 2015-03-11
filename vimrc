@@ -3,36 +3,76 @@ if has('vim_starting')
     set nocompatible
 endif
 
-let s:vimrc_base = expand('~/.vimrc_base')
-if !filereadable(s:vimrc_base)
-    echomsg 'Cannot find vimrc_base, terminating.'
+function! Print(msg, ...)
+    " Parse optional arguments.
+    let is_msg = 1
+    if !empty(a:000)
+        let is_msg = (get(a:000, 0, 1) == 1)
+    endif
+
+    " Echo to the appropriate destination.
+    if !empty(a:msg)
+        if is_msg
+            echomsg a:msg
+        else
+            echo a:msg
+        endif
+    endif
+endfunction
+
+function! TrySource(fname, ...)
+    " Parse optional arguments.
+    let error_msg = ''
+    let is_msg = 1
+    if !empty(a:000)
+        let error_msg = string(get(a:000, 0, ''))
+        let is_msg = (get(a:000, 1, 1) == 1)
+    endif
+
+    let fname = expand(a:fname)
+    try
+        execute 'source ' . a:fname
+        return 0
+    catch /.*/
+        call Print(error_msg, is_msg)
+        call "\nLocation"
+        " call Print(string(v:throwpoint), is_msg)
+        call "\nError"
+        " call Print(string(v:exception), is_msg)
+    endtry
+endfunction
+
+if TrySource('~/.vimrc_base', 'Cannot source vimrc_base, terminating.')
     finish
 endif
-execute 'source ' . s:vimrc_base
 
 "{{{ Automatically install vim-plug if absent.
-let s:plug_script = expand('~/.vim/autoload/plug.vim')
-let s:plug_url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+function! s:InstallPlug()
+    let plug_script = expand('~/.vim/autoload/plug.vim')
+    let plug_url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-if !filereadable(s:plug_script)
-    echomsg 'Installing vim-plug...'
-    silent !mkdir -p ~/.vim/autoload
+    if !filereadable(plug_script)
+        echomsg 'Installing vim-plug...'
+        silent !mkdir -p ~/.vim/autoload
 
-    " Use either wget or curl to download the script.
-    silent !command -v curl
-    let curl_exists = (v:shell_error == 0)
-    silent !command -v wget
-    let wget_exists = (v:shell_error == 0)
+        " Use either wget or curl to download the script.
+        silent !command -v curl
+        let curl_exists = (v:shell_error == 0)
+        silent !command -v wget
+        let wget_exists = (v:shell_error == 0)
 
-    if curl_exists
-        execute 'silent !curl -fLo ' . s:plug_script . ' ' . s:plug_url
-    elseif wget_exists
-        execute 'silint !wget -O ' s:plug_script . ' ' . s:plug_url
-    else
-        echomsg 'I cannot download plug.vim? Stop using a crap system without wget and curl!11'
-        finish
+        if curl_exists
+            execute 'silent !curl -fLo ' . plug_script . ' ' . plug_url
+        elseif wget_exists
+            execute 'silint !wget -O ' plug_script . ' ' . plug_url
+        else
+            echomsg 'I cannot download plug.vim? Stop using a crap system without wget and curl!11'
+            finish
+        endif
     endif
-endif
+endfunction
+
+call s:InstallPlug()
 "}}}
 
 " Plugin declarations.
