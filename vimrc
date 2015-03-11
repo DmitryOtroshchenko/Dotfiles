@@ -41,7 +41,7 @@ call plug#begin('~/.vim/plugged')
 "{{{ Meta-plugins and libs
 
 " Asynchronous execution library for Vim.
-Plug 'Shougo/vimproc', { 'do': 'make -f make_mac.mak' }
+Plug 'Shougo/vimproc', { 'do': 'make' }
 
 " Plugin developer goodies lib.
 Plug 'xolox/vim-misc'
