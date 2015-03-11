@@ -5,7 +5,7 @@ endif
 
 let s:vimrc_base = expand('~/.vimrc_base')
 if !filereadable(s:vimrc_base)
-    echo 'Cannot find vimrc_base, terminating.'
+    echomsg 'Cannot find vimrc_base, terminating.'
     finish
 endif
 execute 'source ' . s:vimrc_base
@@ -15,7 +15,7 @@ let s:plug_script = expand('~/.vim/autoload/plug.vim')
 let s:plug_url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 if !filereadable(s:plug_script)
-    echo 'Installing vim-plug...'
+    echomsg 'Installing vim-plug...'
     silent !mkdir -p ~/.vim/autoload
 
     " Use either wget or curl to download the script.
@@ -29,14 +29,19 @@ if !filereadable(s:plug_script)
     elseif wget_exists
         execute 'silint !wget -O ' s:plug_script . ' ' . s:plug_url
     else
-        echo 'I cannot download plug.vim? Stop using a crap system without wget and curl!11'
+        echomsg 'I cannot download plug.vim? Stop using a crap system without wget and curl!11'
         finish
     endif
 endif
 "}}}
 
 " Plugin declarations.
-call plug#begin('~/.vim/plugged')
+try
+    call plug#begin('~/.vim/plugged')
+catch /.*/
+    echomsg 'Cannot load plug. No hands - no plugins.'
+    finish
+endtry
 
 "{{{ Meta-plugins and libs
 
