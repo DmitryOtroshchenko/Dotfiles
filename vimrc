@@ -21,17 +21,22 @@ endfunction
 
 function! TrySource(fname, ...)
     " Parse optional arguments.
-    let error_msg = string(get(a:000, 0, ''))
-    let is_msg = (get(a:000, 1, 1) == 1)
+    let error_msg = get(a:000, 0, '')
+    let is_msg = get(a:000, 1, 1) == 1
+    let print_stacktrace = get(a:000, 2, 0) == 1
 
     let fname = expand(a:fname)
     try
         execute 'source ' . a:fname
         return 0
     catch /.*/
-        call Print(error_msg, is_msg)
-        call "\nError :"
-        call Print(string(v:exception), is_msg)
+        if !empty(error_msg)
+            call Print(error_msg, is_msg)
+        endif
+        if print_stacktrace
+            call Print('Error :', is_msg)
+            call Print(v:exception, is_msg)
+        endif
         return 1
     endtry
 endfunction
@@ -285,7 +290,7 @@ Plug 'luochen1990/rainbow'
 
 "}}}
 
-TrySource('~/Dotfiles/vim-test.vim')
+call TrySource('~/Dotfiles/vim-test.vim')
 
 " End of plugin declarations.
 call plug#end()
