@@ -274,6 +274,9 @@ Plug 'osyo-manga/vim-anzu'
 " Use ack-grep for multi-file searches.
 Plug 'mileszs/ack.vim'
 
+" Sublime and Emacs-like multifile search buffer.
+Plug 'pelodelfuego/vim-swoop'
+
 "}}}
 
 "{{{ Colorschemes
