@@ -3,12 +3,11 @@ if has('vim_starting')
     set nocompatible
 endif
 
+" {{{ Essential vimrc tools
 function! Print(msg, ...)
     " Parse optional arguments.
     let is_msg = 1
-    if !empty(a:000)
-        let is_msg = (get(a:000, 0, 1) == 1)
-    endif
+    let is_msg = (get(a:000, 0, 1) == 1)
 
     " Echo to the appropriate destination.
     if !empty(a:msg)
@@ -22,12 +21,8 @@ endfunction
 
 function! TrySource(fname, ...)
     " Parse optional arguments.
-    let error_msg = ''
-    let is_msg = 1
-    if !empty(a:000)
-        let error_msg = string(get(a:000, 0, ''))
-        let is_msg = (get(a:000, 1, 1) == 1)
-    endif
+    let error_msg = string(get(a:000, 0, ''))
+    let is_msg = (get(a:000, 1, 1) == 1)
 
     let fname = expand(a:fname)
     try
@@ -35,12 +30,12 @@ function! TrySource(fname, ...)
         return 0
     catch /.*/
         call Print(error_msg, is_msg)
-        call "\nLocation"
-        " call Print(string(v:throwpoint), is_msg)
-        call "\nError"
-        " call Print(string(v:exception), is_msg)
+        call "\nError :"
+        call Print(string(v:exception), is_msg)
+        return 1
     endtry
 endfunction
+" }}}
 
 if TrySource('~/.vimrc_base', 'Cannot source vimrc_base, terminating.')
     finish
@@ -66,7 +61,7 @@ function! s:InstallPlug()
         elseif wget_exists
             execute 'silint !wget -O ' plug_script . ' ' . plug_url
         else
-            echomsg 'I cannot download plug.vim? Stop using a crap system without wget and curl!11'
+            echomsg 'I cannot download plug.vim? Stop using a crap system without wget and curl.'
             finish
         endif
     endif
@@ -290,10 +285,7 @@ Plug 'luochen1990/rainbow'
 
 "}}}
 
-let s:test_settnigs = '~/Dotfiles/vim-test.vim'
-if filereadable(expand(s:test_settnigs))
-    execute 'source ' . s:test_settnigs
-endif
+TrySource('~/Dotfiles/vim-test.vim')
 
 " End of plugin declarations.
 call plug#end()
