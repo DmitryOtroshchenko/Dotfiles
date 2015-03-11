@@ -3,7 +3,12 @@ if has('vim_starting')
     set nocompatible
 endif
 
-source ~/.vimrc_base
+let s:vimrc_base = expand('~/.vimrc_base')
+if !filereadable(s:vimrc_base)
+    echo 'Cannot find vimrc_base, terminating.'
+    finish
+endif
+execute 'source ' . s:vimrc_base
 
 "{{{ Automatically install vim-plug if absent.
 let s:plug_script = expand('~/.vim/autoload/plug.vim')
@@ -25,6 +30,7 @@ if !filereadable(s:plug_script)
         execute 'silint !wget -O ' s:plug_script . ' ' . s:plug_url
     else
         echo 'I cannot download plug.vim? Stop using a crap system without wget and curl!11'
+        finish
     endif
 endif
 "}}}
