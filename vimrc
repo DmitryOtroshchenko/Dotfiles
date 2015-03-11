@@ -81,6 +81,9 @@ Plug 'szw/vim-maximizer'
 " Delete buffers without closing splits and tabs.
 Plug 'moll/vim-bbye'
 
+" Vim-tmux integration.
+Plug 'tpope/vim-tbone'
+
 "}}}
 
 "{{{ Misc
@@ -467,7 +470,7 @@ let g:EasyMotion_enter_jump_first = 1
 let g:EasyMotion_space_jump_first = 1
 
 let g:EasyMotion_use_upper = 1
-let g:EasyMotion_keys = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ;'
+let g:EasyMotion_keys = 'ARSTNEIODHFPLUVMWYQ;CXZBKG'
 let g:EasyMotion_do_shade = 1
 
 map <SPACE> <Plug>(easymotion-prefix)

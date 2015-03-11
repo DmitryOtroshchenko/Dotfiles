@@ -343,6 +343,11 @@ noremap <Leader>, :call ResetSearchPattern()<CR>
 
 nnoremap K i<CR><Esc>h
 
+onoremap ir i[
+onoremap ar a[
+vnoremap ir i[
+vnoremap ar a[
+
 inoremap <C-e> <C-o>$
 cnoremap <C-e> <end>
 inoremap <C-a> <C-o>0
