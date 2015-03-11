@@ -6,11 +6,26 @@ endif
 source ~/.vimrc_base
 
 "{{{ Automatically install vim-plug if absent.
-let plug_script=expand('~/.vim/autoload/plug.vim')
-if !filereadable(plug_script)
-  echo 'Installing vim-plug...'
-  silent !mkdir -p ~/.vim/autoload
-  silent !curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+let s:plug_script = expand('~/.vim/autoload/plug.vim')
+let s:plug_url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+if !filereadable(s:plug_script)
+    echo 'Installing vim-plug...'
+    silent !mkdir -p ~/.vim/autoload
+
+    " Use either wget or curl to download the script.
+    silent !command -v curl
+    let curl_exists = (v:shell_error == 0)
+    silent !command -v wget
+    let wget_exists = (v:shell_error == 0)
+
+    if curl_exists
+        execute 'silent !curl -fLo ' . s:plug_script . ' ' . plug_url
+    elseif wget_exists
+        execute 'silint !wget -O ' s:plug_script . ' ' . s:plug_url
+    else
+        echo 'I cannot download plug.vim? Stop using a crap system without wget and curl!11'
+    endif
 endif
 "}}}
 
