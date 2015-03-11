@@ -131,7 +131,6 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 
 " Open Marked 2 App from vim.
-" TODO: dont load on unix.
 Plug 'itspriddle/vim-marked'
 
 "}}}
@@ -347,8 +346,6 @@ function! s:SetupMarkdownFt()
     setlocal syntax=pandoc
     setlocal foldcolumn=0
     setlocal wrap
-    noremap <buffer> <localleader>md :MarkedOpen<CR>
-    noremap <buffer> <localleader>mq :MarkedQuit<CR>
     " autocmd BufNewFile,BufReadPost,BufWritePost *.md hi Conceal cterm=NONE ctermbg=NONE ctermfg=red gui=NONE guifg=red guibg=NONE
 endfunction
 
