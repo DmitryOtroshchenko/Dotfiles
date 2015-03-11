@@ -25,7 +25,7 @@ if !filereadable(s:plug_script)
     let wget_exists = (v:shell_error == 0)
 
     if curl_exists
-        execute 'silent !curl -fLo ' . s:plug_script . ' ' . plug_url
+        execute 'silent !curl -fLo ' . s:plug_script . ' ' . s:plug_url
     elseif wget_exists
         execute 'silint !wget -O ' s:plug_script . ' ' . s:plug_url
     else
