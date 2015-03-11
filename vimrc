@@ -224,7 +224,10 @@ Plug 'luochen1990/rainbow'
 
 "}}}
 
-source ~/Dotfiles/vim-test.vim
+let s:test_settnigs = '~/Dotfiles/vim-test.vim'
+if filereadable(expand(s:test_settnigs))
+    execute 'source ' . s:test_settnigs
+endif
 
 " End of plugin declarations.
 call plug#end()
