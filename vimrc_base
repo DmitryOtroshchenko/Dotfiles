@@ -429,6 +429,12 @@ augroup vimrc_base_python
 augroup END
 
 
+augroup vimrc_base_vimscript
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+
+
 function! BufferIsEmpty(n_buf)
     let is_modified = getbufvar(4, '&modified')
     let first_two_lines = getbufline(a:n_buf, 1, 2)
