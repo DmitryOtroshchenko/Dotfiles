@@ -177,7 +177,6 @@ Plug 'gregsexton/gitv'
 " This plugin creates redraw artefacts in iTerm in insert mode due to
 " a vim bug. The bug was fixed in Vim 7.4.427.
 " See https://github.com/airblade/vim-gitgutter/issues/155
-" TODO: fix cannot write to /var/tmp issue (Ubuntu 12.04).
 Plug 'airblade/vim-gitgutter'
 
 "}}}
