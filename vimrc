@@ -702,3 +702,5 @@ augroup vimrc_ft_python
 augroup END
 
 let g:virtualenv_auto_activate = 1
+
+TrySource('~/.vimrc_local')
