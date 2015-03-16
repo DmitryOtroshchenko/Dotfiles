@@ -425,7 +425,7 @@ call unite#custom#profile('source/grep', 'context', {
 
 call unite#custom#source('file,file/new,buffer,file_rec', 'matchers', 'matcher_fuzzy')
 
-noremap <Leader>b :Unite -no-split -buffer-name=buffers buffer<CR>
+noremap <Leader>b :Unite -no-split -buffer-name=buffers -input=* -start-insert buffer<CR>
 noremap <Leader>t :Unite -no-split -buffer-name=fb -input=** -start-insert buffer file_rec/async<CR>
 "}}}
 
@@ -540,7 +540,7 @@ let g:EasyMotion_use_upper = 1
 let g:EasyMotion_keys = 'ARSTNEIODHFPLUVMWYQ;CXZBKG'
 let g:EasyMotion_do_shade = 1
 
-map <SPACE> <Plug>(easymotion-prefix)
+map , <Plug>(easymotion-prefix)
 
 nmap s <Plug>(easymotion-s2)
 xmap s <Plug>(easymotion-s2)

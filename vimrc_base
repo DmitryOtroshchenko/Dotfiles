@@ -268,8 +268,13 @@ set ssop-=folds
 " Key mappings.
 "
 
-let mapleader=','
-let maplocalleader=','
+let mapleader = "\<SPACE>"
+let maplocalleader = "\<SPACE>"
+
+nnoremap <Leader>w :w<CR>
+" TODO: it does not work.
+nnoremap q: :q<CR>
+
 
 " I can type :help on my own, thanks.
 noremap  <F1> <Esc>
@@ -333,13 +338,11 @@ vnoremap > >gv
 " Select (charwise) the contents of the current line, excluding indentation.
 nnoremap vv ^vg_
 
-" Turn search patterns highlight on and off.
-noremap <Leader><SPACE> :set hlsearch! hlsearch?<CR>
 " Turn of highlight by searching for a nonexistent (incorrect) pattern.
 function! ResetSearchPattern()
     let @/ = ''
 endfunction
-noremap <Leader>, :call ResetSearchPattern()<CR>
+noremap <Leader><Leader> :call ResetSearchPattern()<CR>
 
 nnoremap K i<CR><Esc>h
 
