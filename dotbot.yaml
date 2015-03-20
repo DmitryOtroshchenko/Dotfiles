@@ -1,4 +1,6 @@
 
+- clean: ['~']
+
 - link:
     ~/.vimrc: vimrc
     ~/.vimrc_base: vimrc_base
