@@ -128,6 +128,8 @@ set showtabline=2
 set laststatus=2
 " Show currently edited ex command.
 set showcmd
+" I will NOT hit enter no continue!
+set shortmess=tI
 " Show current mode.
 set showmode
 " 1 line for ex command.
@@ -361,10 +363,6 @@ inoremap <C-u> <C-o>d^
 " Tabs and buffers.
 nnoremap <Leader>n gt
 nnoremap <Leader>N gT
-nnoremap <silent> <S-t> :tabnew<CR>
-" nnoremap <leader>] :BF<CR>
-" nnoremap <leader>[ :BB<CR>
-" nnoremap <leader>x :BD<CR>
 nnoremap <leader>X :bd<CR>
 
 " Easy window navigation
@@ -412,7 +410,7 @@ endfunction
 " Make sure vim returns to the same line when you reopen a file.
 augroup vimrc_base_return_to_the_last_pos
     autocmd!
-    autocmd BufReadPost * call s:ReturnToLastFilePos()
+    autocmd BufReadPost * :call s:ReturnToLastFilePos()
 augroup END
 
 
@@ -473,7 +471,7 @@ endfun
 
 augroup vimrc_base_close_hidden_empty_buffers
     autocmd!
-    autocmd BufEnter * call s:CloseHiddenBuffers()
+    autocmd BufEnter * :call s:CloseHiddenBuffers()
 augroup END
 
 " TODO:
