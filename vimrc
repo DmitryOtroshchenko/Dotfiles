@@ -255,6 +255,13 @@ Plug 'tpope/vim-abolish'
 " Equally indented lines block text object.
 Plug 'michaeljsmith/vim-indent-object'
 
+" Custom text objects.
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-line'
+Plug 'kana/vim-textobj-fold'
+" Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-niceblock'
+
 "}}}
 
 "{{{ Search and motions
@@ -425,8 +432,8 @@ call unite#custom#profile('source/grep', 'context', {
 
 call unite#custom#source('file,file/new,buffer,file_rec', 'matchers', 'matcher_fuzzy')
 
-noremap <Leader>b :Unite -no-split -buffer-name=buffers -input=* -start-insert buffer<CR>
-noremap <Leader>t :Unite -no-split -buffer-name=fb -input=** -start-insert buffer file_rec/async<CR>
+noremap <Leader>b :Unite -no-split -wipe -buffer-name=buffers -input=* -start-insert buffer<CR>
+noremap <Leader>t :Unite -no-split -wipe -buffer-name=fb      -input=* -start-insert buffer file_rec/async<CR>
 "}}}
 
 
