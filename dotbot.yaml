@@ -1,0 +1,9 @@
+
+- link:
+    ~/.vimrc: vimrc
+    ~/.vimrc_base: vimrc_base
+    ~/.tmux.conf: tmux.conf
+    ~/.tmux_line: tmux_line
+    ~/.tmux-osx.conf: tmux-osx.conf
+    ~/.ackrc: ackrc
+    ~/.gitconfig: gitconfig
