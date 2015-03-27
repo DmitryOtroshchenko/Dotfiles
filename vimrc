@@ -150,6 +150,9 @@ Plug 'moll/vim-bbye'
 " Vim-tmux integration.
 Plug 'tpope/vim-tbone'
 
+" Restore focus events in tmux.
+Plug 'tmux-plugins/vim-tmux-focus-events'
+
 "}}}
 
 "{{{ Misc
@@ -207,6 +210,10 @@ Plug 'JuliaLang/julia-vim'
 Plug 'tshirtman/vim-cython'
 
 Plug 'ekalinin/Dockerfile.vim'
+
+Plug 'sirtaj/vim-openscad'
+
+Plug 'tmux-plugins/vim-tmux'
 
 "}}}
 
