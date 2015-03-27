@@ -373,6 +373,7 @@ noremap <C-W>,     :MaximizerToggle<CR>
 
 "{{{ moll/vim-bbye
 noremap <Leader>x :Bdelete<CR>
+noremap <Leader>X :Bdelete!<CR>
 "}}}
 
 
@@ -635,6 +636,9 @@ nmap N <Plug>(anzu-N-with-echo)
 
 
 "{{{ mileszs/ack.vim
+if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+endif
 let g:ack_default_options = ' -s -H --nocolor --nogroup --smart-case --sort-files --follow'
 let g:ackhighlight = 1
 " let g:ack_autofold_results = 1

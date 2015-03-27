@@ -370,7 +370,7 @@ inoremap <C-u> <C-o>d^
 " Tabs and buffers.
 nnoremap <Leader>n gt
 nnoremap <Leader>N gT
-nnoremap <leader>X :bd<CR>
+" nnoremap <leader>X :bd<CR>
 
 " Easy window navigation
 noremap <C-h> <C-w>k
