@@ -3,6 +3,7 @@
 
 - link:
     ~/.vimrc: vimrc
+    ~/.nvimrc: vimrc
     ~/.vimrc_base: vimrc_base
     ~/.tmux.conf: tmux.conf
     ~/.tmux_line: tmux_line

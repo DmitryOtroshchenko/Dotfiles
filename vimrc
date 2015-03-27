@@ -48,12 +48,12 @@ endif
 
 "{{{ Automatically install vim-plug if absent.
 function! s:InstallPlug()
-    let plug_script = expand('~/.vim/autoload/plug.vim')
+    let plug_script = expand(g:VimHome . '/autoload/plug.vim')
     let plug_url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
     if !filereadable(plug_script)
         echomsg 'Installing vim-plug...'
-        silent !mkdir -p ~/.vim/autoload
+        execute('silent !mkdir -p ' . g:VimHome . '/autoload')
 
         " Use either wget or curl to download the script.
         silent !command -v curl
@@ -77,7 +77,7 @@ call s:InstallPlug()
 
 " Plugin declarations.
 try
-    call plug#begin('~/.vim/plugged')
+    call plug#begin(g:VimHome . '/plugged')
 catch /.*/
     echomsg 'Cannot load plug. No hands - no plugins.'
     finish

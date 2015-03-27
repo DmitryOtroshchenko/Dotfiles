@@ -43,12 +43,19 @@ else
     endif
 endif
 
+if has('nvim')
+    let g:VimHome = "~/.nvim"
+else
+    let g:VimHome = "~/.vim"
+endif
+
 if exists('+undofile')
     " undofile permits to use undos after exiting and restarting.
     set undofile
     " Don't forget to create a directory for undo files.
-    silent !mkdir -p ~/.vim/undo/
-    set undodir=~/.vim/undo/
+    let undo_dir = g:VimHome . '/undo/'
+    execute('silent !mkdir -p ' . undo_dir)
+    let &undodir = undo_dir
 endif
 
 if has('cryptv')
