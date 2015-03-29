@@ -10,3 +10,4 @@
     ~/.tmux-osx.conf: tmux-osx.conf
     ~/.ackrc: ackrc
     ~/.gitconfig: gitconfig
+    ~/.ssh/rc: sshrc
