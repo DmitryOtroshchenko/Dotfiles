@@ -91,6 +91,9 @@ Plug 'Shougo/vimproc', { 'do': 'make' }
 " Plugin developer goodies lib.
 Plug 'xolox/vim-misc'
 
+" Functional programming lib for Vimscript
+Plug 'haya14busa/underscore.vim'
+
 " Google lib for plugin development.
 Plug 'google/vim-maktaba'
 
@@ -139,6 +142,10 @@ Plug 'osyo-manga/vim-watchdogs'
 
 "}}}
 
+"{{{ REPLs and interpreter interaction plugins.
+
+"}}}
+
 "{{{ Window management
 
 " Maximize and unmaximize windows.
@@ -167,6 +174,9 @@ Plug 'mhinz/vim-startify'
 
 " Undo tree visualization
 Plug 'sjl/gundo.vim'
+
+" Man page viewer
+Plug 'bruno-/vim-man'
 
 "}}}
 
