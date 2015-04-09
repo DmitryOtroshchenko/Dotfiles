@@ -241,6 +241,8 @@ Plug 'gregsexton/gitv'
 " See https://github.com/airblade/vim-gitgutter/issues/155
 Plug 'airblade/vim-gitgutter'
 
+Plug 'airblade/vim-rooter'
+
 "}}}
 
 "{{{ Text editing
@@ -514,6 +516,10 @@ nmap <leader>ht <Plug>GitGutterPrevHunk
 nmap <leader>hT <Plug>GitGutterNextHunk
 "}}}
 
+"{{{
+let g:rooter_disable_map = 1
+let g:rooter_manual_only = 1
+"}}}
 
 "{{{ svermeulen/vim-easyclip
 noremap <silent> <leader>y :Yanks<CR>
@@ -732,3 +738,5 @@ augroup END
 let g:virtualenv_auto_activate = 1
 
 call TrySource('~/.vimrc_local')
+
+" TODO: remap everything as <unique>
