@@ -370,6 +370,8 @@ inoremap <C-u> <C-o>d^
 " Tabs and buffers.
 nnoremap <Leader>n gt
 nnoremap <Leader>N gT
+nnoremap <TAB> :bnext<CR>
+nnoremap <C-TAB> :bprev<CR>
 " nnoremap <leader>X :bd<CR>
 
 " Easy window navigation
