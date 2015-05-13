@@ -281,6 +281,8 @@ Plug 'kana/vim-textobj-fold'
 " Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-niceblock'
 
+Plug 'Julian/vim-textobj-variable-segment'
+
 "}}}
 
 "{{{ Search and motions
