@@ -528,9 +528,15 @@ noremap <silent> <leader>y :Yanks<CR>
 map M m$
 
 let g:EasyClipUseSubstituteDefaults = 0
+let g:EasyClipAutoFormat = 1
+let g:EasyClipAlwaysMoveCursorToEndOfPaste = 1
+let g:EasyClipPreserveCursorPositionAfterYank = 1
+
 nmap <silent> gs <plug>SubstituteOverMotionMap
 nmap gss <plug>SubstituteLine
 xmap gs <plug>XEasyClipPaste
+
+imap <c-v> <plug>EasyClipInsertModePaste
 "}}}
 
 
