@@ -195,6 +195,9 @@ Plug 'itspriddle/vim-marked'
 
 "{{{ Unite et al
 
+" General purpose fuzzy finder.
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+
 " Vim list interface.
 Plug 'Shougo/unite.vim'
 
