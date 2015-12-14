@@ -123,7 +123,7 @@ Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
 
 " Avoid oldfag-style C-xC-uC-p
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 
 " Code outliner.
 Plug 'majutsushi/tagbar'
@@ -164,7 +164,11 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 
 "{{{ Misc
 
+" OS interaction goodies.
 Plug 'tpope/vim-eunuch'
+
+" Auto set paste.
+Plug 'ConradIrwin/vim-bracketed-paste'
 
 " Misc vim goodies.
 Plug 'tpope/vim-unimpaired'
@@ -191,6 +195,9 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 " Open Marked 2 App from vim.
 Plug 'itspriddle/vim-marked'
 
+" Wrap mode improvements.
+Plug 'reedes/vim-pencil'
+
 "}}}
 
 "{{{ Unite et al
@@ -198,8 +205,57 @@ Plug 'itspriddle/vim-marked'
 " General purpose fuzzy finder.
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 
+cnoremap <silent> <c-l> <c-\>eGetCompletions()<cr>
+"add an extra <cr> at the end of this line to automatically accept the fzf-selected completions.
+
+function! Lister()
+    call extend(g:FZF_Cmd_Completion_Pre_List,split(getcmdline(),'\(\\\zs\)\@<!\& '))
+endfunction
+
+function! CmdLineDirComplete(prefix, options, rawdir)
+    let l:dirprefix = matchstr(a:rawdir,"^.*/")
+    if isdirectory(expand(l:dirprefix))
+        return join(a:prefix + map(fzf#run({
+                    \'options': a:options . ' --select-1  --query=' .
+                    \ a:rawdir[matchend(a:rawdir,"^.*/"):len(a:rawdir)],
+                    \'dir': expand(l:dirprefix)
+                    \}),
+                    \'"' . escape(l:dirprefix, " ") . '" . escape(v:val, " ")'))
+    else
+        return join(a:prefix + map(fzf#run({
+                    \'options': a:options . ' --query='. a:rawdir }),
+                    \'escape(v:val, " ")'))
+        "dropped --select-1 to speed things up on a long query
+endfunction
+
+    function! GetCompletions()
+        let g:FZF_Cmd_Completion_Pre_List = []
+        let l:cmdline_list = split(getcmdline(), '\(\\\zs\)\@<!\& ', 1)
+        let l:Prefix = l:cmdline_list[0:-2]
+        execute "silent normal! :" . getcmdline() . "\<c-a>\<c-\>eLister()\<cr>\<c-c>"
+        let l:FZF_Cmd_Completion_List = g:FZF_Cmd_Completion_Pre_List[len(l:Prefix):-1]
+        unlet g:FZF_Cmd_Completion_Pre_List
+        if len(l:Prefix) > 0 && l:Prefix[0] =~
+                    \ '^ed\=i\=t\=$\|^spl\=i\=t\=$\|^tabed\=i\=t\=$\|^arged\=i\=t\=$\|^vsp\=l\=i\=t\=$'
+            "single-argument file commands
+            return CmdLineDirComplete(l:Prefix, "",l:cmdline_list[-1])
+        elseif len(l:Prefix) > 0 && l:Prefix[0] =~
+                    \ '^arg\=s\=$\|^ne\=x\=t\=$\|^sne\=x\=t\=$\|^argad\=d\=$'
+            "multi-argument file commands
+            return CmdLineDirComplete(l:Prefix, '--multi', l:cmdline_list[-1])
+        else
+            return join(l:Prefix + fzf#run({
+                        \'source':l:FZF_Cmd_Completion_List,
+                        \'options': '--select-1 --query='.shellescape(l:cmdline_list[-1])
+                        \}))
+        endif
+endfunction
+
 " Vim list interface.
 Plug 'Shougo/unite.vim'
+
+" Git-grep source for Unite.
+Plug 'lambdalisue/unite-grep-vcs'
 
 " 2-panel file manager.
 Plug 'Shougo/vimfiler.vim'
@@ -243,6 +299,8 @@ Plug 'gregsexton/gitv'
 " a vim bug. The bug was fixed in Vim 7.4.427.
 " See https://github.com/airblade/vim-gitgutter/issues/155
 Plug 'airblade/vim-gitgutter'
+
+Plug 'will133/vim-dirdiff'
 
 Plug 'airblade/vim-rooter'
 
@@ -302,8 +360,16 @@ Plug 'haya14busa/vim-asterisk'
 " Counts number of occurrences when performing search.
 Plug 'osyo-manga/vim-anzu'
 
+" Incremental buffer line filtering.
+Plug 'osyo-manga/vim-hopping'
+
 " Use ack-grep for multi-file searches.
-Plug 'mileszs/ack.vim'
+" Plug 'mileszs/ack.vim'
+
+" Sublime Text -like search.
+Plug 'dyng/ctrlsf.vim'
+
+Plug 'wincent/ferret'
 
 " Sublime and Emacs-like multifile search buffer.
 Plug 'pelodelfuego/vim-swoop'
@@ -318,6 +384,8 @@ Plug 'flazz/vim-colorschemes'
 Plug 'gosukiwi/vim-atom-dark'
 
 Plug 'AlxHnr/clear_colors'
+
+Plug 'NLKNguyen/papercolor-theme'
 
 " Colors nested parentheses in different colors.
 Plug 'luochen1990/rainbow'
@@ -581,6 +649,9 @@ let g:EasyMotion_space_jump_first = 1
 let g:EasyMotion_use_upper = 1
 let g:EasyMotion_keys = 'ARSTNEIODHFPLUVMWYQ;CXZBKG'
 let g:EasyMotion_do_shade = 1
+
+" TODO:
+" nmap q <Plug>(easymotion-jumptoanywhere)
 
 map , <Plug>(easymotion-prefix)
 
