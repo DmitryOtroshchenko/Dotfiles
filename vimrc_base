@@ -58,11 +58,6 @@ if exists('+undofile')
     let &undodir = undo_dir
 endif
 
-if has('cryptv')
-    " Use more secure encryption method.
-    set cryptmethod=blowfish
-endif
-
 if has("gui_macvim") && has('mac')
     " Option -> Meta on mac.
     set macmeta
