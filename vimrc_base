@@ -339,10 +339,10 @@ vnoremap > >gv
 nnoremap vv ^vg_
 
 " Turn of highlight by searching for a nonexistent (incorrect) pattern.
-function! ResetSearchPattern()
+function! s:ResetSearchPattern()
     let @/ = ''
 endfunction
-noremap <Leader><Leader> :call ResetSearchPattern()<CR>
+noremap <Leader><Leader> :call s:ResetSearchPattern()<CR>
 
 nnoremap K i<CR><Esc>h
 
@@ -397,7 +397,7 @@ inoremap <C-Z> <C-o>:call ToggleCompletionPreview()<CR>
 
 set previewheight=10
 
-function s:PreviewHeightWorkAround()
+function! s:PreviewHeightWorkAround()
     if &previewwindow
         exec 'setlocal winheight=' . &previewheight
     endif
