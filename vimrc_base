@@ -386,9 +386,6 @@ nnoremap <C-W><C-6> <C-W><C-^>
 nnoremap <leader>cd :cd %:p:h<CR>
 nnoremap <leader>lcd :lcd %:p:h<CR>
 
-" TODO: it does not work after sourcing vimrc. Some plugin overrides it?
-set pastetoggle=<F2>
-
 function! ToggleCompletionPreview()
     if &completeopt =~? 'preview'
         set completeopt-=preview
