@@ -216,8 +216,7 @@ set showmatch
 set matchtime=3
 
 " Vim internal encoding.
-set encoding=utf-8
-set ambiwidth=double
+set ambiwidth=single
 set fileformats=unix,dos,mac
 
 " Don't wrap lines.
