@@ -198,7 +198,7 @@ set sidescrolloff=10
 set ruler
 set rulerformat=%l\:%c\ -\ %P
 " Allow to put cursor outside of the text in V-Block mode only.
-set virtualedit=block
+set virtualedit=all
 
 " Search options.
 " By default substitute all occurrences - not only the first one.
