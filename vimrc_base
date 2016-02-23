@@ -382,17 +382,33 @@ nnoremap <C-W><C-6> <C-W><C-^>
 nnoremap <leader>cd :cd %:p:h<CR>
 nnoremap <leader>lcd :lcd %:p:h<CR>
 
+"
+" Preview window.
+"
+
 function! ToggleCompletionPreview()
     if &completeopt =~? 'preview'
         set completeopt-=preview
-        echo 'Preview off'
+        echo 'Preview OFF'
     else
         set completeopt+=preview
-        echo 'Preview on'
+        echo 'Preview ON'
     endif
 endfunction
 inoremap <C-Z> <C-o>:call ToggleCompletionPreview()<CR>
-" TODO: set fixed previewheight.
+
+set previewheight=10
+
+function PreviewHeightWorkAround()
+    if &previewwindow
+        exec 'setlocal winheight=' . &previewheight
+    endif
+endfunction
+
+augroup vimrc_base_preview_window_height
+    autocmd!
+    autocmd BufEnter ?* call PreviewHeightWorkAround()
+augroup END
 
 "
 " Some additional autocommands.
