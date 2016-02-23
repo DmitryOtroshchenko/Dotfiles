@@ -399,7 +399,7 @@ inoremap <C-Z> <C-o>:call ToggleCompletionPreview()<CR>
 
 set previewheight=10
 
-function PreviewHeightWorkAround()
+function s:PreviewHeightWorkAround()
     if &previewwindow
         exec 'setlocal winheight=' . &previewheight
     endif
@@ -407,7 +407,8 @@ endfunction
 
 augroup vimrc_base_preview_window_height
     autocmd!
-    autocmd BufEnter ?* call PreviewHeightWorkAround()
+    autocmd BufCreate * :call s:PreviewHeightWorkAround()
+    autocmd BufEnter * :call s:PreviewHeightWorkAround()
 augroup END
 
 "
