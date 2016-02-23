@@ -160,6 +160,7 @@ set autoindent
 set foldcolumn=0
 set foldmethod=indent
 set foldlevel=5
+set foldopen=insert,undo
 
 " Navigation
 set number
@@ -311,11 +312,6 @@ inoremap <down> <C-o>gj
 noremap h gk
 noremap <up> gk
 inoremap <up> <C-o>gk
-
-" Don't open folds when jumping paragraph by paragraph.
-" TODO: sometimes in operator-pending mode it jumps incorrectly, fix it.
-noremap <expr> } foldclosed(search('^$', 'Wn')) == -1 ? "}" : "}j}"
-noremap <expr> { foldclosed(search('^$', 'Wnb')) == -1 ? "{" : "{k{"
 
 " Toggle "keep current line in the center of the screen" mode.
 nnoremap <leader>C :let &scrolloff=999-&scrolloff<CR>
