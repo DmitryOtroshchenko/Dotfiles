@@ -68,7 +68,6 @@ if has('mouse')
     set mousemodel=popup_setpos
 endif
 
-" TODO: arrange.
 if has('wildmenu')
     set wildmenu
     set wildignorecase
@@ -364,7 +363,6 @@ nnoremap <Leader>n gt
 nnoremap <Leader>N gT
 nnoremap <TAB> :bnext<CR>
 nnoremap <C-TAB> :bprev<CR>
-" nnoremap <leader>X :bd<CR>
 
 " Easy window navigation
 noremap <C-h> <C-w>k
@@ -501,3 +499,4 @@ iabbrev @@ dmitry.otroshchenko@gmail.com
 " Better use for q and Q.
 " <C-W> a, m, u, y are not mapped - map them!
 " bring at least basic config over ssh.
+" nnoremap <leader>X :bd<CR>
