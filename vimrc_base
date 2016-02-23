@@ -238,7 +238,8 @@ set fillchars=vert:\ ,fold:-
 set backspace=indent,eol,start
 
 " Misc
-if has('clipboard')
+let g:is_ssh = ($SSH_TTY != '') || ($SSH_CLIENT != '')
+if has('clipboard') && !g:is_ssh
     set clipboard=unnamed
 endif
 " Ask for confirmation when doing hard stuff...
