@@ -199,8 +199,7 @@ set sidescroll=1
 set sidescrolloff=10
 " Line and column rulers in statusline.
 set ruler
-" TODO: improve it.
-set rulerformat="%l\:%c %P"
+set rulerformat=%l\:%c\ -\ %P
 " Allow to put cursor outside of the text in V-Block mode only.
 set virtualedit=block
 
