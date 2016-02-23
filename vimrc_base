@@ -68,6 +68,7 @@ if has('mouse')
     set mousemodel=popup_setpos
 endif
 
+" TODO: arrange.
 if has('wildmenu')
     set wildmenu
     set wildignorecase
@@ -300,7 +301,6 @@ nnoremap ! :!
 " Quit vim easily
 nnoremap ZX :qall!<CR>
 
-" TODO: find some better use for it?
 nnoremap Q q
 nnoremap q <NOP>
 
@@ -489,9 +489,6 @@ augroup vimrc_base_close_hidden_empty_buffers
     autocmd BufEnter * :call s:CloseHiddenBuffers()
 augroup END
 
-" TODO:
-" <C-W> a, m, u, y are not mapped - map them!
-
 "
 " Abbreviations
 "
@@ -499,3 +496,8 @@ augroup END
 iabbrev teh the
 iabbrev fo of
 iabbrev @@ dmitry.otroshchenko@gmail.com
+
+" TODO:
+" Better use for q and Q.
+" <C-W> a, m, u, y are not mapped - map them!
+" bring at least basic config over ssh.
