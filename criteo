@@ -1,0 +1,122 @@
+#!/usr/bin/env bash
+
+export NAME=d.otroshchenko
+
+alias kinit='kinit -e aes128-cts-hmac-sha1-96'
+alias kloc='kinit $NAME'
+alias kreinit='kdestroy && klist && kinit && klist'
+
+HADOOP_COMMANDS_TO_ALIAS=(
+    'test'
+    'appendToFile'
+    'cat'
+    'chown'
+    'copyFromLocal'
+    'copyToLocal'
+    'count'
+    'cp'
+    'du'
+    'dus'
+    'get'
+    'ls'
+    'mkdir'
+    'moveFromLocal'
+    'mv'
+    'put'
+    'rm'
+    'rmr'
+    'stat'
+    'tail'
+    'text'
+    'touchz'
+)
+for cmd in ${HADOOP_COMMANDS_TO_ALIAS[@]}; do
+    ALIAS_CMD="alias h$cmd=\"hadoop fs -$cmd\""
+    eval $ALIAS_CMD
+done
+
+
+function pa4pre_from_pa4() {
+    CMD="hadoop distcp -m100 ${@:3} hdfs://pa4$1 $2"
+    eval $CMD
+}
+
+function pa4_from_am5() {
+    CMD="hadoop distcp -skipcrccheck -m100 ${@:3} webhdfs://am5$1 $2"
+    eval $CMD
+}
+
+
+alias ylist="yarn application -list"
+alias ystatus="yarn application -status"
+alias ykill="yarn application -kill"
+alias ylogs="yarn logs -applicationId"
+
+
+function scp_to() {
+    HOST=$1
+    SRC=$2
+    DST=$3
+    scp -r ${@:4} $SRC $HOST:/home/$NAME/$DST
+}
+
+function scp_from() {
+    HOST=$1
+    SRC=$2
+    DST=$3
+    scp -r ${@:4} $HOST:/home/$NAME/$SRC $DST
+}
+
+function add_aliases_for_server() {
+    if [ $# -ne 2 ]; then
+        echo 'Incorrect add_aliases_for_server() signature.'
+        return 1
+    fi
+
+    SERVER_NAME=$1
+    HOST=$2
+    SSH_CMD="alias ssh$SERVER_NAME='ssh -K $NAME@$HOST'"
+    eval $SSH_CMD
+    SCP_TO_CMD="alias 'to$SERVER_NAME=scp_to $HOST'"
+    eval $SCP_TO_CMD
+    SCP_FROM_CMD="alias 'from$SERVER_NAME=scp_from $HOST'"
+    eval $SCP_FROM_CMD
+    SERVER_NAME_UPPER=$(echo $SERVER_NAME | awk '{print toupper($0)}' | awk '{sub(/-/, "_"); print}')
+    SET_ENV_VAR="export $SERVER_NAME_UPPER=$HOST"
+    eval $SET_ENV_VAR
+}
+
+declare -A CRITEO_SERVERS
+CRITEO_SERVERS['am5']='jobs-user.hpc.criteo.prod'
+CRITEO_SERVERS['am5pre']='jobs-user.hpc.criteo.preprod'
+CRITEO_SERVERS['pa4']='jobs-user.pa4.hpc.criteo.prod'
+CRITEO_SERVERS['pa4pre']='jobs-user.pa4.hpc.criteo.preprod'
+CRITEO_SERVERS['pa4pre-testfwk']='jobs-testfwk.pa4.hpc.criteo.preprod'
+CRITEO_SERVERS['pa4-testfwk']='jobs-testfwk.pa4.hpc.criteo.prod'
+
+SHELL_NAME=$(ps h -p $$ -o args='' | cut -f1 -d' ')
+if [[ $SHELL_NAME =~ 'zsh' ]]; then
+    for SERVER_NAME in "${(@k)CRITEO_SERVERS}"; do
+        add_aliases_for_server $SERVER_NAME ${CRITEO_SERVERS[$SERVER_NAME]}
+    done
+elif [[ $SHELL_NAME0 =~ 'bash' ]]; then
+    for SERVER_NAME in  "${!CRITEO_SERVERS[@]}"; do
+        add_aliases_for_server $SERVER_NAME ${CRITEO_SERVERS[$SERVER_NAME]}
+    done
+fi
+
+# Required by Maven
+export GIT_SSH=`which ssh`
+
+alias deploy='mvn clean install -DpackageForDeploy'
+
+function fixjmoab {
+    # if $# -ne 1; do
+    #     echo 'Incorrect fixjmoab call signature.'
+    #     return 1
+    # done
+    rm pom.xml
+    mvn bfs:create-pom -DmaxRetries=20
+    mvn bfs:refresh-moab -DmaxRetries=20
+    mvn bfs:refresh-sources
+}
