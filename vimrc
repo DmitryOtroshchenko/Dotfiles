@@ -270,6 +270,8 @@ Plug 'Shougo/neomru.vim'
 
 "{{{ Language plugins
 
+Plug 'derekwyatt/vim-scala'
+
 Plug 'hdima/python-syntax'
 
 Plug 'jmcantrell/vim-virtualenv'
