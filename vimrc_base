@@ -197,7 +197,7 @@ set sidescrolloff=10
 set ruler
 set rulerformat=%l\:%c\ -\ %P
 " Allow to put cursor outside of the text in V-Block mode only.
-set virtualedit=all
+set virtualedit=onemore
 
 " Search options.
 " By default substitute all occurrences - not only the first one.
@@ -339,10 +339,10 @@ vnoremap > >gv
 nnoremap vv ^vg_
 
 " Turn of highlight by searching for a nonexistent (incorrect) pattern.
-function! s:ResetSearchPattern()
+function! ResetSearchPattern()
     let @/ = ''
 endfunction
-noremap <Leader><Leader> :call s:ResetSearchPattern()<CR>
+noremap <Leader><Leader> :call ResetSearchPattern()<CR>
 
 nnoremap K i<CR><Esc>h
 
