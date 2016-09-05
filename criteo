@@ -107,6 +107,7 @@ declare -A CRITEO_SERVERS
 CRITEO_SERVERS[am5]='jobs-user.hpc.criteo.prod'
 CRITEO_SERVERS[am5pre]='jobs-user.hpc.criteo.preprod'
 CRITEO_SERVERS[pa4]='jobs-user.pa4.hpc.criteo.prod'
+CRITEO_SERVERS[pa4_prod]='jobs-prod.pa4.hpc.criteo.prod'
 CRITEO_SERVERS[pa4pre]='jobs-user.pa4.hpc.criteo.preprod'
 CRITEO_SERVERS[pa4pre_testfwk]='jobs-testfwk.pa4.hpc.criteo.preprod'
 CRITEO_SERVERS[pa4_testfwk]='jobs-testfwk.pa4.hpc.criteo.prod'
