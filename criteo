@@ -1,10 +1,18 @@
 #!/usr/bin/env bash
 
+#
+# Kerberos
+#
+
 export NAME=d.otroshchenko
 
 alias kinit='kinit -e aes128-cts-hmac-sha1-96'
 alias kloc='kinit $NAME'
 alias kreinit='kdestroy && klist && kinit && klist'
+
+#
+# Hadoop
+#
 
 HADOOP_COMMANDS_TO_ALIAS=(
     'test'
@@ -35,6 +43,13 @@ for cmd in ${HADOOP_COMMANDS_TO_ALIAS[@]}; do
     eval $ALIAS_CMD
 done
 
+function hpcat {
+    hadoop fs -text $1 | sed 's/^...../0a/' | xxd -p -r
+}
+
+function pailcat {
+    hdfs dfs -text $1 | sed 's/^...../0a/' | xxd -p -r
+}
 
 function pa4pre_from_pa4() {
     CMD="hadoop distcp -m100 ${@:3} hdfs://pa4$1 $2"
@@ -67,6 +82,10 @@ function scp_from() {
     scp -r ${@:4} $HOST:/home/$NAME/$SRC $DST
 }
 
+#
+# Criteo servers
+#
+
 function add_aliases_for_server() {
     if [ $# -ne 2 ]; then
         echo 'Incorrect add_aliases_for_server() signature.'
@@ -75,35 +94,37 @@ function add_aliases_for_server() {
 
     SERVER_NAME=$1
     HOST=$2
-    SSH_CMD="alias ssh$SERVER_NAME='ssh -K $NAME@$HOST'"
-    eval $SSH_CMD
-    SCP_TO_CMD="alias 'to$SERVER_NAME=scp_to $HOST'"
-    eval $SCP_TO_CMD
-    SCP_FROM_CMD="alias 'from$SERVER_NAME=scp_from $HOST'"
-    eval $SCP_FROM_CMD
+
+    alias ssh$SERVER_NAME="ssh -K $NAME@$HOST"
+    alias to$SERVER_NAME="scp_to $HOST"
+    alias from$SERVER_NAME="scp_from $HOST"
+
     SERVER_NAME_UPPER=$(echo $SERVER_NAME | awk '{print toupper($0)}' | awk '{sub(/-/, "_"); print}')
-    SET_ENV_VAR="export $SERVER_NAME_UPPER=$HOST"
-    eval $SET_ENV_VAR
+    export $SERVER_NAME_UPPER=$HOST
 }
 
 declare -A CRITEO_SERVERS
-CRITEO_SERVERS['am5']='jobs-user.hpc.criteo.prod'
-CRITEO_SERVERS['am5pre']='jobs-user.hpc.criteo.preprod'
-CRITEO_SERVERS['pa4']='jobs-user.pa4.hpc.criteo.prod'
-CRITEO_SERVERS['pa4pre']='jobs-user.pa4.hpc.criteo.preprod'
-CRITEO_SERVERS['pa4pre-testfwk']='jobs-testfwk.pa4.hpc.criteo.preprod'
-CRITEO_SERVERS['pa4-testfwk']='jobs-testfwk.pa4.hpc.criteo.prod'
+CRITEO_SERVERS[am5]='jobs-user.hpc.criteo.prod'
+CRITEO_SERVERS[am5pre]='jobs-user.hpc.criteo.preprod'
+CRITEO_SERVERS[pa4]='jobs-user.pa4.hpc.criteo.prod'
+CRITEO_SERVERS[pa4pre]='jobs-user.pa4.hpc.criteo.preprod'
+CRITEO_SERVERS[pa4pre_testfwk]='jobs-testfwk.pa4.hpc.criteo.preprod'
+CRITEO_SERVERS[pa4_testfwk]='jobs-testfwk.pa4.hpc.criteo.prod'
 
 SHELL_NAME=$(ps h -p $$ -o args='' | cut -f1 -d' ')
 if [[ $SHELL_NAME =~ 'zsh' ]]; then
     for SERVER_NAME in "${(@k)CRITEO_SERVERS}"; do
         add_aliases_for_server $SERVER_NAME ${CRITEO_SERVERS[$SERVER_NAME]}
     done
-elif [[ $SHELL_NAME0 =~ 'bash' ]]; then
+elif [[ $SHELL_NAME =~ 'bash' ]]; then
     for SERVER_NAME in  "${!CRITEO_SERVERS[@]}"; do
         add_aliases_for_server $SERVER_NAME ${CRITEO_SERVERS[$SERVER_NAME]}
     done
 fi
+
+#
+# JMOAB
+#
 
 # Required by Maven
 export GIT_SSH=`which ssh`
@@ -119,4 +140,42 @@ function fixjmoab {
     mvn bfs:create-pom -DmaxRetries=20
     mvn bfs:refresh-moab -DmaxRetries=20
     mvn bfs:refresh-sources
+}
+
+#
+# Reco
+#
+
+RECOCOMPUTER_PATH="/home/d.otroshchenko/jars/criteo-hadoop-recocomputer.jar"
+function protobuf_util_cat() {
+    hadoop fs -text $2 | \
+        java -cp $RECOCOMPUTER_PATH com.criteo.recommendation.babelfish.utils.ProtobufUtil $1 ${@:3}
+}
+
+function simprot() {
+    protobuf_util_cat "ProductWithSimilarities" $@
+}
+
+function richprot() {
+    protobuf_util_cat "EnrichedProduct" $@
+}
+
+function lightprot() {
+    protobuf_util_cat "LightCatalogItem" $@
+}
+
+function imgprot() {
+    protobuf_util_cat "com.criteo.recommendation.babelfish.hdfs.outputs.Image\$ProductImage" $@
+}
+
+function coevtprot() {
+    protobuf_util_cat "com.criteo.hadoop.recocomputer.values.Coevent\$CoEvts" $@
+}
+
+function richcatimelineprot() {
+    protobuf_util_cat "com.criteo.recommendation.babelfish.hdfs.outputs.Catimeline\$UserEvents" $@
+}
+
+function tokenstatsprot() {
+    protobuf_util_cat "com.criteo.recommendation.babelfish.hdfs.outputs.TokenStat\$TokenStatForPartner" $@
 }
