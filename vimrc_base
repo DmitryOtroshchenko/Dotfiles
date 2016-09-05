@@ -159,7 +159,7 @@ set autoindent
 " I don't want to see fold level markers.
 set foldcolumn=0
 set foldmethod=indent
-set foldlevel=5
+set foldlevel=99
 set foldopen=insert,undo
 
 " Navigation
@@ -197,7 +197,7 @@ set sidescrolloff=10
 set ruler
 set rulerformat=%l\:%c\ -\ %P
 " Allow to put cursor outside of the text in V-Block mode only.
-set virtualedit=onemore
+set virtualedit=block
 
 " Search options.
 " By default substitute all occurrences - not only the first one.
@@ -486,14 +486,6 @@ augroup vimrc_base_close_hidden_empty_buffers
     autocmd!
     autocmd BufEnter * :call s:CloseHiddenBuffers()
 augroup END
-
-"
-" Abbreviations
-"
-
-iabbrev teh the
-iabbrev fo of
-iabbrev @@ dmitry.otroshchenko@gmail.com
 
 " TODO:
 " Better use for q and Q.
