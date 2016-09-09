@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+function join_by {
+    local d=$1
+    shift
+    echo -n $1
+    shift
+    printf "%s" "${@/#/$d}"
+}
+
 #
 # Kerberos
 #
@@ -130,17 +138,20 @@ fi
 # Required by Maven
 export GIT_SSH=`which ssh`
 
-alias deploy='mvn clean install -DpackageForDeploy'
-
 function fixjmoab {
-    # if $# -ne 1; do
-    #     echo 'Incorrect fixjmoab call signature.'
-    #     return 1
-    # done
     rm pom.xml
     mvn bfs:create-pom -DmaxRetries=20
     mvn bfs:refresh-moab -DmaxRetries=20
     mvn bfs:refresh-sources
+}
+
+alias refresh-moab='mvn bfs:refresh-moab'
+alias refresh-sources='mvn bfs:refresh-sources'
+alias deploy='mvn clean install -DpackageForDeploy'
+
+function moab_checkout() {
+    PROJECTS=$(join_by , $@)
+    mvn bfs:checkout -Dprojects=$PROJECTS
 }
 
 #
