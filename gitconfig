@@ -2,6 +2,7 @@
 [core]
     pager = less -r
     editor = vim
+    excludesfile = /Users/d.otroshchenko/.gitignore_global
 
 [color]
     ui = auto
@@ -22,13 +23,18 @@
 
     l = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
     ll = log --stat --abbrev-commit --decorate
-    last = log -1 --stat HEAD
+    last = "!f() { source ~/Dotfiles/gitcommands.sh && git_show_last $@; }; f"
+    stat = "!f() { source ~/Dotfiles/gitcommands.sh && git_show_stat $@; }; f"
     publish = push origin HEAD:refs/publish/master
     draft = push origin HEAD:refs/drafts/master
     refresh = pull --rebase origin master
-    fix = "!interactive_rebase() { git rebase -i HEAD~$1; }; interactive_rebase"
+    news = "!f() { source ~/Dotfiles/gitcommands.sh && git_news $@; }; f"
+    fix = "!f() { source ~/Dotfiles/gitcommands.sh && git_interactive_rebase $@; }; f"
+    amend = commit --amend
     continue = rebase --continue
     abort = rebase --abort
+    unpublished="!f() { source ~/Dotfiles/gitcommands.sh && git_unpublished $@; }; f"
+
 
     lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
     lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
