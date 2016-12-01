@@ -112,13 +112,17 @@ function add_aliases_for_server() {
 }
 
 declare -A CRITEO_SERVERS
+
 CRITEO_SERVERS[am5]='jobs-user.hpc.criteo.prod'
 CRITEO_SERVERS[am5pre]='jobs-user.hpc.criteo.preprod'
+
 CRITEO_SERVERS[pa4]='jobs-user.pa4.hpc.criteo.prod'
 CRITEO_SERVERS[pa4_prod]='jobs-prod.pa4.hpc.criteo.prod'
-CRITEO_SERVERS[pa4pre]='jobs-user.pa4.hpc.criteo.preprod'
-CRITEO_SERVERS[pa4pre_testfwk]='jobs-testfwk.pa4.hpc.criteo.preprod'
 CRITEO_SERVERS[pa4_testfwk]='jobs-testfwk.pa4.hpc.criteo.prod'
+
+CRITEO_SERVERS[pa4pre]='jobs-user.pa4.hpc.criteo.preprod'
+CRITEO_SERVERS[pa4pre_prod]='jobs-prod.pa4.hpc.criteo.preprod'
+CRITEO_SERVERS[pa4pre_testfwk]='jobs-testfwk.pa4.hpc.criteo.preprod'
 
 SHELL_NAME=$(ps h -p $$ -o args='' | cut -f1 -d' ')
 if [[ $SHELL_NAME =~ 'zsh' ]]; then
@@ -131,6 +135,12 @@ elif [[ $SHELL_NAME =~ 'bash' ]]; then
     done
 fi
 
+function servers() {
+    for SERVER_NAME in "${(@k)CRITEO_SERVERS}"; do
+        echo "${SERVER_NAME}|${CRITEO_SERVERS[$SERVER_NAME]}"
+    done | column -t -s "|"
+}
+
 #
 # JMOAB
 #
@@ -139,7 +149,13 @@ fi
 export GIT_SSH=`which ssh`
 
 function fixjmoab {
-    rm pom.xml
+    if [ ! -f pom.xml ]; then
+        echo 'pom.xml not found.'
+    else
+        echo 'Deleting pom.xml.'
+        rm pom.xml
+    fi
+
     mvn bfs:create-pom -DmaxRetries=20
     mvn bfs:refresh-moab -DmaxRetries=20
     mvn bfs:refresh-sources
@@ -154,11 +170,21 @@ function moab_checkout() {
     mvn bfs:checkout -Dprojects=$PROJECTS
 }
 
+function fixintellij() {
+    if [ ! -d '.idea' ]; then
+        echo 'Not an Intellij root.'
+        return
+    fi
+
+    find . -name '*.iml' -exec rm -rf {} \;
+    rm -rf .idea
+}
+
 #
 # Reco
 #
 
-RECOCOMPUTER_PATH="/home/d.otroshchenko/jars/criteo-hadoop-recocomputer.jar"
+RECOCOMPUTER_PATH="/home/$NAME/jars/criteo-hadoop-recocomputer.jar"
 function protobuf_util_cat() {
     hadoop fs -text $2 | \
         java -cp $RECOCOMPUTER_PATH com.criteo.recommendation.babelfish.utils.ProtobufUtil $1 ${@:3}
