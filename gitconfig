@@ -30,6 +30,7 @@
     refresh = pull --rebase origin master
     news = "!f() { source ~/Dotfiles/gitcommands.sh && git_news $@; }; f"
     fix = "!f() { source ~/Dotfiles/gitcommands.sh && git_interactive_rebase $@; }; f"
+    fts = "!f() { source ~/Dotfiles/gitcommands.sh && git_fts $@; }; f"
     amend = commit --amend
     continue = rebase --continue
     abort = rebase --abort
@@ -52,11 +53,6 @@
 
 [github]
     user = DmitryOtroshchenko
-
-[filter "hawser"]
-	clean = git hawser clean %f
-	smudge = git hawser smudge %f
-	required = true
 
 [push]
 	default = simple

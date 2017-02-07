@@ -54,3 +54,25 @@ function git_unpublished() {
     N_UNPUBLISHED=$(git rev-list --left-only --count $HEAD_REF...origin/master)
     git log -n $N_UNPUBLISHED
 }
+
+function git_fts() {
+    if [ $# -ne 0 ]; then
+        echo "$FUNCNAME() wrong call signature."
+        return 1
+    fi
+
+    # Check if the working tree is dirty.
+    git diff-index --quiet HEAD --
+    if [ $? -eq 0 ]; then
+        echo "Nothing to do here."
+        return
+    fi
+
+    read -p "Do you really want to fuck this shit (y/n)? " CONT
+    if [ "$CONT" = "y" ]; then
+        git reset --hard head
+        echo "All the shit is succesfully fucked."
+    else
+        echo "Fucking is a dish that is better served cold..."
+    fi
+}
