@@ -48,11 +48,13 @@
     prompt = false
 
 [user]
-    email = dmitry.otroshchenko@gmail.com
-    name = Dmitry Otroshchenko
+    email =
+    name =
 
 [github]
     user = DmitryOtroshchenko
 
 [push]
-	default = simple
+    default = simple
+[commit]
+    template = /Users/d.otroshchenko/.stCommitMsg
