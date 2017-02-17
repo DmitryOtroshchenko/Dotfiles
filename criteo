@@ -75,19 +75,26 @@ alias ystatus="yarn application -status"
 alias ykill="yarn application -kill"
 alias ylogs="yarn logs -applicationId"
 
+function ssh_to() {
+    HOST=$1
+    USER=${Z:-$NAME}
+    ssh ${@:2} -K $USER@$HOST
+}
 
 function scp_to() {
     HOST=$1
     SRC=$2
     DST=${3:-"."}
-    scp -r ${@:4} $SRC $HOST:/home/$NAME/$DST
+    USER=${Z:-$NAME}
+    scp -r ${@:4} $SRC $USER@$HOST:/home/$USER/$DST
 }
 
 function scp_from() {
     HOST=$1
     SRC=$2
     DST=${3:-"."}
-    scp -r ${@:4} $HOST:/home/$NAME/$SRC $DST
+    USER=${Z:-$NAME}
+    scp -r ${@:4} $USER@$HOST:/home/$USER/$SRC $DST
 }
 
 #
@@ -103,7 +110,7 @@ function add_aliases_for_server() {
     SERVER_NAME=$1
     HOST=$2
 
-    alias ssh$SERVER_NAME="ssh -K $NAME@$HOST"
+    alias ssh$SERVER_NAME="ssh_to $HOST"
     alias to$SERVER_NAME="scp_to $HOST"
     alias from$SERVER_NAME="scp_from $HOST"
 
