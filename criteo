@@ -79,14 +79,14 @@ alias ylogs="yarn logs -applicationId"
 function scp_to() {
     HOST=$1
     SRC=$2
-    DST=$3
+    DST=${3:-"."}
     scp -r ${@:4} $SRC $HOST:/home/$NAME/$DST
 }
 
 function scp_from() {
     HOST=$1
     SRC=$2
-    DST=$3
+    DST=${3:-"."}
     scp -r ${@:4} $HOST:/home/$NAME/$SRC $DST
 }
 
@@ -159,6 +159,16 @@ function fixjmoab {
     mvn bfs:create-pom -DmaxRetries=20
     mvn bfs:refresh-moab -DmaxRetries=20
     mvn bfs:refresh-sources
+}
+
+function nukemaven {
+    read -p "Do you really want to nuke da maven (y/n)? " CONT
+    if [ "$CONT" = "y" ]; then
+        echo "FAIA1111111"
+        rm -rf "~/.m2/repository"
+    else
+        echo "Later then..."
+    fi
 }
 
 alias refresh-moab='mvn bfs:refresh-moab'
