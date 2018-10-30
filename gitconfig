@@ -30,11 +30,13 @@
     refresh = pull --rebase origin master
     news = "!f() { source ~/Dotfiles/gitcommands.sh && git_news $@; }; f"
     fix = "!f() { source ~/Dotfiles/gitcommands.sh && git_interactive_rebase $@; }; f"
+    fixunp = "!f() { source ~/Dotfiles/gitcommands.sh && git_fix_unpublished $@; }; f"
     fts = "!f() { source ~/Dotfiles/gitcommands.sh && git_fts $@; }; f"
     amend = commit --amend
     continue = rebase --continue
     abort = rebase --abort
     unpublished="!f() { source ~/Dotfiles/gitcommands.sh && git_unpublished $@; }; f"
+    nunpublished="!f() { source ~/Dotfiles/gitcommands.sh && git_n_unpublished $@; }; f"
 
 
     lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
@@ -48,8 +50,9 @@
     prompt = false
 
 [user]
-    email =
-    name =
+	# email = d.otroshchenko@gmail.com
+	email = d.otroshchenko@criteo.com
+	name = Dmitry Otroshchenko
 
 [github]
     user = DmitryOtroshchenko

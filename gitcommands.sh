@@ -44,15 +44,30 @@ function git_news() {
     fi
 }
 
+function git_n_unpublished() {
+    if [ $# -ne 0 ]; then
+        echo "$FUNCNAME() wrong call signature."
+        return 1
+    fi
+    HEAD_REF=$(git rev-parse --abbrev-ref HEAD)
+    N_UNPUBLISHED=$(git rev-list --left-only --count $HEAD_REF...origin/master)
+    echo $N_UNPUBLISHED
+}
+
 function git_unpublished() {
     if [ $# -ne 0 ]; then
         echo "$FUNCNAME() wrong call signature."
         return 1
     fi
+    git log -n $(git_n_unpublished)
+}
 
-    HEAD_REF=$(git rev-parse --abbrev-ref HEAD)
-    N_UNPUBLISHED=$(git rev-list --left-only --count $HEAD_REF...origin/master)
-    git log -n $N_UNPUBLISHED
+function git_fix_unpublished() {
+    if [ $# -ne 0 ]; then
+        echo "$FUNCNAME() wrong call signature."
+        return 1
+    fi
+    git fix $(git nunpublished)
 }
 
 function git_fts() {
