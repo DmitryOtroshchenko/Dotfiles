@@ -2,6 +2,7 @@
 - clean: ['~']
 
 - link:
+    ~/.criteo: criteo
     ~/.vimrc: vimrc
     ~/.nvimrc: vimrc
     ~/.vimrc_base: vimrc_base
