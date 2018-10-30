@@ -579,7 +579,7 @@ let python_highlight_all = 1
 
 
 "{{{ airblade/vim-gitgutter
-let g:gitgutter_sign_column_always = 1
+set signcolumn=yes
 
 " This helps to avoid glitches in terminal.
 if !has('gui_running')
