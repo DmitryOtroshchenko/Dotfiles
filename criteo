@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+alias mvn="mvn -Djava.awt.headless=true"
+
 function join_by {
     local d=$1
     shift
@@ -15,8 +17,10 @@ function join_by {
 export NAME=d.otroshchenko
 
 alias kinit='kinit -e aes128-cts-hmac-sha1-96'
-alias kloc='kinit $NAME'
+alias kinit-full="kinit $NAME@CRITEOIS.LAN"
+alias kloc="kinit $NAME"
 alias kreinit='kdestroy && klist && kinit && klist'
+alias openssl_brew=/usr/local/opt/openssl/bin/openssl
 
 #
 # Hadoop
@@ -78,7 +82,7 @@ alias ylogs="yarn logs -applicationId"
 function ssh_to() {
     HOST=$1
     USER=${Z:-$NAME}
-    ssh ${@:2} -K $USER@$HOST
+    ssh -K $USER@$HOST ${@:2}
 }
 
 function scp_to() {
@@ -102,7 +106,7 @@ function scp_from() {
 #
 
 function add_aliases_for_server() {
-    if [ $# -ne 2 ]; then
+    if [[ $# != 2 ]]; then
         echo 'Incorrect add_aliases_for_server() signature.'
         return 1
     fi
@@ -124,12 +128,12 @@ CRITEO_SERVERS[am5]='jobs-user.hpc.criteo.prod'
 CRITEO_SERVERS[am5pre]='jobs-user.hpc.criteo.preprod'
 
 CRITEO_SERVERS[pa4]='jobs-user.pa4.hpc.criteo.prod'
-CRITEO_SERVERS[pa4_prod]='jobs-prod.pa4.hpc.criteo.prod'
-CRITEO_SERVERS[pa4_testfwk]='jobs-testfwk.pa4.hpc.criteo.prod'
+CRITEO_SERVERS[pa4-prod]='jobs-prod.pa4.hpc.criteo.prod'
+CRITEO_SERVERS[pa4-testfwk]='jobs-testfwk.pa4.hpc.criteo.prod'
 
 CRITEO_SERVERS[pa4pre]='jobs-user.pa4.hpc.criteo.preprod'
-CRITEO_SERVERS[pa4pre_prod]='jobs-prod.pa4.hpc.criteo.preprod'
-CRITEO_SERVERS[pa4pre_testfwk]='jobs-testfwk.pa4.hpc.criteo.preprod'
+CRITEO_SERVERS[pa4pre-prod]='jobs-prod.pa4.hpc.criteo.preprod'
+CRITEO_SERVERS[pa4pre-testfwk]='jobs-testfwk.pa4.hpc.criteo.preprod'
 
 SHELL_NAME=$(ps h -p $$ -o args='' | cut -f1 -d' ')
 if [[ $SHELL_NAME =~ 'zsh' ]]; then
@@ -148,12 +152,26 @@ function servers() {
     done | column -t -s "|"
 }
 
+function dm() {
+    project_root=$(git rev-parse --show-toplevel)
+    python "$project_root/manage.py" $@
+}
+
+alias dmnb='dm shell_plus --notebook'
+
+alias pl='pylint -r n'
+
 #
 # JMOAB
 #
 
 # Required by Maven
 export GIT_SSH=`which ssh`
+
+function bootstrapgit() {
+    gitdir=$(git rev-parse --git-dir)
+    scp -p -P 29418 $NAME@review.criteois.lan:hooks/commit-msg ${gitdir}/hooks/
+}
 
 function fixjmoab {
     if [ ! -f pom.xml ]; then
@@ -197,6 +215,14 @@ function fixintellij() {
     rm -rf .idea
 }
 
+function setup_chrome_kerberos() {
+    DOMAIN_SPEC='*.criteo.prod,*.criteo.preprod'
+    defaults write com.google.Chrome AuthServerWhitelist $DOMAIN_SPEC
+    defaults write com.google.Chrome AuthNegotiateDelegateWhitelist $DOMAIN_SPEC
+    defaults write com.vivaldi.Vivaldi AuthServerWhitelist $DOMAIN_SPEC
+    defaults write com.vivaldi.Vivaldi AuthNegotiateDelegateWhitelist $DOMAIN_SPEC
+}
+
 #
 # Reco
 #
@@ -234,3 +260,29 @@ function richcatimelineprot() {
 function tokenstatsprot() {
     protobuf_util_cat "com.criteo.recommendation.babelfish.hdfs.outputs.TokenStat\$TokenStatForPartner" $@
 }
+
+# vagrant
+
+function vagrant_run() {
+    SCRIPT_PATH=$1
+    shift
+    vagrant scp $SCRIPT_PATH .
+    echo "./$SCRIPT_PATH $@" | vagrant ssh -- -t
+}
+
+# For thrift
+
+export PATH="/usr/local/opt/bison/bin:$PATH"
+export PATH="/usr/local/opt/thrift@0.90/bin:$PATH"
+
+autoload bashcompinit
+bashcompinit
+
+alias rg="rg -S"
+
+export PATH="/Applications/mosek/8/tools/platform/osx64x86/bin:$PATH"
+
+# added by Miniconda3 installer
+export PATH="/Users/d.otroshchenko/.conda/bin:$PATH"
+
+alias af="open ~/Applications/Autodesk\ Fusion\ 360.app"
