@@ -23,20 +23,20 @@
 
     l = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
     ll = log --stat --abbrev-commit --decorate
-    last = "!f() { source ~/Dotfiles/gitcommands.sh && git_show_last $@; }; f"
-    stat = "!f() { source ~/Dotfiles/gitcommands.sh && git_show_stat $@; }; f"
+    last = "!f() { source ~/Dotfiles/config/gitcommands.sh && git_show_last $@; }; f"
+    stat = "!f() { source ~/Dotfiles/config/gitcommands.sh && git_show_stat $@; }; f"
     publish = push origin HEAD:refs/publish/master
     draft = push origin HEAD:refs/drafts/master
     refresh = pull --rebase origin master
-    news = "!f() { source ~/Dotfiles/gitcommands.sh && git_news $@; }; f"
-    fix = "!f() { source ~/Dotfiles/gitcommands.sh && git_interactive_rebase $@; }; f"
-    fixunp = "!f() { source ~/Dotfiles/gitcommands.sh && git_fix_unpublished $@; }; f"
-    fts = "!f() { source ~/Dotfiles/gitcommands.sh && git_fts $@; }; f"
+    news = "!f() { source ~/Dotfiles/config/gitcommands.sh && git_news $@; }; f"
+    fix = "!f() { source ~/Dotfiles/config/gitcommands.sh && git_interactive_rebase $@; }; f"
+    fixunp = "!f() { source ~/Dotfiles/config/gitcommands.sh && git_fix_unpublished $@; }; f"
+    fts = "!f() { source ~/Dotfiles/config/gitcommands.sh && git_fts $@; }; f"
     amend = commit --amend
     continue = rebase --continue
     abort = rebase --abort
-    unpublished="!f() { source ~/Dotfiles/gitcommands.sh && git_unpublished $@; }; f"
-    nunpublished="!f() { source ~/Dotfiles/gitcommands.sh && git_n_unpublished $@; }; f"
+    unpublished="!f() { source ~/Dotfiles/config/gitcommands.sh && git_unpublished $@; }; f"
+    nunpublished="!f() { source ~/Dotfiles/config/gitcommands.sh && git_n_unpublished $@; }; f"
 
 
     lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
@@ -60,4 +60,4 @@
 [push]
     default = simple
 [commit]
-    template = /Users/d.otroshchenko/.stCommitMsg
+    # template = /Users/d.otroshchenko/.stCommitMsg

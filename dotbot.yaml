@@ -2,13 +2,13 @@
 - clean: ['~']
 
 - link:
-    ~/.criteo: criteo
-    ~/.vimrc: vimrc
-    ~/.nvimrc: vimrc
-    ~/.vimrc_base: vimrc_base
-    ~/.tmux.conf: tmux.conf
-    ~/.tmux_line: tmux_line
-    ~/.tmux-osx.conf: tmux-osx.conf
-    ~/.ackrc: ackrc
-    ~/.gitconfig: gitconfig
-    ~/.ssh/rc: sshrc
+    ~/.vimrc: config/vimrc
+    ~/.nvimrc: config/vimrc
+    ~/.vimrc_base: config/vimrc_base
+    ~/.tmux.conf: config/tmux.conf
+    ~/.tmux_line: config/tmux_line
+    ~/.tmux-osx.conf: config/tmux-osx.conf
+    ~/.gitconfig: config/gitconfig
+
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]
