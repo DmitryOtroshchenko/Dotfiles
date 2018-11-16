@@ -1,2 +1,5 @@
 # Fish temporary files.
 config/fish/fishd.*
+
+# Oh-my-fish
+config/omf/fonts

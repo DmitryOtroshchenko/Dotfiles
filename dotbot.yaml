@@ -12,6 +12,9 @@
     ~/.config/fish:
         path: config/fish
         create: true
+    ~/.config/omf:
+        path: config/omf
+        create: true
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
