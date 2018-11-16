@@ -1,0 +1,5 @@
+
+- link:
+    ~/.config/karabiner:
+        path: config/karabiner
+        create: true

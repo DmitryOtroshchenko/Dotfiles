@@ -1,0 +1,26 @@
+{
+    "title": "Basic *nix keybindings",
+    "rules": [
+      {
+        "description": "C-W -> delete word",
+        "manipulators": [
+          {
+            "type": "basic",
+            "from": {
+                "key_code": "w",
+                "modifiers": {
+                    "mandatory": [ "control" ],
+                    "optional": [ "caps_lock" ]
+                }
+            },
+            "to": [
+                {
+                    "key_code": "delete_or_backspace",
+                    "modifiers": { "mandatory": "option" }
+                }
+            ]
+          }
+        ]
+      }
+    ]
+}
