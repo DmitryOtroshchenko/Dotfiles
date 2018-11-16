@@ -9,6 +9,14 @@
     ~/.tmux_line: config/tmux_line
     ~/.tmux-osx.conf: config/tmux-osx.conf
     ~/.gitconfig: config/gitconfig
+    ~/.config/fish:
+        path: config/fish
+        create: true
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
+
+# TODO:
+# karabiner
+# up
+# omf
