@@ -1,21 +1,11 @@
 fish_vi_key_bindings
 
 #
-# Intresting plugins
-#
-
-# Installed: grc, osx, python, colored-man-pages, dpaste, epwd
-#   fonts, tab
-# To test: brew, envious
-
-#
 # External scripts that require sourcing.
 #
 
 # Use omf autojump?
 [ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish
-
-# Also using https://github.com/shannonmoeller/up
 
 #
 # Basic exports.
@@ -49,19 +39,19 @@ set -x RIPGREP_CONFIG_PATH '/Users/d.otroshchenko/Dotfiles/config/ripgreprc'
 #
 
 function gc --wraps git
-    git commit $argv;
+    git commit $argv
 end
 
 function gcm --wraps git
-    git commit -m $argv;
+    git commit -m $argv
 end
 
 function gia --wraps git
-    git add $argv;
+    git add $argv
 end
 
 function giA --wraps git
-    git add -p $argv;
+    git add -p $argv
 end
 
 function st
@@ -69,7 +59,7 @@ function st
 end
 
 function g --wraps git
-    git $argv;
+    git $argv
 end
 
 #
@@ -77,11 +67,11 @@ end
 #
 
 function rgfs --wraps rg
-    rg --files --glob $argv;
+    rg --files --glob $argv
 end
 
 function rgfi --wraps rg
-    rg --files --iglob $argv;
+    rg --files --iglob $argv
 end
 
 function rgf --wraps rg
@@ -123,6 +113,18 @@ function fkill -a signal
     else
         echo 'Kill aborted.'
     end
+end
+
+#
+# SSH
+#
+
+function ssh-ci --wraps ssh-copy-id
+    ssh-copy-id -i ~/.ssh/id_rsa.pub $argv
+end
+
+function ssh-aliases
+    sed -rn 's/^\s*Host\s+(.*)\s*/\1/ip' ~/.ssh/config | grep -v '\*'
 end
 
 #

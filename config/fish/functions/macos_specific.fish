@@ -16,5 +16,6 @@ if echo $OSTYPE | grep '^darwin' > /dev/null
 
     set -gx PATH '/usr/local/opt/coreutils/libexec/gnubin' $PATH
     set -gx PATH '/usr/local/opt/unzip/bin' $PATH
+    set -gx PATH '/usr/local/opt/gnu-sed/libexec/gnubin' $PATH
 
 end

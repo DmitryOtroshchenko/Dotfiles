@@ -3,6 +3,10 @@
 
 # TODO:
 # install/autojump.sh
+# install/unp.py
+# install/ranger
+# autostart tmux on ssh
+# ssh config
 
 - clean: ['~', '~/.config']
 
