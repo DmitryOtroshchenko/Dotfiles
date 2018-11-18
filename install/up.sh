@@ -5,7 +5,7 @@ if [ $? -eq 0 ]; then
     export DOWNLOAD_PATH=$(mktemp)
 
     curl -o $DOWNLOAD_PATH $GITHUB_REPO
-    fish -c "source $DOWNLOAD_PATH"
+    fish -c "type -q up ; or source $DOWNLOAD_PATH"
 else
     echo "fish not installed, cannot install up.fish"
 fi

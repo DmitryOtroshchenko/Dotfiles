@@ -6,8 +6,6 @@
     ~/.nvimrc: config/vimrc
     ~/.vimrc_base: config/vimrc_base
     ~/.tmux.conf: config/tmux.conf
-    ~/.tmux_line: config/tmux_line
-    ~/.tmux-osx.conf: config/tmux-osx.conf
     ~/.gitconfig: config/gitconfig
     ~/.config/fish:
         path: config/fish
