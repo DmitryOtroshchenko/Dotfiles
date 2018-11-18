@@ -1,4 +1,9 @@
 
+# Intresting themes: mars
+
+# TODO:
+# install/autojump.sh
+
 - clean: ['~', '~/.config']
 
 - link:
@@ -15,8 +20,18 @@
         create: true
 
 - shell:
-  - ['./install/fzf.sh']
-  - ['./install/omf.sh']
-  - ['./install/up.sh']
-
-# Intresting themes: mars
+    -
+        command: './install/omf.sh'
+        stdin: true
+        stdout: true
+        stderr: true
+    -
+        command: './install/up.sh'
+        stdin: true
+        stdout: true
+        stderr: true
+    -
+        command: './install/fzf.sh'
+        stdin: true
+        stdout: true
+        stderr: true
