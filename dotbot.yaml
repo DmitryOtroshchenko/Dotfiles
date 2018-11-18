@@ -17,8 +17,8 @@
         create: true
 
 - shell:
-  - ['omf -v; or curl -L https://get.oh-my.fish | fish']
-  - ['curl --create-dirs -o ~/.config/up/up.fish https://raw.githubusercontent.com/shannonmoeller/up/master/up.fish ;
-fish -c "source ~/.config/up/up.fish"']
+  - ['./install/fzf.sh']
+  - ['./install/omf.sh']
+  - ['./install/up.sh']
 
 # Intresting themes: mars
