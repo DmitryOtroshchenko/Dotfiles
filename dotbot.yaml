@@ -21,12 +21,12 @@
 
 - shell:
     -
-        command: './install/omf.sh'
+        command: './install/omf.fish'
         stdin: true
         stdout: true
         stderr: true
     -
-        command: './install/up.sh'
+        command: './install/up.fish'
         stdin: true
         stdout: true
         stderr: true
