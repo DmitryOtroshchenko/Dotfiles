@@ -21,6 +21,26 @@ set -x VISUAL 'vim'
 set -x PAGER 'less'
 
 #
+# Basic helper functions.
+#
+
+function file_ext
+    if [ (count $argv) = 1 ]
+        echo (echo $argv[1] | sed 's/^.*\.//')
+    else
+        return 1
+    end
+end
+
+function file_basename
+    if [ (count $argv) = 1 ]
+        echo (echo $argv[1] | sed 's/\.[^.]*$//')
+    else
+        return 1
+    end
+end
+
+#
 # Standard GNU tools.
 #
 
