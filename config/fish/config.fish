@@ -11,6 +11,7 @@ fish_vi_key_bindings
 # Basic exports.
 #
 
+set -x SHELL (which fish)
 set -x TERM 'xterm-256color'
 
 set -x LANG 'en_US.UTF-8'
