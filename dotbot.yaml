@@ -22,6 +22,9 @@
     ~/.config/omf:
         path: config/omf
         create: true
+    ~/.config/ranger:
+        path: config/ranger
+        create: true
 
 - shell:
     -
