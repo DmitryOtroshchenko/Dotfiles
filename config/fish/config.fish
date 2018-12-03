@@ -52,6 +52,11 @@ export LESS='-F -g -i -M -R -S -w -X -z-4'
 
 alias ls="ls --group-directories-first -h --color --sort=extension --classify --ignore=\"*.pyc\""
 
+alias md='mkdir -p'
+alias rd='rmdir'
+alias mv='mv -i'
+alias cp='cp -i'
+
 # TODO:
 set -x RIPGREP_CONFIG_PATH '/Users/d.otroshchenko/Dotfiles/config/ripgreprc'
 
@@ -59,28 +64,12 @@ set -x RIPGREP_CONFIG_PATH '/Users/d.otroshchenko/Dotfiles/config/ripgreprc'
 # Git goodies.
 #
 
-function gc --wraps git
-    git commit $argv
-end
-
-function gcm --wraps git
-    git commit -m $argv
-end
-
-function gia --wraps git
-    git add $argv
-end
-
-function giA --wraps git
-    git add -p $argv
-end
+abbr -e gcm
+abbr -a gcm 'git commit -m'
+abbr -a gia 'git add -p'
 
 function st
     git status
-end
-
-function g --wraps git
-    git $argv
 end
 
 #
@@ -154,11 +143,3 @@ end
 
 # Fixes R locale error.
 # defaults write org.R-project.R force.LANG en_US.UTF-8
-
-#
-# TODO
-#
-
-# function cd {
-#     builtin cd "$@" && ls
-# }

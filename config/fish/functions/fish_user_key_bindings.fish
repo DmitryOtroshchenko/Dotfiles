@@ -23,12 +23,17 @@ end
 function fish_user_key_bindings
     fzf_key_bindings
 
-    # TODO: bind -M insert \cw 'backward-kill-word'
+    bind_all \cw 'backward-kill-word'
+    # One of these is option + backspace.
+    # for Mac with Karabiner remap C-w -> option + backspace.
+    bind_all \e\x7f 'backward-kill-word'
+    bind_all \e\b 'backward-kill-word'
+
     bind_all \ca 'beginning-of-line'
     bind_all \ce 'end-of-line'
     bind_all \cp 'history-search-backward'
     bind_all \cn 'history-search-forward'
-    bind_all \cq 'pwd; echo; ls; commandline -f repaint'
+    bind_all \cq 'echo; pwd; echo; ls; commandline -f repaint'
     bind_all \cl 'clear; commandline -f repaint'
 
     # bind_all \ck 'fancy_cz'
