@@ -203,7 +203,7 @@ Plug 'reedes/vim-pencil'
 "{{{ Unite et al
 
 " General purpose fuzzy finder.
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug '~/.fzf'
 
 cnoremap <silent> <c-l> <c-\>eGetCompletions()<cr>
 "add an extra <cr> at the end of this line to automatically accept the fzf-selected completions.
