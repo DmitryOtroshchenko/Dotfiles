@@ -1,10 +1,26 @@
 fish_vi_key_bindings
 
+# TODO: fix absolute paths
+set fish_config_root '/Users/d.otroshchenko/.config/fish/'
+set dotfiles_root '/Users/d.otroshchenko/Dotfiles/'
+
 #
 # External scripts that require sourcing.
 #
 
+# set config_debug 1
+function debug_echo
+    set -q config_debug; and echo $argv
+end
+
+set to_source (ls -1 $fish_config_root'/source/' | rg '^[^_].+.fish')
+for fn in $to_source
+    debug_echo 'Sourcing '$fn
+    source $fish_config_root'/source/'$fn
+end
+
 # Use omf autojump?
+# TODO: create a link in source/
 [ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish
 
 #
@@ -57,8 +73,7 @@ alias rd='rmdir'
 alias mv='mv -i'
 alias cp='cp -i'
 
-# TODO:
-set -x RIPGREP_CONFIG_PATH '/Users/d.otroshchenko/Dotfiles/config/ripgreprc'
+set -x RIPGREP_CONFIG_PATH $dotfiles_root'/config/ripgreprc'
 
 #
 # Git goodies.
@@ -104,26 +119,6 @@ end
 source ~/anaconda3/etc/fish/conf.d/conda.fish
 conda activate
 conda activate sandbox
-
-#
-# Platform specific
-#
-
-source ~/.config/fish/functions/macos_specific.fish
-
-#
-# Other.
-#
-
-function fkill -a signal
-    set -q signal[1]; or set signal '-9'
-    set pids_to_kill (ps -efww | fzf -m -i +x -e --header-lines=1 | awk '{print $2}')
-    if set -q pids_to_kill[1]
-        kill $signal $pids_to_kill
-    else
-        echo 'Kill aborted.'
-    end
-end
 
 #
 # SSH
