@@ -106,23 +106,6 @@ function rgf --wraps rg
 end
 
 #
-# Python
-#
-
-function pt --wraps pytest
-    pytest -s --pdb --pdbcls=IPython.terminal.debugger:Pdb $argv
-end
-
-function pl --wraps pylint
-    pylint -r n $argv
-end
-
-# Anaconda
-source ~/anaconda3/etc/fish/conf.d/conda.fish
-conda activate
-conda activate sandbox
-
-#
 # SSH
 #
 
