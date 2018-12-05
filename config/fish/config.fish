@@ -7,23 +7,9 @@ set is_criteo 1
 set fish_config_root '/Users/d.otroshchenko/.config/fish/'
 set dotfiles_root '/Users/d.otroshchenko/Dotfiles/'
 
-#
-# External scripts that require sourcing.
-#
-
 function debug_echo
     set -q config_debug; and echo $argv
 end
-
-set to_source (ls -1 $fish_config_root'/source/' | rg '^[^_].+.fish')
-for fn in $to_source
-    debug_echo 'Sourcing '$fn
-    source $fish_config_root'/source/'$fn
-end
-
-# Use omf autojump?
-# TODO: create a link in source/
-[ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish
 
 #
 # Basic exports.
@@ -57,6 +43,16 @@ function file_basename
     else
         return 1
     end
+end
+
+#
+# Source modules.
+#
+
+set to_source (ls -1 $fish_config_root'/source/' | rg '^[^_].+.fish')
+for fn in $to_source
+    debug_echo 'Sourcing '$fn
+    source $fish_config_root'/source/'$fn
 end
 
 #
