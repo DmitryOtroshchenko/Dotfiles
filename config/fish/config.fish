@@ -1,5 +1,8 @@
 fish_vi_key_bindings
 
+# set config_debug 1
+set is_criteo 1
+
 # TODO: fix absolute paths
 set fish_config_root '/Users/d.otroshchenko/.config/fish/'
 set dotfiles_root '/Users/d.otroshchenko/Dotfiles/'
@@ -8,7 +11,6 @@ set dotfiles_root '/Users/d.otroshchenko/Dotfiles/'
 # External scripts that require sourcing.
 #
 
-# set config_debug 1
 function debug_echo
     set -q config_debug; and echo $argv
 end

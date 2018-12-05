@@ -1,6 +1,4 @@
-
 if uname | grep -i '^darwin' > /dev/null
-
 debug_echo 'Loading MacOS-specific config ...'
 
 set -gx PATH '/usr/local/opt/coreutils/libexec/gnubin' $PATH
