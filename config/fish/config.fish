@@ -3,9 +3,7 @@ fish_vi_key_bindings
 # set config_debug 1
 set is_criteo 1
 
-# TODO: fix absolute paths
-set fish_config_root '/Users/d.otroshchenko/.config/fish/'
-set dotfiles_root '/Users/d.otroshchenko/Dotfiles/'
+set dotfiles_root (echo ~)'/Dotfiles/'
 
 function debug_echo
     set -q config_debug; and echo $argv
@@ -49,6 +47,7 @@ end
 # Source modules.
 #
 
+set fish_config_root (echo ~)'/.config/fish/'
 set to_source (ls -1 $fish_config_root'/source/' | rg '^[^_].+.fish')
 for fn in $to_source
     debug_echo 'Sourcing '$fn
