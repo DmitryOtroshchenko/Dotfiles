@@ -111,10 +111,3 @@ end
 function ssh-aliases
     sed -rn 's/^\s*Host\s+(.*)\s*/\1/ip' ~/.ssh/config | grep -v '\*'
 end
-
-#
-# R
-#
-
-# Fixes R locale error.
-# defaults write org.R-project.R force.LANG en_US.UTF-8
