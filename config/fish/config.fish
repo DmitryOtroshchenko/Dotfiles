@@ -5,6 +5,8 @@ set is_criteo 1
 
 set dotfiles_root (echo ~)'/Dotfiles/'
 
+set -gx PATH "$HOME/local/bin" $PATH
+
 function debug_echo
     set -q config_debug; and echo $argv
 end
