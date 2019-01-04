@@ -6,14 +6,18 @@
 # Fish Shell will be installed in $HOME/local/bin.
 # It's assumed that wget and a C/C++ compiler are installed.
 
-FISH_VERSION=2.7.1
-
 set -e
+
+FISH_VERSION=$1
+FISH_VERSION=${FISH_VERSION:-2.7.1}
+echo "Installing fish $FISH_VERSION ..."
 
 HOME=$(echo ~)
 INSTALL_TMP=$(mktemp -d --tmpdir=$HOME)
 
-function cleanup() { rm -rf $INSTALL_TMP }
+function cleanup {
+    rm -rf $INSTALL_TMP
+}
 trap cleanup EXIT
 
 mkdir -p $HOME/local
