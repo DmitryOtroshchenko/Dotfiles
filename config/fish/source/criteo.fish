@@ -1,7 +1,7 @@
 if set -q is_criteo
 debug_echo 'Loading Criteo-specific config ...'
 
-conda activate sandbox
+conda activate base
 
 function bootstrapgit
     set gitdir (git rev-parse --git-dir)
