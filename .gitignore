@@ -9,3 +9,6 @@ config/fish/fishd.*
 # Oh-my-fish
 config/omf/fonts
 config/fish/conf.d/omf.fish
+
+# VSCode
+.vscode
