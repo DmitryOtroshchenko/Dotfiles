@@ -1,1 +1,1 @@
-/Users/d.otroshchenko/.fzf/shell/key-bindings.fish
+/Users/d.otroshchenko/local/.fzf/shell/key-bindings.fish
