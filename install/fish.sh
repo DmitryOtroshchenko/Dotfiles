@@ -12,21 +12,12 @@ FISH_VERSION=$1
 FISH_VERSION=${FISH_VERSION:-2.7.1}
 echo "Installing fish $FISH_VERSION ..."
 
-HOME=$(echo ~)
-INSTALL_TMP=$(mktemp -d --tmpdir=$HOME)
-
-function cleanup {
-    rm -rf $INSTALL_TMP
-}
-trap cleanup EXIT
-
-mkdir -p $HOME/local
-cd $INSTALL_TMP
+source $(dirname $0)/common.sh
 
 wget https://github.com/fish-shell/fish-shell/releases/download/$FISH_VERSION/fish-$FISH_VERSION.tar.gz
-
 tar xvzf fish-${FISH_VERSION}.tar.gz
 cd fish-${FISH_VERSION}
+
 ./configure --prefix=$HOME/local --disable-shared
 make
 make install
