@@ -9,8 +9,15 @@ function concat_pdf
     /System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py $argv
 end
 
+set brew_prefix (brew --prefix)
+function gnu_manpath -a name
+    echo $brew_prefix'/opt/'$name'/libexec/gnuman/'
+end
+
 function q --wraps man
-    set brew_man_path (brew --prefix)'/opt/coreutils/libexec/gnuman'
+    set -l brew_man_path (gnu_manpath 'coreutils') (gnu_manpath 'gnu-sed') (gnu_manpath 'gawk')
+    set -l brew_man_path (string join ':' $brew_man_path)
+
     man -M $brew_man_path $argv 1>/dev/null 2>&1
     if test $status -eq 0
         man -M $brew_man_path $argv
