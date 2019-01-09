@@ -71,6 +71,7 @@ alias md='mkdir -p'
 alias rd='rmdir'
 alias mv='mv -i'
 alias cp='cp -i'
+alias cb='cd -'
 
 set -x RIPGREP_CONFIG_PATH $dotfiles_root'/config/ripgreprc'
 
