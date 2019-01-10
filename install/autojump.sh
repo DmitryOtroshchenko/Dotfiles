@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 autojump --version &> /dev/null
-if [ $? -ne 1 ]; then
+if [ $? -ne 0 ]; then
     echo 'Installing autojump ...'
     source $(dirname $0)/common.sh
     cd $LOCAL_INSTALL_ROOT
