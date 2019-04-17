@@ -11,11 +11,12 @@
 - clean: ['~', '~/.config']
 
 - link:
-    ~/.vimrc: config/vimrc
-    ~/.nvimrc: config/vimrc
-    ~/.vimrc_base: config/vimrc_base
-    ~/.tmux.conf: config/tmux.conf
     ~/.gitconfig: config/gitconfig
+    ~/.nvimrc: config/vimrc
+    ~/.pylintrc: config/pylintrc
+    ~/.tmux.conf: config/tmux.conf
+    ~/.vimrc: config/vimrc
+    ~/.vimrc_base: config/vimrc_base
     ~/.config/fish:
         path: config/fish
         create: true
