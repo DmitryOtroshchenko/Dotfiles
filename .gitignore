@@ -12,3 +12,6 @@ config/fish/conf.d/omf.fish
 
 # VSCode
 .vscode
+
+# Karabiner
+config/karabiner/automatic_backups/
