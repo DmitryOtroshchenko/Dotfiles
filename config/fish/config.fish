@@ -65,7 +65,7 @@ end
 # Remove -X and -F (exit if the content fits on one screen) to enable it.
 export LESS='-F -g -i -M -R -S -w -X -z-4'
 
-alias ls="ls --group-directories-first -h --color --sort=extension --classify --ignore=\"*.pyc\""
+alias ls='ls --group-directories-first -h --color --sort=extension --classify --hide="*.pyc" --hide="__pycache__"'
 
 alias md='mkdir -p'
 alias rd='rmdir'
