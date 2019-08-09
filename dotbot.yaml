@@ -33,11 +33,11 @@
         stdin: true
         stdout: true
         stderr: true
-    -
-        command: './install/up.fish'
-        stdin: true
-        stdout: true
-        stderr: true
+    # -
+    #     command: './install/up.fish'
+    #     stdin: true
+    #     stdout: true
+    #     stderr: true
     -
         command: './install/fzf.sh'
         stdin: true
