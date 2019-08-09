@@ -3,3 +3,10 @@
     ~/.config/karabiner:
         path: config/karabiner
         create: true
+
+- shell:
+    -
+        command: './install/setup_macos_key_repeat.sh'
+        stdin: true
+        stdout: true
+        stderr: true
