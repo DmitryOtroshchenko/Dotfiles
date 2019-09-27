@@ -9,7 +9,7 @@
 set -e
 
 FISH_VERSION=$1
-FISH_VERSION=${FISH_VERSION:-2.7.1}
+FISH_VERSION=${FISH_VERSION:-3.0.2}
 echo "Installing fish $FISH_VERSION ..."
 
 source $(dirname $0)/common.sh

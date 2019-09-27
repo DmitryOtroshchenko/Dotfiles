@@ -50,6 +50,7 @@ end
 #
 
 set fish_config_root (echo ~)'/.config/fish/'
+source $fish_config_root'/source/macos.fish'
 set to_source (ls -1 $fish_config_root'/source/' | rg '^[^_].+.fish')
 for fn in $to_source
     debug_echo 'Sourcing '$fn
