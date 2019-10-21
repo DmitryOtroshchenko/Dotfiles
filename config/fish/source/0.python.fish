@@ -1,5 +1,5 @@
 # Anaconda
-source ~/anaconda3/etc/fish/conf.d/conda.fish
+# source ~/anaconda3/etc/fish/conf.d/conda.fish
 
 which conda
 if [ $status -ne 0 ]

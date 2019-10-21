@@ -1,7 +1,6 @@
 fish_vi_key_bindings
 
 # set config_debug 1
-set is_criteo 1
 
 set dotfiles_root (echo ~)'/Dotfiles/'
 
