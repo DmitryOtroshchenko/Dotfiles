@@ -5,6 +5,7 @@ __pycache__/
 
 # Fish temporary files.
 config/fish/fishd.*
+config/fish/fish_variables
 
 # Oh-my-fish
 config/omf/fonts
