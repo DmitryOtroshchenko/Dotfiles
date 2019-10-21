@@ -13,3 +13,8 @@
         stdin: true
         stdout: true
         stderr: true
+    -
+        command: './install/setup_macos_defaults.sh'
+        stdin: true
+        stdout: true
+        stderr: true

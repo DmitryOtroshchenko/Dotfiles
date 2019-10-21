@@ -26,11 +26,4 @@ function q --wraps man
     end
 end
 
-function setup_osx_defaults
-    defaults write -g InitialKeyRepeat -int 25
-    defaults write -g KeyRepeat -int 2
-    # Properly set locale for R.
-    defaults write org.R-project.R force.LANG en_US.UTF-8
-end
-
 end
