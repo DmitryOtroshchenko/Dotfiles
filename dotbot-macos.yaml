@@ -3,6 +3,9 @@
     ~/.config/karabiner:
         path: config/karabiner
         create: true
+    ~/.config/kitty:
+        path: config/kitty
+        create: true
 
 - shell:
     -
