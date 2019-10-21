@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-ln -Fis *.bundle /Library/Keyboard\ Layouts/
+cp -r *.bundle /Library/Keyboard\ Layouts/
