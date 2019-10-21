@@ -21,8 +21,6 @@ end
 
 
 function fish_user_key_bindings
-    fzf_key_bindings
-
     bind_all \cw 'backward-kill-word'
     # One of these is option + backspace.
     # for Mac with Karabiner remap C-w -> option + backspace.
@@ -42,3 +40,5 @@ function fish_user_key_bindings
     bind_nv Y fish_clipboard_copy
     bind_nv p fish_clipboard_paste
 end
+
+fzf_key_bindings
