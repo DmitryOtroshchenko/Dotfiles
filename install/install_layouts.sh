@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-cp -r *.bundle /Library/Keyboard\ Layouts/
+sudo cp -r config/keyboard_layouts/*.bundle /Library/Keyboard\ Layouts/
