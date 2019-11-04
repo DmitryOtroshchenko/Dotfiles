@@ -1,17 +1,35 @@
 #!/usr/bin/env bash
 
-cd ~
+confirm() {
+    # Call with a prompt string or use a default.
+    read -r -p "${1:-Are you sure? [y/N]} " response
+    case "$response" in
+        [yY])
+            true
+            ;;
+        *)
+            false
+            ;;
+    esac
+}
+
+cd ~/Dotfiles
 
 # Homebrew
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+confirm 'Install homebrew?' && \
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+confirm 'Install formulae?' && \
+    cat install/brew_formulae.txt | xargs brew install
+confirm 'Install casks?' && \
+    cat install/brew_casks.txt | xargs brew cask install
+
 # Dotfiles + dotbot
-sudo easy_install pip
-sudo pip install dotbot
-git clone https://github.com/DmitryOtroshchenko/Dotfiles.git
-cd Dotfiles
+confirm 'Install dotbot?' && \
+    sudo easy_install pip && sudo pip install dotbot
 
-brew install coreutils fish ripgrep tree fd exa
-brew cask install karabiner-elements kitty visual-studio-code vivaldi
+confirm 'Link common dotfiles?' && dotbot -c dotbot.yaml
+[[ "$OSTYPE" =~ ^darwin ]] && confirm 'Link Mac-specific dotfiles?' && \
+    dotbot -c dotbot-macos.yaml
 
-brew install tealdeer
+# Misc
 tldr --update
