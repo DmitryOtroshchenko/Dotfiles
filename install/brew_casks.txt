@@ -1,0 +1,15 @@
+adoptopenjdk
+adoptopenjdk8
+alfred
+anaconda
+caffeine
+font-source-code-pro
+intellij-idea-ce
+karabiner-elements
+kitty
+slack
+spectacle
+spotify
+telegram
+visual-studio-code
+vivaldi
