@@ -38,13 +38,13 @@
     #     stdin: true
     #     stdout: true
     #     stderr: true
-    -
-        command: './install/fzf.sh'
-        stdin: true
-        stdout: true
-        stderr: true
-    -
-        command: './install/autojump.sh'
-        stdin: true
-        stdout: true
-        stderr: true
+    # -
+    #     command: './install/fzf.sh'
+    #     stdin: true
+    #     stdout: true
+    #     stderr: true
+    # -
+    #     command: './install/autojump.sh'
+    #     stdin: true
+    #     stdout: true
+    #     stderr: true
