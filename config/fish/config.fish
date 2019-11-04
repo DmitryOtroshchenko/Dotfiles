@@ -114,3 +114,10 @@ end
 function ssh-aliases
     sed -rn 's/^\s*Host\s+(.*)\s*/\1/ip' ~/.ssh/config | grep -v '\*'
 end
+
+#
+# Autojump
+#
+
+set autojump_setup_fish '/usr/local/share/autojump/autojump.fish'
+test -f $autojump_setup_fish; and source $autojump_setup_fish

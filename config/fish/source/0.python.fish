@@ -1,10 +1,7 @@
 # Anaconda
-# source ~/anaconda3/etc/fish/conf.d/conda.fish
 
-which conda
-if [ $status -ne 0 ]
-    set -x has_conda 0
-end
+set conda_path '/usr/local/anaconda3/bin/conda'
+test -f $conda_path; and eval $conda_path "shell.fish" "hook" $argv | source
 
 function pt --wraps pytest
     pytest -s --pdb --pdbcls=IPython.terminal.debugger:Pdb $argv
