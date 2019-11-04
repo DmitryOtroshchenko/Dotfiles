@@ -26,4 +26,16 @@ function q --wraps man
     end
 end
 
+# Enable kitty completions.
+which kitty > /dev/null
+if test $status -eq 0
+    kitty + complete setup fish | source
+end
+
+function brew-commit --wraps brew
+    set COMMIT $argv[1]
+    set FORMULA $argv[2]
+    brew install "https://raw.github.com/Homebrew/homebrew-core/$COMMIT/Formula/$FORMULA.rb" $argv[3..-1]
+end
+
 end
