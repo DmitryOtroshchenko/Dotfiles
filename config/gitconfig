@@ -1,7 +1,7 @@
 
 [core]
     pager = less -r
-    editor = vim
+    editor = code --wait
     excludesfile = /Users/d.otroshchenko/.gitignore_global
 
 [color]
@@ -18,8 +18,6 @@
 
     unstage = reset HEAD --
     restore = checkout --
-    dd = diff
-    dt = difftool
 
     l = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
     ll = log --stat --abbrev-commit --decorate
@@ -43,21 +41,15 @@
     lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
     lg = !git lg2
 
-[diff]
-    tool = vimdiff
-
-[difftool]
-    prompt = false
-
 [user]
-	# email = d.otroshchenko@gmail.com
-	email = d.otroshchenko@criteo.com
-	name = Dmitry Otroshchenko
+    email = dmitry.otroshchenko@airbnb.com
+    name = Dmitry Otroshchenko
 
 [github]
     user = DmitryOtroshchenko
 
 [push]
     default = simple
-[commit]
-    # template = /Users/d.otroshchenko/.stCommitMsg
+
+[credential]
+    helper = osxkeychain
