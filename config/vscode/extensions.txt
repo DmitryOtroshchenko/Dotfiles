@@ -1,0 +1,11 @@
+alefragnani.Bookmarks
+alefragnani.project-manager
+fabiospampinato.vscode-diff
+fwcd.kotlin
+Gruntfuggly.todo-tree
+lunaryorn.fish-ide
+ms-python.python
+naco-siren.gradle-language
+ryu1kn.partial-diff
+skyapps.fish-vscode
+vscodevim.vim
