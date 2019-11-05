@@ -10,6 +10,12 @@
         path: config/vscode
         create: true
 
+- brewfile:
+    file: Brewfile
+    stdin: true
+    stdout: true
+    stderr: true
+
 - shell:
     -
         command: './config/vscode/install_extensions.sh'
