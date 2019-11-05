@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 current_ext_list=$(mktemp)
 code --list-extensions > $current_ext_list
 
