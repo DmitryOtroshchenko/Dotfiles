@@ -2,6 +2,8 @@
 
 [[ "$OSTYPE" =~ ^darwin ]] || { echo 'THIS IS NOT MACOSoneoneone' && exit 1; }
 
+dotroot="$(git rev-parse --show-toplevel)"
+
 confirm() {
     # Call with a prompt string or use a default.
     read -r -p "${1:-Are you sure? [y/N]} " response
@@ -30,24 +32,7 @@ confirm 'Link Mac-specific dotfiles?' && dotbot -c dotbot-macos.yaml
 # Homebrew
 which brew > /dev/null || { confirm 'Install homebrew?' && \
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"; }
-# Simple formulae can depend on casks and can not install cask dependencies automatically -> install casks first.
-
-install_casks() {
-    while read cask; do
-        echo "Installing $cask ..."
-        brew cask install $cask
-    done <install/brew_casks.txt
-}
-confirm 'Install casks?' && install_casks && echo 'Now go activate all those apps...' \
-    && cat install/brew_casks.txt && open /Applications && confirm 'Done?'
-
-install_formulae() {
-    while read form; do
-        echo "Installing $form ..."
-        brew install $form
-    done <install/brew_formulae.txt
-}
-confirm 'Install formulae?' && install_formulae
+confirm 'Install brew formulae?' && brew bundle --file="$dotroot/Brewfile"
 
 # Download creds and access tokens from lastpass.
 confirm 'Bootstrap secrets from lastpass?' && {
