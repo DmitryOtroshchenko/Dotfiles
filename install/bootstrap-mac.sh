@@ -38,5 +38,8 @@ confirm 'Link common dotfiles?' && dotbot -c dotbot.yaml
 [[ "$OSTYPE" =~ ^darwin ]] && confirm 'Link Mac-specific dotfiles?' && \
     dotbot -c dotbot-macos.yaml
 
+# Download creds and access tokens from lastpass.
+ lpass login && lpass show -F dotfiles-private --notes > ~/Dotfiles/config/fish/source/00.credentials.fish
+
 # Misc
 tldr --update
