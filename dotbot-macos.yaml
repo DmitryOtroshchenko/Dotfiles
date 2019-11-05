@@ -6,3 +6,6 @@
     ~/.config/kitty:
         path: config/kitty
         create: true
+    ~/Library/Application Support/Code/User:
+        path: config/vscode
+        create: true
