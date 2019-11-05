@@ -7,7 +7,7 @@ font-source-code-pro
 intellij-idea-ce
 karabiner-elements
 kitty
-slack
+lastpass
 spectacle
 spotify
 telegram

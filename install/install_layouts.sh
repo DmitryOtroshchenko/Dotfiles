@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-sudo cp -r "config/keyboard_layouts/*.bundle" '/Library/Keyboard Layouts/'
+dotfiles_root=$(git rev-parse --show-toplevel)
+sudo cp -R "$dotfiles_root/config/keyboard_layouts/." '/Library/Keyboard Layouts/'

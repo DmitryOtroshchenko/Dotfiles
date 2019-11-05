@@ -6,15 +6,3 @@
     ~/.config/kitty:
         path: config/kitty
         create: true
-
-- shell:
-    -
-        command: './install/setup_macos_defaults.sh'
-        stdin: true
-        stdout: true
-        stderr: true
-    -
-        command: './install/install_layouts.sh'
-        stdin: true
-        stdout: true
-        stderr: true
