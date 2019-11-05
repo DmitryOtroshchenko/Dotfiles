@@ -31,7 +31,8 @@ install_casks() {
         brew cask install $cask
     done <install/brew_casks.txt
 }
-confirm 'Install casks?' && install_casks
+confirm 'Install casks?' && install_casks && echo 'Now go activate all those apps...' \
+    && cat install/brew_casks.txt && open /Applications && confirm 'Done?'
 
 install_formulae() {
     while read form; do
