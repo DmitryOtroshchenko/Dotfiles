@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-[[ "$OSTYPE" =~ ^darwin ]] || exit 1
+[[ "$OSTYPE" =~ ^darwin ]] || { echo 'THIS IS NOT MACOSoneoneone' && exit 1; }
 
 confirm() {
     # Call with a prompt string or use a default.
@@ -18,28 +18,41 @@ confirm() {
 cd ~/Dotfiles
 
 ./install/setup_macos_defaults.sh
-confirm 'Install kbd layouts?' &&
-    ./install/install_layouts.sh
+confirm 'Install kbd layouts?' && ./install/install_layouts.sh
 
 # Homebrew
-confirm 'Install homebrew?' && \
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+which brew > /dev/null || { confirm 'Install homebrew?' && \
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"; }
 # Simple formulae can depend on casks and can not install cask dependencies automatically -> install casks first.
-confirm 'Install casks?' && \
-    cat install/brew_casks.txt | xargs brew cask install
-confirm 'Install formulae?' && \
-    cat install/brew_formulae.txt | xargs brew install
+
+install_casks() {
+    while read cask; do
+        echo "Installing $cask ..."
+        brew cask install $cask
+    done <install/brew_casks.txt
+}
+confirm 'Install casks?' && install_casks
+
+install_formulae() {
+    while read form; do
+        echo "Installing $form ..."
+        brew install $form
+    done <install/brew_formulae.txt
+}
+confirm 'Install formulae?' && install_formulae
 
 # Dotfiles + dotbot
-confirm 'Install dotbot?' && \
-    sudo /usr/bin/easy_install pip && sudo /usr/local/bin/pip install dotbot
+which dotbot > /dev/null || { confirm 'Install dotbot?' && \
+    sudo /usr/bin/easy_install pip && sudo /usr/local/bin/pip install dotbot; }
 
 confirm 'Link common dotfiles?' && dotbot -c dotbot.yaml
-[[ "$OSTYPE" =~ ^darwin ]] && confirm 'Link Mac-specific dotfiles?' && \
-    dotbot -c dotbot-macos.yaml
+confirm 'Link Mac-specific dotfiles?' && dotbot -c dotbot-macos.yaml
 
 # Download creds and access tokens from lastpass.
- lpass login && lpass show -F dotfiles-private --notes > ~/Dotfiles/config/fish/source/00.credentials.fish
+confirm 'Bootstrap secrets from lastpass?' && { 
+    lpass login dmitry.otroshchenko@gmail.com && lpass show -F dotfiles-private --notes > ~/Dotfiles/config/fish/source/00.credentials.fish; }
 
 # Misc
 tldr --update
+
+echo 'All set!'
