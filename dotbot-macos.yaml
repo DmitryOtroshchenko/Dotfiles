@@ -9,6 +9,10 @@
     ~/Library/Application Support/Code/User:
         path: config/vscode
         create: true
+    ~/Library/Application Support/Spectacle:
+        path: config/spectacle.app
+        create: true
+        force: true
 
 - brewfile:
     file: Brewfile
