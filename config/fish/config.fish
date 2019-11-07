@@ -88,22 +88,6 @@ function st
 end
 
 #
-# Search for files by name using ripgrep.
-#
-
-function rgfs --wraps rg
-    rg --files --glob $argv
-end
-
-function rgfi --wraps rg
-    rg --files --iglob $argv
-end
-
-function rgf --wraps rg
-    rgfi $argv
-end
-
-#
 # SSH
 #
 
@@ -121,3 +105,11 @@ end
 
 set autojump_setup_fish '/usr/local/share/autojump/autojump.fish'
 test -f $autojump_setup_fish; and source $autojump_setup_fish
+
+#
+# Other
+#
+
+alias ns='exa -F --group-directories-first'
+alias nt='exa --tree --group-directories-first'
+alias na='exa -lF --group-directories-first'
