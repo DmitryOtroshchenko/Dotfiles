@@ -20,8 +20,8 @@ set -x TERM 'xterm-256color'
 set -x LANG 'en_US.UTF-8'
 set -x LC_ALL 'en_US.UTF-8'
 
-set -x EDITOR 'vim'
-set -x VISUAL 'vim'
+set -x EDITOR 'code'
+set -x VISUAL 'code'
 set -x PAGER 'less'
 
 #
@@ -81,11 +81,9 @@ set -x RIPGREP_CONFIG_PATH $dotfiles_root'/config/ripgreprc'
 
 abbr -e gcm
 abbr -a gcm 'git commit -m'
+abbr -a ga 'git add'
 abbr -a gia 'git add -p'
-
-function st
-    git status
-end
+abbr -a st 'git status'
 
 #
 # SSH
