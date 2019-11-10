@@ -111,3 +111,5 @@ test -f $autojump_setup_fish; and source $autojump_setup_fish
 alias ns='exa -F --group-directories-first'
 alias nt='exa --tree --group-directories-first'
 alias na='exa -lF --group-directories-first'
+
+set -gx RANGER_LOAD_DEFAULT_RC FALSE
