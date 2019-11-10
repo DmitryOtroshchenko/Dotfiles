@@ -1,13 +1,10 @@
-from __future__ import (absolute_import, division, print_function)
+import os
 
-import os.path
-
-# You always need to import ranger.api.commands here to get the Command class.
 from ranger.api.commands import Command
 
 
-# Any class that is a subclass of "Command" will be integrated into ranger
-# as a command. Try typing ":my_edit<ENTER>" in ranger.
+# Any class that is a subclass of "Command" will be integrated into ranger as a
+# command.  Try typing ":my_edit<ENTER>" in ranger!
 class my_edit(Command):
     # The so-called doc-string of the class will be visible in the built-in
     # help that is accessible by typing "?c" inside ranger.
