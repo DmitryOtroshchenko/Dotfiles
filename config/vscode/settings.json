@@ -2,12 +2,39 @@
     //
     // core
     //
-    "files.trimTrailingWhitespace": true,
-    "files.insertFinalNewline": true,
     "editor.fontFamily": "Source Code Pro",
     "editor.fontSize": 18,
+    "editor.cursorBlinking": "solid",
+    "editor.find.autoFindInSelection": "multiline",
+    "editor.minimap.showSlider": "always",
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.suggest.shareSuggestSelections": true,
+    "files.trimTrailingWhitespace": true,
+    "files.autoGuessEncoding": true,
+    "files.enableTrash": false,
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.simpleDialog.enable": true,
+    "workbench.colorTheme": "Solarized Dark",
+    "workbench.tree.indent": 16,
+    "workbench.editor.highlightModifiedTabs": true,
+    "workbench.editor.labelFormat": "short",
+    "workbench.editor.tabCloseButton": "off",
+    "workbench.settings.openDefaultKeybindings": true,
+    "workbench.settings.openDefaultSettings": true,
+    "workbench.settings.useSplitJSON": true,
+    "window.restoreWindows": "all",
+    "window.title": "${rootPath} ${separator} ${activeEditorMedium}",
+    "window.newWindowDimensions": "maximized",
+    "window.openWithoutArgumentsInNewWindow": "on",
+    "explorer.incrementalNaming": "smart",
+    "explorer.sortOrder": "type",
     "search.location": "panel",
     "search.showLineNumbers": true,
+    "search.smartCase": true,
+    "debug.console.fontSize": 18,
+    "debug.console.fontFamily": "Source Code Pro",
     //
     // file types
     //
@@ -36,7 +63,11 @@
     "vim.useSystemClipboard": true,
     "vim.visualstar": true,
     //
-    // todo-tree
+    // Plugins
     //
     "todo-tree.highlights.enabled": true,
+    "bookmarks.saveBookmarksInProject": true,
+    "bookmarks.navigateThroughAllFiles": true,
+    "python.analysis.memory.keepLibraryAst": true,
+    "python.analysis.memory.keepLibraryLocalVariables": true,
 }
