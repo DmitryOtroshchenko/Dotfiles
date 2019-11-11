@@ -5,16 +5,16 @@ import subprocess
 import ranger.api
 
 
-HOOK_INIT_OLD = ranger.api.hook_init
+# HOOK_INIT_OLD = ranger.api.hook_init
 
-def hook_init(fm):
-    def update_autojump(signal):
-        subprocess.Popen(['autojump', '--add', signal.new.path])
+# def hook_init(fm):
+#     def update_autojump(signal):
+#         subprocess.Popen(['autojump', '--add', signal.new.path])
 
-    fm.signal_bind('cd', update_autojump)
-    HOOK_INIT_OLD(fm)
+#     fm.signal_bind('cd', update_autojump)
+#     HOOK_INIT_OLD(fm)
 
-ranger.api.hook_init = hook_init
+# ranger.api.hook_init = hook_init
 
 
 class j(ranger.api.commands.Command):
@@ -24,3 +24,4 @@ class j(ranger.api.commands.Command):
         directory = directory.decode('utf-8', 'ignore')
         directory = directory.rstrip('\n')
         self.fm.execute_console('cd ' + directory)
+        subprocess.Popen(['autojump', '--add', directory])
