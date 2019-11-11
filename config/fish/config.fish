@@ -113,3 +113,8 @@ alias nt='exa --tree --group-directories-first'
 alias na='exa -lF --group-directories-first'
 
 set -gx RANGER_LOAD_DEFAULT_RC FALSE
+
+# Ranger-like gotos
+alias gh='cd ~'
+alias gw='cd ~/workbench'
+alias gd='cd ~/Dotfiles'
