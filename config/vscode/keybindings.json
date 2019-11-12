@@ -1,23 +1,23 @@
 [
     {
-        "key": "ctrl+a", // default is Home
+        "key": "ctrl+a",
         "command": "cursorHome",
         "when": "textInputFocus"
     },
     {
-        "key": "ctrl+e", // default is End
+        "key": "ctrl+e",
         "command": "cursorEnd",
         "when": "textInputFocus"
     },
     {
-        "key": "ctrl+a", // default is Home
+        "key": "ctrl+a",
         "command": "cursorHome",
-        "when": "editorTextFocus && vim.active && !inDebugRepl"
+        "when": "editorTextFocus && !inDebugRepl"
     },
     {
-        "key": "ctrl+e", // default is End
+        "key": "ctrl+e",
         "command": "cursorEnd",
-        "when": "editorTextFocus && vim.active && !inDebugRepl"
+        "when": "editorTextFocus && !inDebugRepl"
     },
     {
         "key": "enter",

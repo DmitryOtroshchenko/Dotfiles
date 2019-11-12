@@ -119,6 +119,14 @@
             "commands": [ "workbench.action.files.save" ]
         },
         {
+            "before": [ "<leader>", "x" ],
+            "commands": [ "workbench.action.closeActiveEditor" ]
+        },
+        {
+            "before": [ "<leader>", "X" ],
+            "commands": [ "workbench.action.closeEditorsAndGroup" ]
+        },
+        {
             "before": [ "<leader>", "w" ],
             "commands": [ "workbench.action.files.save" ]
         },
@@ -156,6 +164,14 @@
         }
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": [ ":" ],
+            "commands": [ "workbench.action.showCommands" ]
+        },
+        {
+            "before": [ ";" ],
+            "commands": [ "workbench.action.showCommands" ]
+        },
         {
             "before": [ ">" ],
             "commands": [ "editor.action.indentLines" ]
