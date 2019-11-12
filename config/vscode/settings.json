@@ -1,6 +1,7 @@
 // TODO:
 // - Find / write a fuzzy search plugin.
 // - Fix * / # search so that they set current search term.
+// - Add vim shortcuts for go to problem.
 
 {
     //
@@ -69,7 +70,7 @@
         "editor.selectionHighlightBackground": "#ff000000",
         "editor.selectionHighlightBorder": "#728905",
 
-        "statusBar.border": "#c61b6e",
+        "statusBar.border": "#c61b6e"
     },
 
     //
@@ -102,32 +103,32 @@
     "vim.normalModeKeyBindingsNonRecursive": [
         {
             "before": [ ":" ],
-            "commands": [ "workbench.action.showCommands", ]
+            "commands": [ "workbench.action.showCommands" ]
         },
         {
             "before": [ ";" ],
-            "commands": [ "workbench.action.showCommands", ]
+            "commands": [ "workbench.action.showCommands" ]
         },
         {
             "before": [ "<leader>", "n" ],
-            "commands": [ "workbench.action.quickOpen", ]
+            "commands": [ "workbench.action.quickOpen" ]
         },
         // TODO: find a good shortcut for "go to file".
         {
             "before": [ "Z", "Z" ],
-            "commands": [ "workbench.action.files.save", ]
+            "commands": [ "workbench.action.files.save" ]
         },
         {
             "before": [ "<leader>", "w" ],
-            "commands": [ "workbench.action.files.save", ]
+            "commands": [ "workbench.action.files.save" ]
         },
         {
             "before": [ "<leader>", "m" ],
-            "commands": [ "bookmarks.toggle", ]
+            "commands": [ "bookmarks.toggle" ]
         },
         {
             "before": [ "<leader>", "b" ],
-            "commands": [ "bookmarks.list", ]
+            "commands": [ "bookmarks.list" ]
         },
         {
             "before": [ "/" ],
@@ -149,6 +150,10 @@
             "before": [ "N" ],
             "commands": [ "editor.action.previousMatchFindAction" ]
         },
+        {
+            "before": [ "K" ],
+            "commands": [ "lineBreakInsert" ]
+        }
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
         {
@@ -178,7 +183,7 @@
         {
             "before": [ "N" ],
             "commands": [ "editor.action.previousMatchFindAction" ]
-        },
+        }
     ],
 
     //
@@ -189,5 +194,5 @@
     "color-highlight.markerType": "dot-before",
     "python.analysis.memory.keepLibraryAst": true,
     "python.analysis.memory.keepLibraryLocalVariables": true,
-    "todo-tree.highlights.enabled": true,
+    "todo-tree.highlights.enabled": true
 }

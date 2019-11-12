@@ -1,5 +1,25 @@
 [
     {
+        "key": "ctrl+a", // default is Home
+        "command": "cursorHome",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "ctrl+e", // default is End
+        "command": "cursorEnd",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "ctrl+a", // default is Home
+        "command": "cursorHome",
+        "when": "editorTextFocus && vim.active && !inDebugRepl"
+    },
+    {
+        "key": "ctrl+e", // default is End
+        "command": "cursorEnd",
+        "when": "editorTextFocus && vim.active && !inDebugRepl"
+    },
+    {
         "key": "enter",
         "command": "closeFindWidget",
         "when": "editorFocus && findWidgetVisible"
