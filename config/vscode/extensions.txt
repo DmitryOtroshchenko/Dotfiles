@@ -3,9 +3,11 @@ alefragnani.project-manager
 fabiospampinato.vscode-diff
 fwcd.kotlin
 Gruntfuggly.todo-tree
+ilich8086.Untabify
 lunaryorn.fish-ide
 ms-python.python
 naco-siren.gradle-language
+naumovs.color-highlight
 ryu1kn.partial-diff
 skyapps.fish-vscode
 vscodevim.vim

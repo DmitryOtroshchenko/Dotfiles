@@ -2,42 +2,50 @@
     //
     // core
     //
-    "editor.fontFamily": "Source Code Pro",
-    "editor.fontSize": 18,
+    "editor.acceptSuggestionOnEnter": "off",
     "editor.cursorBlinking": "solid",
     "editor.find.autoFindInSelection": "multiline",
+    "editor.fontFamily": "Source Code Pro",
+    "editor.fontSize": 18,
     "editor.minimap.showSlider": "always",
-    "editor.acceptSuggestionOnEnter": "off",
+    "editor.renderLineHighlight": "all",
     "editor.suggest.shareSuggestSelections": true,
-    "files.trimTrailingWhitespace": true,
+
     "files.autoGuessEncoding": true,
     "files.enableTrash": false,
     "files.eol": "\n",
     "files.insertFinalNewline": true,
-    "files.trimFinalNewlines": true,
     "files.simpleDialog.enable": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+
     "workbench.colorTheme": "Solarized Dark",
-    "workbench.tree.indent": 16,
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.editor.labelFormat": "short",
     "workbench.editor.tabCloseButton": "off",
-    "workbench.settings.openDefaultKeybindings": true,
-    "workbench.settings.openDefaultSettings": true,
     "workbench.settings.useSplitJSON": true,
-    "window.restoreWindows": "all",
-    "window.title": "${rootPath} ${separator} ${activeEditorMedium}",
+    "workbench.tree.indent": 16,
+
     "window.newWindowDimensions": "maximized",
     "window.openWithoutArgumentsInNewWindow": "on",
+    "window.restoreWindows": "all",
+    "window.title": "${rootPath} ${separator} ${activeEditorMedium}",
+
     "explorer.incrementalNaming": "smart",
     "explorer.sortOrder": "type",
+
     "search.location": "panel",
     "search.showLineNumbers": true,
     "search.smartCase": true,
-    "debug.console.fontSize": 18,
+
+    "terminal.integrated.fontSize": 18,
+    "terminal.integrated.inheritEnv": false,
+    "terminal.integrated.shell.osx": "/usr/local/bin/fish",
+
     "debug.console.fontFamily": "Source Code Pro",
-    //
+    "debug.console.fontSize": 18,
+
     // file types
-    //
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
@@ -46,28 +54,53 @@
         "**/.DS_Store": true,
         "**/__pycache__": true
     },
-    //
-    // terminal
-    //
-    "terminal.integrated.shell.osx": "/usr/local/bin/fish",
-    "terminal.integrated.fontSize": 18,
-    "terminal.integrated.inheritEnv": false,
+
+    // colorschemes
+    "workbench.colorCustomizations": {
+        "editor.findMatchBackground": "#ff000000",
+        "editor.findMatchBorder": "#c61b6e",
+        "editor.findMatchHighlightBackground": "#ff000000",
+        "editor.findMatchHighlightBorder":"#c61b6e",
+        "editor.selectionHighlightBackground": "#ff000000",
+        "editor.selectionHighlightBorder": "#728905",
+
+        "statusBar.border": "#c61b6e",
+    },
+
     //
     // vim
     //
     "vim.camelCaseMotion.enable": true,
+    "vim.foldfix": true,
+    "vim.gdefault": true,
     "vim.replaceWithRegister": true,
     "vim.sneak": true,
     "vim.sneakReplacesF": true,
     "vim.sneakUseIgnorecaseAndSmartcase": true,
     "vim.useSystemClipboard": true,
     "vim.visualstar": true,
+    // search highlight et al.
+    "vim.hlsearch": true,
+    "vim.searchHighlightColor": "rgba(250, 0, 0, 0.5)",
+    "vim.searchHighlightTextColor": "",
+    // statusbar colors, off for now as it completely overrides
+    // all workbench.colorCustomizations in runtime.
+    "vim.statusBarColorControl": false,
+    "vim.statusBarColors.insert": "#728905",
+    "vim.statusBarColors.normal": "#2075c7",
+    "vim.statusBarColors.replace": "#c61b6e",
+    "vim.statusBarColors.visual": "#5f00af",
+    "vim.statusBarColors.visualblock": "#5f00af",
+    "vim.statusBarColors.visualline": "#5f00af",
+
     //
-    // Plugins
+    // plugins
     //
-    "todo-tree.highlights.enabled": true,
-    "bookmarks.saveBookmarksInProject": true,
     "bookmarks.navigateThroughAllFiles": true,
+    "bookmarks.saveBookmarksInProject": true,
+    "color-highlight.markerType": "dot-before",
     "python.analysis.memory.keepLibraryAst": true,
     "python.analysis.memory.keepLibraryLocalVariables": true,
+    "todo-tree.highlights.enabled": true,
+
 }
