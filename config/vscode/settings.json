@@ -108,13 +108,17 @@
             "before": [ ";" ],
             "commands": [ "workbench.action.showCommands", ]
         },
+        {
+            "before": [ "<leader>", "n" ],
+            "commands": [ "workbench.action.quickOpen", ]
+        },
         // TODO: find a good shortcut for "go to file".
         {
             "before": [ "Z", "Z" ],
             "commands": [ "workbench.action.files.save", ]
         },
         {
-            "before": [ "leader", "w" ],
+            "before": [ "<leader>", "w" ],
             "commands": [ "workbench.action.files.save", ]
         },
         {

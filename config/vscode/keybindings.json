@@ -1,8 +1,19 @@
-// Place your key bindings in this file to override the defaults
 [
     {
         "key": "enter",
         "command": "closeFindWidget",
-        "when": "editorFocus && findWidgetVisible",
+        "when": "editorFocus && findWidgetVisible"
     },
+    {
+        "key": "cmd+k cmd+t",
+        "command": "-workbench.action.selectTheme"
+    },
+    {
+        "key": "cmd+k cmd+t",
+        "command": "workbench.action.terminal.toggleTerminal"
+    },
+    {
+        "key": "ctrl+`",
+        "command": "-workbench.action.terminal.toggleTerminal"
+    }
 ]
