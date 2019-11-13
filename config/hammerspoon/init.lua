@@ -4,6 +4,11 @@ hs.hotkey.bind(
   function() hs.reload() end
 )
 
+
+local app_man = require('modules.appman')
+hs.hotkey.bind({"cmd"}, "escape", app_man:toggle("kitty"))
+
+
 hasBeenMutedBeforeLock = false
 
 function sleepWatch(eventType)
