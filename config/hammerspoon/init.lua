@@ -1,7 +1,13 @@
 
--- Set volume to 0 when locked.
+hs.hotkey.bind(
+  {"cmd", "alt", "ctrl"}, "R",
+  function() hs.reload() end
+)
+
 hasBeenMutedBeforeLock = false
+
 function sleepWatch(eventType)
+  -- Set volume to 0 when locked.
   if (eventType == hs.caffeinate.watcher.screensDidLock) then
     hasBeenMutedBeforeLock = hs.audiodevice.defaultOutputDevice():muted()
     hs.audiodevice.defaultOutputDevice():setMuted(true)
@@ -12,5 +18,4 @@ function sleepWatch(eventType)
   end
 end
 
-sleepWatcher = hs.caffeinate.watcher.new(sleepWatch)
-sleepWatcher:start()
+hs.caffeinate.watcher.new(sleepWatch):start()
