@@ -1,14 +1,16 @@
+local wm = require('modules.window_management')
 
+-- Reload hs.
 hs.hotkey.bind(
   {"cmd", "alt", "ctrl"}, "R",
   function() hs.reload() end
 )
 
-
+-- Hotkey kitty.
 local app_man = require('modules.appman')
 hs.hotkey.bind({"cmd"}, "escape", app_man:toggle("kitty"))
 
-
+-- Stfu when locked.
 hasBeenMutedBeforeLock = false
 
 function sleepWatch(eventType)
