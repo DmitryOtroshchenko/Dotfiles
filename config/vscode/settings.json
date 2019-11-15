@@ -110,6 +110,10 @@
             "commands": [ "workbench.action.showCommands" ]
         },
         {
+            "before": [ "enter" ],
+            "commands": [ "editor.action.nextMatchFindAction" ]
+        },
+        {
             "before": [ "<leader>", "n" ],
             "commands": [ "workbench.action.quickOpen" ]
         },
