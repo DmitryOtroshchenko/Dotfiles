@@ -1,5 +1,5 @@
-require('modules.window_management')
-require('modules.sound')
+require("modules.window_management")
+require("modules.sound")
 
 -- Reload hs.
 hs.hotkey.bind(
@@ -8,5 +8,5 @@ hs.hotkey.bind(
 )
 
 -- Hotkey kitty.
-local app_man = require('modules.appman')
+local app_man = require("modules.appman")
 hs.hotkey.bind({"cmd"}, "escape", app_man:toggle("kitty"))

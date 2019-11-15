@@ -11,8 +11,8 @@ function obj:toggle(name, secondName, isMoveMouse)
         local activated = hs.application.frontmostApplication()
         local path = string.lower(activated:path())
 
-        if (string.match(path, string.lower(name) .. '%.app$')
-                or string.match(path, string.lower(secondName) .. '%.app$')) then
+        if (string.match(path, string.lower(name) .. "%.app$")
+                or string.match(path, string.lower(secondName) .. "%.app$")) then
             return activated:hide()
         end
 
