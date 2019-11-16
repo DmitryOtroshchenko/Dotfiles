@@ -115,6 +115,10 @@
             "before": [ "<leader>", "n" ],
             "commands": [ "workbench.action.quickOpen" ]
         },
+        {
+            "before": [ "Y" ],
+            "after": [ "y", "$" ]
+        },
         // TODO: find a good shortcut for "go to file".
         {
             "before": [ "Z", "Z" ],
