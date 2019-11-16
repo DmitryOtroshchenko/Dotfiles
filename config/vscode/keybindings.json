@@ -1,4 +1,5 @@
 [
+    // C-a, C-e
     {
         "key": "ctrl+a",
         "command": "cursorHome",
@@ -18,12 +19,24 @@
         "key": "ctrl+e",
         "command": "cursorEnd",
         "when": "editorTextFocus && !inDebugRepl"
+    },
+    // Search with Enter.
+    {
+        "key": "enter",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "findInputFocussed"
     },
     {
         "key": "enter",
-        "command": "closeFindWidget",
-        "when": "findInputFocussed"
+        "command": "editor.action.nextMatchFindAction",
+        "when": "editorTextFocus && vim.mode != 'Insert'"
     },
+    {
+        "key": "shift+enter",
+        "command": "editor.action.previousMatchFindAction",
+        "when": "editorTextFocus && vim.mode != 'Insert'"
+    },
+    // Term
     {
         "key": "cmd+k cmd+t",
         "command": "-workbench.action.selectTheme"

@@ -14,7 +14,7 @@
     "editor.fontFamily": "Source Code Pro",
     "editor.fontSize": 18,
     "editor.minimap.showSlider": "always",
-    "editor.renderLineHighlight": "all",
+    "editor.renderLineHighlight": "none",
     "editor.rulers": [80, 120],
     "editor.suggest.shareSuggestSelections": true,
 
@@ -63,13 +63,15 @@
 
     // colorschemes
     "workbench.colorCustomizations": {
+        // Search match.
         "editor.findMatchBackground": "#ff000000",
         "editor.findMatchBorder": "#c61b6e",
         "editor.findMatchHighlightBackground": "#ff000000",
         "editor.findMatchHighlightBorder":"#c61b6e",
+        // Current word / selection match.
         "editor.selectionHighlightBackground": "#ff000000",
         "editor.selectionHighlightBorder": "#728905",
-
+        // Other.
         "statusBar.border": "#c61b6e"
     },
 
@@ -110,10 +112,6 @@
             "commands": [ "workbench.action.showCommands" ]
         },
         {
-            "before": [ "enter" ],
-            "commands": [ "editor.action.nextMatchFindAction" ]
-        },
-        {
             "before": [ "<leader>", "n" ],
             "commands": [ "workbench.action.quickOpen" ]
         },
@@ -145,6 +143,14 @@
         {
             "before": [ "/" ],
             "commands": [ "actions.find" ]
+        },
+        {
+            "before": [ "<leader>", "f" ],
+            "commands": [ "actions.find" ]
+        },
+        {
+            "before": [ "<leader>", "r" ],
+            "commands": [ "editor.action.startFindReplaceAction" ]
         },
         {
             "before": [ "*" ],
@@ -187,6 +193,14 @@
         {
             "before": [ "/" ],
             "commands": [ "actions.find" ]
+        },
+        {
+            "before": [ "<leader>", "f" ],
+            "commands": [ "actions.find" ]
+        },
+        {
+            "before": [ "<leader>", "r" ],
+            "commands": [ "editor.action.startFindReplaceAction" ]
         },
         {
             "before": [ "*" ],
