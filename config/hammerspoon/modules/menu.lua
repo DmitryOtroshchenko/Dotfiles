@@ -1,6 +1,4 @@
 
-local log = hs.logger.new("menu", "debug")
-
 local PlaybackStateIcons = {
   [hs.spotify.state_playing]=" ",
   [hs.spotify.state_paused]="•",
@@ -68,8 +66,5 @@ local MenuBarWidgets = {
 -- Important: if not assigned to a variable, timers get garbage collected.
 MenuRefreshTimer = hs.timer.doEvery(
   0.5,
-  function()
-    local rendered = renderMenuWidgets(MenuBarWidgets)
-    MenuBar:setTitle(rendered)
-  end
+  function() MenuBar:setTitle(renderMenuWidgets(MenuBarWidgets)) end
 )
