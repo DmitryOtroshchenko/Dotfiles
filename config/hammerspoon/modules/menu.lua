@@ -57,7 +57,8 @@ function spacer(nSpaces)
   return (" "):rep(nSpaces)
 end
 
-local MenuBar = hs.menubar.new()
+local MenuBar = hs.menubar.new():setClickCallback(hs.spotify.playpause)
+
 local MenuBarWidgets = {
   renderCpuAlert,
   spacer,

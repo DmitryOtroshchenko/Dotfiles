@@ -13,4 +13,4 @@ function sleepWatch(eventType)
   end
 end
 
-hs.caffeinate.watcher.new(sleepWatch):start()
+SleepWatcher = hs.caffeinate.watcher.new(sleepWatch):start()
