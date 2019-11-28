@@ -6,16 +6,16 @@ local PlaybackStateIcons = {
 }
 
 function renderSpotifyStatus()
-  if (hs.spotify.isRunning()) then
-    local unknown = "UNKNOWN"
-    local playbackIcon = PlaybackStateIcons[hs.spotify.getPlaybackState()] or " "
-    local artist = hs.spotify.getCurrentArtist() or unknown
-    local track = hs.spotify.getCurrentTrack() or unknown
-    return hs.styledtext.new(
-      playbackIcon .. " " .. artist .. ' - ' .. track,
-      {font={name="Source Code Pro"}}
-    )
-  end
+  -- if (hs.spotify.isRunning()) then
+  --   local unknown = "UNKNOWN"
+  --   local playbackIcon = PlaybackStateIcons[hs.spotify.getPlaybackState()] or " "
+  --   local artist = hs.spotify.getCurrentArtist() or unknown
+  --   local track = hs.spotify.getCurrentTrack() or unknown
+  --   return hs.styledtext.new(
+  --     playbackIcon .. " " .. artist .. ' - ' .. track,
+  --     {font={name="Source Code Pro"}}
+  --   )
+  -- end
   return ""
 end
 
@@ -57,7 +57,18 @@ function spacer(nSpaces)
   return (" "):rep(nSpaces)
 end
 
-local MenuBar = hs.menubar.new():setClickCallback(hs.spotify.playpause)
+function buildMenuBar()
+  local main = hs.menubar.new():setClickCallback(hs.spotify.playpause)
+  main:setMenu(
+    {
+      { title = "Next", fn = hs.spotify.next },
+      { title = "Prev", fn = hs.spotify.previous },
+    }
+  )
+  return main
+end
+
+local MenuBar = buildMenuBar()
 
 local MenuBarWidgets = {
   renderCpuAlert,

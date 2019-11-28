@@ -3,9 +3,10 @@
 local obj = {}
 local app_mode = hs.hotkey.modal.new()
 
-function obj:toggle(name, secondName, isMoveMouse)
+function obj:toggle(name, secondName, isMoveMouse, isLaunchMaximized)
   secondName = secondName or "--no-app--"
   isMoveMouse = isMoveMouse or false
+  isLaunchMaximized = isLaunchMaximized or false
 
   return function()
     local activated = hs.application.frontmostApplication()
