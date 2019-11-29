@@ -6,28 +6,32 @@
 -- https://kirbuchi.com/2016/10/26/playing-with-hammerspoon/
 -- https://github.com/Hammerspoon/hammerspoon/issues/848
 -- https://github.com/cmsj/hammerspoon-config/blob/master/init.lua
-AppLauncherMode = hs.hotkey.modal.new({"cmd"}, "escape", nil)
+
+function launchOrFocusCall(app)
+  return function ()
+    hs.application.launchOrFocus(app)
+  end
+end
 
 AppLauncherApps = {
-  ["n"] = "Vivaldi",
-  ["e"] = "Visual Studio Code",
-  ["space"] = "kitty",
-  ["m"] = "Slack"
+  ["n"] = launchOrFocusCall("Vivaldi"),
+  ["e"] = launchOrFocusCall("Visual Studio Code"),
+  ["space"] = launchOrFocusCall("kitty"),
+  ["m"] = launchOrFocusCall("Slack"),
+  ["0"] = hs.toggleConsole
 }
+
+AppLauncherMode = hs.hotkey.modal.new({"cmd"}, "escape", nil)
 
 AppLauncherModeKeyEvent = hs.eventtap.new(
   {hs.eventtap.event.types.keyDown},
   function (event)
     local keyPressed = hs.keycodes.map[event:getKeyCode()]
-    local appToFocus = AppLauncherApps[keyPressed]
-    if (appToFocus ~= nil) then
-      hs.application.launchOrFocus(appToFocus)
-    elseif (keyPressed == "0") then
-      hs.toggleConsole()
-    end
+    local action = AppLauncherApps[keyPressed]
+    if (action ~= nil) then action() end
     AppLauncherMode:exit()
     AppLauncherModeKeyEvent:stop()
-    return (appToFocus ~= nil or keyPressed == "0")
+    return true
   end
 )
 
