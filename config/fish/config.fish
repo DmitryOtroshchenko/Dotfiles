@@ -1,33 +1,47 @@
 fish_vi_key_bindings
 
 # set config_debug 1
-
-set dotfiles_root (echo ~)'/Dotfiles/'
-
-set -gx PATH "$HOME/.local/bin" $PATH
-
 function debug_echo
     set -q config_debug; and echo $argv
 end
+
+function lpath
+    debug_echo "LPush PATH: $argv"
+    set -gx PATH $argv $PATH
+end
+
+function rpath
+    debug_echo "RPush PATH: $argv"
+    set -gx PATH $PATH $argv
+end
+
+set dotfiles_root (echo ~)'/Dotfiles/'
+
+lpath '/usr/local/opt/gnu-sed/libexec/gnubin'
+lpath '/usr/local/opt/unzip/bin'
+lpath '/usr/local/bin'
+lpath (echo ~)'/.local/bin'
 
 #
 # Basic exports.
 #
 
-set -x SHELL (which fish)
-# set -x TERM 'xterm-kitty'
-set -x TERM 'xterm-256color'
+set -gx SHELL (which fish)
+# set -gx TERM 'xterm-kitty'
+set -gx TERM 'xterm-256color'
 
-set -x LANG 'en_US.UTF-8'
-set -x LC_ALL 'en_US.UTF-8'
+set -gx LANG 'en_US.UTF-8'
+set -gx LC_ALL 'en_US.UTF-8'
 
-set -x EDITOR 'code'
-set -x VISUAL 'code'
-set -x PAGER 'less'
+set -gx EDITOR 'code'
+set -gx VISUAL 'code'
+set -gx PAGER 'less'
 
-set -x LESS '-iMRX'
-set -x __batcommand (command -v bat)
-set -x LESSOPEN "| $__batcommand --color=always %s"
+# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
+# Remove -X and -F (exit if the content fits on one screen) to enable it.
+set -gx LESS '-FgiMRX -z-4'
+set -gx __batcommand (command -v bat)
+set -gx LESSOPEN "| $__batcommand --color=always %s"
 
 #
 # Basic helper functions.
@@ -65,11 +79,6 @@ source $fish_config_root'/secrets.fish'
 # Standard GNU tools.
 #
 
-# Set the default Less options.
-# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
-# Remove -X and -F (exit if the content fits on one screen) to enable it.
-export LESS='-F -g -i -M -R -S -w -X -z-4'
-
 alias ls='ls --group-directories-first -h --color --sort=extension --classify --hide="*.pyc" --hide="__pycache__"'
 
 alias md='mkdir -p'
@@ -78,22 +87,22 @@ alias mv='mv -i'
 alias cp='cp -i'
 alias cb='cd -'
 
-set -x RIPGREP_CONFIG_PATH $dotfiles_root'/config/ripgreprc'
+set -gx RIPGREP_CONFIG_PATH $dotfiles_root'/config/ripgreprc'
 
 #
 # Git goodies.
 #
 
-abbr -a gc   'git commit'
+abbr -a gc    'git commit'
 abbr -e gcm
-abbr -a gcm  'git commit -m'
-abbr -a ga   'git add'
-abbr -a gia  'git add -p'
-abbr -a st   'git status'
-abbr -a gss  'git stash show'
-abbr -a gssv 'git stash show -v'
-abbr -a gsl  'git stash list'
-abbr -a gpro 'git pull --rebase origin'
+abbr -a gcm   'git commit -m'
+abbr -a ga    'git add'
+abbr -a gia   'git add -p'
+abbr -a st    'git status -bs'
+abbr -a gss   'git stash show'
+abbr -a gssv  'git stash show -v'
+abbr -a gsl   'git stash list'
+abbr -a gpro  'git pull --rebase origin'
 abbr -a gprom 'git pull --rebase origin master'
 
 #
@@ -125,18 +134,14 @@ alias na='exa -lF --group-directories-first'
 
 set -gx RANGER_LOAD_DEFAULT_RC FALSE
 
-# Ranger-like gotos
-alias gh='cd ~'
-# alias gw='cd ~/workbench'
-alias gd='cd ~/Dotfiles'
-
 function profile_fish
     # See https://github.com/fish-shell/fish-shell/issues/2411
     set -l profiling_report_path (mktemp)
     fish --profile $profiling_report_path -ic 'fish_prompt; exit'; sort -nk 2 $profiling_report_path
 end
 
-# From source dir.
+# TODO: integrate to launcher.
+alias dot="$EDITOR ~/Dotfiles"
 
 #
 # Airbnb
@@ -147,7 +152,7 @@ function labinit
 end
 
 set -gx JAVA_HOME (/usr/libexec/java_home -v 1.8)
-set -gx PATH "$JAVA_HOME/bin" $PATH
+lpath "$JAVA_HOME/bin"
 
 #
 # Python
@@ -163,24 +168,32 @@ function pt --wraps pytest
 end
 
 #
+# Fzf
+#
+
+set -gx FZF_DEFAULT_COMMAND 'fd --type f'
+set -gx FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
+set -gx FZF_DEFAULT_OPTS ''
+set -gx FZF_CTRL_R_OPTS "--preview 'echo {}' --preview-window down:3:hidden:wrap --bind 'ctrl-q:toggle-preview'"
+
+#
 # MacOS
 #
 
 if uname | grep -i '^darwin' > /dev/null
+
 debug_echo 'Loading MacOS-specific config ...'
 
-set -gx PATH '/usr/local/opt/coreutils/libexec/gnubin' $PATH
-set -gx PATH '/usr/local/opt/unzip/bin' $PATH
-set -gx PATH '/usr/local/opt/gnu-sed/libexec/gnubin' $PATH
+lpath '/usr/local/opt/coreutils/libexec/gnubin'
 
 function concat_pdf
     /System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py $argv
 end
 
-set brew_prefix (brew --prefix)
-function gnu_manpath -a name
-    echo $brew_prefix'/opt/'$name'/libexec/gnuman/'
-end
+# set brew_prefix (brew --prefix)
+# function gnu_manpath -a name
+#     echo $brew_prefix'/opt/'$name'/libexec/gnuman/'
+# end
 
 function q --wraps man
     set -l brew_man_path (gnu_manpath 'coreutils') (gnu_manpath 'gnu-sed') (gnu_manpath 'gawk')
