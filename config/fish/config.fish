@@ -174,7 +174,24 @@ end
 set -gx FZF_DEFAULT_COMMAND 'fd --type f'
 set -gx FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
 set -gx FZF_DEFAULT_OPTS ''
-set -gx FZF_CTRL_R_OPTS "--preview 'echo {}' --preview-window down:3:hidden:wrap --bind 'ctrl-q:toggle-preview'"
+# set -gx FZF_CTRL_R_OPTS "--preview 'echo {} | bat -l bash' --preview-window down:3:hidden:wrap --bind 'ctrl-q:toggle-preview'"
+set -gx FZF_CTRL_R_OPTS "--preview 'echo {} | bat -l bash' --preview-window down:3:hidden:wrap --bind 'ctrl-q:toggle-preview'"
+
+set -gx BAT_CONFIG_PATH $dotfiles_root'/config/batrc'
+
+function __autojump_fzf
+    set -l CHOICE (
+        cat ~/Library/autojump/autojump.txt |
+        sort -nr |
+        awk -F '\t' '{print $NF}' |
+        fzf +s -q "$argv"
+    )
+    if test $status -eq 0
+        set_color magenta --bold; echo "-> $CHOICE"; echo
+        cd $CHOICE
+    end
+end
+alias j='__autojump_fzf'
 
 #
 # MacOS

@@ -31,7 +31,7 @@ function fish_user_key_bindings
     bind_all \ce 'end-of-line'
     bind_all \cp 'history-search-backward'
     bind_all \cn 'history-search-forward'
-    bind_all \cq 'echo; pwd; echo; ls; commandline -f repaint'
+    bind_all \cq 'echo; set_color magenta --bold; pwd; echo; ns; commandline -f repaint'
     bind_all \cl 'clear; commandline -f repaint'
 
     # bind_all \ck 'fancy_cz'
