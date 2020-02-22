@@ -1,8 +1,11 @@
-
-Sound = {
-  hasBeenMutedBeforeLock = false
-}
+Sound = {}
 Sound.__index = Sound
+
+Sound.hasBeenMutedBeforeLock = false
+
+Sound.watcher = hs.caffeinate.watcher.new(
+  function (eventType) Sound:sleepWatch(eventType) end
+)
 
 function Sound:sleepWatch(eventType)
   -- Set volume to 0 when locked.
@@ -15,10 +18,6 @@ function Sound:sleepWatch(eventType)
     hs.audiodevice.defaultOutputDevice():setMuted(false)
   end
 end
-
-Sound.watcher = hs.caffeinate.watcher.new(
-  function (eventType) Sound:sleepWatch(eventType) end
-):start()
 
 function Sound:enable() self.watcher:start() end
 

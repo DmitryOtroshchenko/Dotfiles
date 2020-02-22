@@ -27,12 +27,12 @@ end
 Launcher = {}
 Launcher.__index = Launcher
 
-function Launcher:create(mods, key, apps)
+function Launcher:create(mods, key)
   local obj = {}
   setmetatable(obj, Launcher)
   obj.mods = mods
   obj.key = key
-  obj.apps = apps
+  obj.apps = nil
   -- Setup state remembering app switches.
   obj.previousActiveApp = nil
   obj.activeAppWatcher = hs.application.watcher.new(
@@ -42,7 +42,6 @@ function Launcher:create(mods, key, apps)
       end
     end
   )
-  obj.previousActiveAppHotkey = nil
   -- Set up app launcher hotkey mode.
   obj.isLauncherMode = false
   -- Process individual keystrokes in launcher mode.
@@ -56,11 +55,7 @@ function Launcher:create(mods, key, apps)
       obj.launcherMode:exit()
       local keyPressed = hs.keycodes.map[event:getKeyCode()]
       local action = obj.apps[keyPressed]
-      if (action ~= nil) then
-        pcall(action.action)
-      elseif (keyPressed == obj.previousActiveAppHotkey) then
-        obj:focusPreviousApp()
-      end
+      if (action ~= nil) then pcall(action.action) end
       -- Consume the pressed key.
       return true
     end
@@ -69,12 +64,6 @@ function Launcher:create(mods, key, apps)
   obj.modeIndicator = Launcher._composeModeIndicator()
 
   return obj
-end
-
-function Launcher:setPreviousActiveAppHotkey(key)
-  if (self.apps[key] ~= nil) then error(key .. " is already bound.") end
-  self.previousActiveAppHotkey = key
-  return self
 end
 
 function Launcher:_composeModeIndicator()
@@ -95,10 +84,11 @@ function Launcher:focusPreviousApp()
   lf(self.previousActiveApp)
 end
 
-function Launcher:enable()
+function Launcher:enable(apps)
   if (self.launcherMode ~= nil) then
     error("Launcher mode is already enabled.")
   end
+  self.apps = apps
   self.launcherMode = hs.hotkey.modal.new(self.mods, self.key, nil)
   self.launcherMode.entered = function ()
     self.isLauncherMode = true
