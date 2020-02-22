@@ -1,9 +1,10 @@
 
-local obj = {}
+Sound = {
+  hasBeenMutedBeforeLock = false
+}
+Sound.__index = Sound
 
-obj.hasBeenMutedBeforeLock = false
-
-function obj:sleepWatch(eventType)
+function Sound:sleepWatch(eventType)
   -- Set volume to 0 when locked.
   if (eventType == hs.caffeinate.watcher.screensDidLock) then
     self.hasBeenMutedBeforeLock = hs.audiodevice.defaultOutputDevice():muted()
@@ -15,8 +16,10 @@ function obj:sleepWatch(eventType)
   end
 end
 
-function obj:startWatcher()
-  return hs.caffeinate.watcher.new(self.sleepWatch):start()
-end
+Sound.watcher = hs.caffeinate.watcher.new(
+  function (eventType) Sound:sleepWatch(eventType) end
+):start()
 
-return obj
+function Sound:enable() self.watcher:start() end
+
+function Sound:disable() self.watcher:stop() end
