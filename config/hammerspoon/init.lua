@@ -1,4 +1,6 @@
 
+-- Classes in lua: http://lua-users.org/wiki/SimpleLuaClasses
+
 hs.application.enableSpotlightForNameSearches(true)
 
 -- Reload hs.
@@ -8,6 +10,57 @@ hs.hotkey.bind(
 )
 
 require("modules.launcher")
+
+LauncherApps = {
+  ["n"] = {
+    hotkey = "n",
+    text = "Vivaldi",
+    action = function() lfAndMaximize("Vivaldi") end,
+  },
+  ["e"] = {
+    hotkey = "e",
+    text = "Visual Studio Code",
+    action = function() lfAndMaximize("Visual Studio Code") end,
+  },
+  ["space"] = {
+    hotkey = "space",
+    text = "kitty",
+    action = function() lfAndMaximize("kitty") end,
+  },
+  ["m"] = {
+    hotkey = "m",
+    text = "Slack",
+    action = function() lfAndMaximize("Slack") end,
+  },
+  ["i"] = {
+    hotkey = "i",
+    text = "IntelliJ",
+    action = function() lfAndMaximize("IntelliJ IDEA Community") end,
+  },
+  ["p"] = {
+    hotkey = "p",
+    text = "Postman",
+    action = function() lfAndMaximize("Postman") end,
+  },
+  ["0"] = {
+    hotkey = "0",
+    text = "Hammerspoon Console",
+    action = hs.toggleConsole,
+  },
+  ["-"] = {
+    hotkey = "-",
+    text = "",
+    action = function() hs.keycodes.setLayout("Colemak") end
+  },
+  ["="] = {
+    hotkey = "=",
+    text = "",
+    action = function() hs.keycodes.setLayout("Rulemak") end
+  },
+}
+LauncherInstance = Launcher:create({}, "f20", LauncherApps)
+  :setPreviousActiveAppHotkey("f20")
+  :enable()
 
 require("modules.sound")
 Sound:enable()

@@ -1,11 +1,12 @@
-
--- Hotkey kitty.
--- hs.hotkey.bind({"cmd"}, "escape", app_man:toggle("kitty"))
-
 -- https://github.com/Hammerspoon/hammerspoon/issues/882
 -- https://kirbuchi.com/2016/10/26/playing-with-hammerspoon/
 -- https://github.com/Hammerspoon/hammerspoon/issues/848
 -- https://github.com/cmsj/hammerspoon-config/blob/master/init.lua
+
+function rgb256(r, g, b, alpha)
+  local alpha = alpha or 1.0
+  return {red = r / 256, green = g / 256, blue = b / 256, opacity = alpha}
+end
 
 function lf(app)
   hs.application.launchOrFocus(app)
@@ -23,136 +24,131 @@ function lfAndMaximize(app)
   lfAndMove(app, 0, 0, 1, 1)
 end
 
-PreviousAppActivated = nil
+Launcher = {}
+Launcher.__index = Launcher
 
-LastAppWatcher = hs.application.watcher.new(
-  function(appName, eventType, app)
-    if (PreviousAppActivated ~= appName) then
-      PreviousAppActivated = app:path()
+function Launcher:create(mods, key, apps)
+  local obj = {}
+  setmetatable(obj, Launcher)
+  obj.mods = mods
+  obj.key = key
+  obj.apps = apps
+  -- Setup state remembering app switches.
+  obj.previousActiveApp = nil
+  obj.activeAppWatcher = hs.application.watcher.new(
+    function(appName, eventType, app)
+      if (Launcher.previousActiveApp ~= appName) then
+        Launcher.previousActiveApp = app:path()
+      end
     end
-  end
-):start()
-
-AppLauncherApps = {
-  ["n"] = {
-    hotkey = "n",
-    text = "Vivaldi",
-    action = function() lfAndMaximize("Vivaldi") end,
-  },
-  ["e"] = {
-    hotkey = "e",
-    text = "Visual Studio Code",
-    action = function() lfAndMaximize("Visual Studio Code") end,
-  },
-  ["space"] = {
-    hotkey = "space",
-    text = "kitty",
-    action = function() lfAndMaximize("kitty") end,
-  },
-  ["m"] = {
-    hotkey = "m",
-    text = "Slack",
-    action = function() lfAndMaximize("Slack") end,
-  },
-  ["i"] = {
-    hotkey = "i",
-    text = "IntelliJ",
-    action = function() lfAndMaximize("IntelliJ IDEA Community") end,
-  },
-  ["p"] = {
-    hotkey = "p",
-    text = "Postman",
-    action = function() lfAndMaximize("Postman") end,
-  },
-  ["0"] = {
-    hotkey = "0",
-    text = "Hammerspoon Console",
-    action = hs.toggleConsole,
-  },
-  ["9"] = {
-    hotkey = "9",
-    text = "",
-    action = function()
-      AppLauncherChooser:query("")
-      AppLauncherChooser:show()
-    end,
-  },
-  ["f20"] = {
-    hotkey = "f20",
-    text = "",
-    action = function() lf(PreviousAppActivated) end
-  },
-  ["-"] = {
-    hotkey = "-",
-    text = "",
-    action = function() hs.keycodes.setLayout("Colemak") end
-  },
-  ["="] = {
-    hotkey = "=",
-    text = "",
-    action = function() hs.keycodes.setLayout("Rulemak") end
-  },
-}
-
-function rgb256(r, g, b, alpha)
-  local alpha = alpha or 1.0
-  return {red = r / 256, green = g / 256, blue = b / 256, opacity = alpha}
-end
-
-SolarizedRed = rgb256(208, 27, 36)
-SolarizedTeal = rgb256(37, 145, 133)
-MainScreenFrame = hs.screen.mainScreen():frame()
-ModeIndicatorSize = 200
-LauncherModeIndicator = hs.drawing.rectangle{
-  x = MainScreenFrame.x + (MainScreenFrame.w - ModeIndicatorSize) / 2,
-  y = MainScreenFrame.y + (MainScreenFrame.h - ModeIndicatorSize) / 2,
-  w = ModeIndicatorSize,
-  h = ModeIndicatorSize
-}:setStrokeWidth(0):setFillColor(SolarizedTeal):setStrokeColor(SolarizedTeal)
-
-AppLauncherChooser = hs.chooser.new(
-  function(choice)
-    print("Choice =", choice["text"])
-    local action = AppLauncherApps[choice["text"]]
-    if (action ~= nil) then action() end
-  end
-)
-AppLauncherChooser:choices(choices)
-AppLauncherChooser:queryChangedCallback(
-  function (newQuery)
-    if (#newQuery > 0) then
-      AppLauncherChooser:query(newQuery)
-      AppLauncherChooser:select()
+  )
+  obj.previousActiveAppHotkey = nil
+  -- Set up app launcher hotkey mode.
+  obj.isLauncherMode = false
+  -- Process individual keystrokes in launcher mode.
+  obj.launcherModeKeyListener = hs.eventtap.new(
+    {hs.eventtap.event.types.keyDown},
+    function (event)
+      if (not obj.isLauncherMode) then
+        return
+      end
+      -- Exit on any, even on unbound key press.
+      obj.launcherMode:exit()
+      local keyPressed = hs.keycodes.map[event:getKeyCode()]
+      local action = obj.apps[keyPressed]
+      if (action ~= nil) then
+        pcall(action.action)
+      elseif (keyPressed == obj.previousActiveAppHotkey) then
+        obj:focusPreviousApp()
+      end
+      -- Consume the pressed key.
+      return true
     end
-  end
-)
+  )
+  -- Show indicator in launcher mode.
+  obj.modeIndicator = Launcher._composeModeIndicator()
 
-IsAppLauncherMode = false
-AppLauncherMode = hs.hotkey.modal.new({}, "f20", nil)
-
-AppLauncherModeKeyEvent = hs.eventtap.new(
-  {hs.eventtap.event.types.keyDown},
-  function (event)
-    if (not IsAppLauncherMode) then return end
-
-    AppLauncherMode:exit()
-    local keyPressed = hs.keycodes.map[event:getKeyCode()]
-    local action = AppLauncherApps[keyPressed]
-    if (action ~= nil) then pcall(action.action) end
-    return true
-  end
-):start()
-
-AppLauncherMode.entered = function ()
-  IsAppLauncherMode = true
-  -- AppLauncherModeKeyEvent:start()
-  LauncherModeIndicator:show()
+  return obj
 end
-AppLauncherMode.exited = function ()
-  IsAppLauncherMode = false
-  -- AppLauncherModeKeyEvent:stop()
-  LauncherModeIndicator:hide()
+
+function Launcher:setPreviousActiveAppHotkey(key)
+  if (self.apps[key] ~= nil) then error(key .. " is already bound.") end
+  self.previousActiveAppHotkey = key
+  return self
 end
+
+function Launcher:_composeModeIndicator()
+  solarizedRed = rgb256(208, 27, 36)
+  solarizedTeal = rgb256(37, 145, 133)
+  mainScreenFrame = hs.screen.mainScreen():frame()
+  modeIndicatorSize = 200
+  launcherModeIndicator = hs.drawing.rectangle{
+    x = mainScreenFrame.x + (mainScreenFrame.w - modeIndicatorSize) / 2,
+    y = mainScreenFrame.y + (mainScreenFrame.h - modeIndicatorSize) / 2,
+    w = modeIndicatorSize,
+    h = modeIndicatorSize
+  }:setStrokeWidth(0):setFillColor(solarizedTeal):setStrokeColor(solarizedTeal)
+  return launcherModeIndicator
+end
+
+function Launcher:focusPreviousApp()
+  lf(self.previousActiveApp)
+end
+
+function Launcher:enable()
+  if (self.launcherMode ~= nil) then
+    error("Launcher mode is already enabled.")
+  end
+  self.launcherMode = hs.hotkey.modal.new(self.mods, self.key, nil)
+  self.launcherMode.entered = function ()
+    self.isLauncherMode = true
+    self.modeIndicator:show()
+  end
+  self.launcherMode.exited = function ()
+    self.isLauncherMode = false
+    self.modeIndicator:hide()
+  end
+
+  self.activeAppWatcher:start()
+  self.launcherModeKeyListener:start()
+  return self
+end
+
+function Launcher:disable()
+  launcherMode:exit()
+  launcherMode:delete()
+  self.launcherMode = nil
+
+  self.activeAppWatcher:stop()
+  self.launcherModeKeyListener:stop()
+  return self
+end
+
+-- ["9"] = {
+--   hotkey = "9",
+--   text = "",
+--   action = function()
+--     AppLauncherChooser:query("")
+--     AppLauncherChooser:show()
+--   end,
+-- },
+
+-- AppLauncherChooser = hs.chooser.new(
+--   function(choice)
+--     print("Choice =", choice["text"])
+--     local action = AppLauncherApps[choice["text"]]
+--     if (action ~= nil) then action() end
+--   end
+-- )
+-- AppLauncherChooser:choices(choices)
+-- AppLauncherChooser:queryChangedCallback(
+--   function (newQuery)
+--     if (#newQuery > 0) then
+--       AppLauncherChooser:query(newQuery)
+--       AppLauncherChooser:select()
+--     end
+--   end
+-- )
 
 -- hs.loadSpoon("Seal")
 -- spoon.Seal:loadPlugins({"pasteboard"})
