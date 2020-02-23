@@ -37,8 +37,8 @@ function Launcher:create(mods, key)
   obj.previousActiveApp = nil
   obj.activeAppWatcher = hs.application.watcher.new(
     function(appName, eventType, app)
-      if (Launcher.previousActiveApp ~= appName) then
-        Launcher.previousActiveApp = app:path()
+      if (obj.previousActiveApp ~= appName) then
+        obj.previousActiveApp = app:path()
       end
     end
   )
@@ -55,7 +55,7 @@ function Launcher:create(mods, key)
       obj.launcherMode:exit()
       local keyPressed = hs.keycodes.map[event:getKeyCode()]
       local action = obj.apps[keyPressed]
-      if (action ~= nil) then pcall(action.action) end
+      if (action ~= nil) then Launcher:_triggerAction(action) end
       -- Consume the pressed key.
       return true
     end
@@ -66,12 +66,16 @@ function Launcher:create(mods, key)
   return obj
 end
 
+function Launcher:_triggerAction(action)
+  pcall(action.action)
+end
+
 function Launcher:_composeModeIndicator()
-  solarizedRed = rgb256(208, 27, 36)
-  solarizedTeal = rgb256(37, 145, 133)
-  mainScreenFrame = hs.screen.mainScreen():frame()
-  modeIndicatorSize = 200
-  launcherModeIndicator = hs.drawing.rectangle{
+  local solarizedRed = rgb256(208, 27, 36)
+  local solarizedTeal = rgb256(37, 145, 133)
+  local mainScreenFrame = hs.screen.mainScreen():frame()
+  local modeIndicatorSize = 200
+  local launcherModeIndicator = hs.drawing.rectangle{
     x = mainScreenFrame.x + (mainScreenFrame.w - modeIndicatorSize) / 2,
     y = mainScreenFrame.y + (mainScreenFrame.h - modeIndicatorSize) / 2,
     w = modeIndicatorSize,
@@ -89,6 +93,7 @@ function Launcher:enable(apps)
     error("Launcher mode is already enabled.")
   end
   self.apps = apps
+  -- Setup hotkey event.
   self.launcherMode = hs.hotkey.modal.new(self.mods, self.key, nil)
   self.launcherMode.entered = function ()
     self.isLauncherMode = true
@@ -113,32 +118,6 @@ function Launcher:disable()
   self.launcherModeKeyListener:stop()
   return self
 end
-
--- ["9"] = {
---   hotkey = "9",
---   text = "",
---   action = function()
---     AppLauncherChooser:query("")
---     AppLauncherChooser:show()
---   end,
--- },
-
--- AppLauncherChooser = hs.chooser.new(
---   function(choice)
---     print("Choice =", choice["text"])
---     local action = AppLauncherApps[choice["text"]]
---     if (action ~= nil) then action() end
---   end
--- )
--- AppLauncherChooser:choices(choices)
--- AppLauncherChooser:queryChangedCallback(
---   function (newQuery)
---     if (#newQuery > 0) then
---       AppLauncherChooser:query(newQuery)
---       AppLauncherChooser:select()
---     end
---   end
--- )
 
 -- hs.loadSpoon("Seal")
 -- spoon.Seal:loadPlugins({"pasteboard"})

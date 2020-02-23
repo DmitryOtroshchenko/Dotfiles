@@ -1,4 +1,3 @@
-
 -- Classes in lua: http://lua-users.org/wiki/SimpleLuaClasses
 
 hs.application.enableSpotlightForNameSearches(true)
