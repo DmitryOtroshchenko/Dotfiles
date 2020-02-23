@@ -12,6 +12,11 @@ require("modules.launcher")
 
 LauncherInstance = Launcher:create({}, "f20", LauncherApps)
 LauncherApps = {
+  ["9"] = {
+    hotkey = "9",
+    text = "App chooser UI",
+    action = function() LauncherInstance:showAppChooser() end,
+  },
   ["n"] = {
     hotkey = "n",
     text = "Vivaldi",
@@ -44,7 +49,7 @@ LauncherApps = {
   },
   ["f20"] = {
     hotkey = "f20",
-    text = "Activate previous appp",
+    text = "Activate previous app",
     action = function () LauncherInstance:focusPreviousApp() end
   },
   ["0"] = {
@@ -54,12 +59,12 @@ LauncherApps = {
   },
   ["-"] = {
     hotkey = "-",
-    text = "",
+    text = "Switch to Colemak",
     action = function () hs.keycodes.setLayout("Colemak") end
   },
   ["="] = {
     hotkey = "=",
-    text = "",
+    text = "Switch to Rulemak",
     action = function () hs.keycodes.setLayout("Rulemak") end
   },
 }
