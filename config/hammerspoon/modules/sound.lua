@@ -1,13 +1,18 @@
-Sound = {}
-Sound.__index = Sound
+MuteOnLock = {}
+MuteOnLock.__index = MuteOnLock
 
-Sound.hasBeenMutedBeforeLock = false
+function MuteOnLock:create()
+  obj = {}
+  setmetatable(obj, MuteOnLock)
 
-Sound.watcher = hs.caffeinate.watcher.new(
-  function (eventType) Sound:sleepWatch(eventType) end
-)
+  obj.hasBeenMutedBeforeLock = false
+  obj.watcher = hs.caffeinate.watcher.new(
+    function (eventType) obj:sleepWatch(eventType) end
+  )
+  return obj
+end
 
-function Sound:sleepWatch(eventType)
+function MuteOnLock:sleepWatch(eventType)
   -- Set volume to 0 when locked.
   if (eventType == hs.caffeinate.watcher.screensDidLock) then
     self.hasBeenMutedBeforeLock = hs.audiodevice.defaultOutputDevice():muted()
@@ -19,6 +24,12 @@ function Sound:sleepWatch(eventType)
   end
 end
 
-function Sound:enable() self.watcher:start() end
+function MuteOnLock:enable()
+  self.watcher:start()
+  return self
+end
 
-function Sound:disable() self.watcher:stop() end
+function MuteOnLock:disable()
+  self.watcher:stop()
+  return self
+end

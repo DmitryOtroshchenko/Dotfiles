@@ -67,7 +67,8 @@ LauncherApps = {
 LauncherInstance:enable(LauncherApps)
 
 require("modules.sound")
-Sound:enable()
+
+MuteOnLockInstance = MuteOnLock:create():enable()
 
 require("modules.window_management")
 
