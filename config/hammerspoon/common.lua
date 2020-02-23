@@ -1,5 +1,5 @@
 
-local serpent = require("modules.serpent")
+local serpent = require("serpent")
 
 function pf(tab)
   return serpent.block(tab, {nocode = true})
