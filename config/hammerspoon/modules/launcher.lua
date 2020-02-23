@@ -5,11 +5,6 @@
 
 require("common")
 
-function rgb256(r, g, b, alpha)
-  local alpha = alpha or 1.0
-  return {red = r / 256, green = g / 256, blue = b / 256, opacity = alpha}
-end
-
 function lf(app)
   hs.application.launchOrFocus(app)
 end
@@ -37,35 +32,77 @@ function Launcher:create(mods, key)
   obj.apps = nil
   -- Setup state remembering app switches.
   obj.previousActiveApp = nil
-  obj.activeAppWatcher = hs.application.watcher.new(
-    function(appName, eventType, app)
-      if (obj.previousActiveApp ~= appName) then
-        obj.previousActiveApp = app:path()
-      end
-    end
-  )
+  obj.activeAppWatcher = hs.application.watcher.new(withself(obj, obj._appSwitchListener))
   -- Set up app launcher hotkey mode.
   obj.isLauncherMode = false
   -- Process individual keystrokes in launcher mode.
   obj.launcherModeKeyListener = hs.eventtap.new(
     {hs.eventtap.event.types.keyDown},
-    function (event)
-      if (not obj.isLauncherMode) then
-        return
-      end
-      -- Exit on any, even on unbound key press.
-      obj.launcherMode:exit()
-      local keyPressed = hs.keycodes.map[event:getKeyCode()]
-      local action = obj.apps[keyPressed]
-      if (action ~= nil) then Launcher:_triggerAction(action) end
-      -- Consume the pressed key.
-      return true
-    end
+    withself(obj, obj._modeKeyListener)
   )
   -- Show indicator in launcher mode.
   obj.modeIndicator = Launcher._composeModeIndicator()
 
   return obj
+end
+
+function Launcher:focusPreviousApp()
+  lf(self.previousActiveApp)
+end
+
+function Launcher:enable(apps)
+  if (self.launcherMode ~= nil) then
+    error("Launcher mode is already enabled.")
+  end
+  self.apps = apps
+  -- Setup hotkey event.
+  self.launcherMode = hs.hotkey.modal.new(self.mods, self.key, nil)
+  self.launcherMode.entered = withself(self, self._onLauncherModeEntered)
+  self.launcherMode.exited = withself(self, self._onLauncherModeExited)
+  -- Start listeners.
+  self.activeAppWatcher:start()
+  self.launcherModeKeyListener:start()
+  return self
+end
+
+function Launcher:disable()
+  -- Exit and delete mode.
+  launcherMode:exit()
+  launcherMode:delete()
+  self.launcherMode = nil
+  -- Stop event listeners.
+  self.activeAppWatcher:stop()
+  self.launcherModeKeyListener:stop()
+  return self
+end
+
+function Launcher:_appSwitchListener(appName, eventType, app)
+  if (self.previousActiveApp ~= appName) then
+    self.previousActiveApp = app:path()
+  end
+end
+
+function Launcher:_modeKeyListener(event)
+  if (not self.isLauncherMode) then
+    return
+  end
+  -- Exit on any, even on unbound key press.
+  self.launcherMode:exit()
+  local keyPressed = hs.keycodes.map[event:getKeyCode()]
+  local action = self.apps[keyPressed]
+  if (action ~= nil) then Launcher:_triggerAction(action) end
+  -- Consume the pressed key.
+  return true
+end
+
+function Launcher:_onLauncherModeEntered()
+  self.isLauncherMode = true
+  self.modeIndicator:show()
+end
+
+function Launcher:_onLauncherModeExited()
+  self.isLauncherMode = false
+  self.modeIndicator:hide()
 end
 
 function Launcher:_triggerAction(action)
@@ -84,41 +121,6 @@ function Launcher:_composeModeIndicator()
     h = modeIndicatorSize
   }:setStrokeWidth(0):setFillColor(solarizedTeal):setStrokeColor(solarizedTeal)
   return launcherModeIndicator
-end
-
-function Launcher:focusPreviousApp()
-  lf(self.previousActiveApp)
-end
-
-function Launcher:enable(apps)
-  if (self.launcherMode ~= nil) then
-    error("Launcher mode is already enabled.")
-  end
-  self.apps = apps
-  -- Setup hotkey event.
-  self.launcherMode = hs.hotkey.modal.new(self.mods, self.key, nil)
-  self.launcherMode.entered = function ()
-    self.isLauncherMode = true
-    self.modeIndicator:show()
-  end
-  self.launcherMode.exited = function ()
-    self.isLauncherMode = false
-    self.modeIndicator:hide()
-  end
-  -- Start listeners.
-  self.activeAppWatcher:start()
-  self.launcherModeKeyListener:start()
-  return self
-end
-
-function Launcher:disable()
-  launcherMode:exit()
-  launcherMode:delete()
-  self.launcherMode = nil
-
-  self.activeAppWatcher:stop()
-  self.launcherModeKeyListener:stop()
-  return self
 end
 
 -- hs.loadSpoon("Seal")
