@@ -9,6 +9,7 @@ hs.hotkey.bind(
 )
 
 require("modules.launcher")
+require("modules.fuzzy_chooser")
 
 LauncherInstance = Launcher:create({}, "f20", LauncherApps)
 LauncherApps = {
@@ -69,6 +70,12 @@ LauncherApps = {
   },
 }
 LauncherInstance:enable(LauncherApps)
+
+ChooserInstance = FuzzyChooser:create(LauncherApps)
+hs.hotkey.bind(
+  {"ctrl"}, "j",
+  function () ChooserInstance:showAppChooser() end
+)
 
 require("modules.sound")
 

@@ -3,10 +3,7 @@
 -- https://github.com/Hammerspoon/hammerspoon/issues/848
 -- https://github.com/cmsj/hammerspoon-config/blob/master/init.lua
 
-local serpent = require("modules.serpent")
-function pp(tab)
-  print(serpent.block(tab, {nocode = true}))
-end
+require("common")
 
 function rgb256(r, g, b, alpha)
   local alpha = alpha or 1.0
@@ -38,7 +35,6 @@ function Launcher:create(mods, key)
   obj.mods = mods
   obj.key = key
   obj.apps = nil
-  obj.appChooser = nil
   -- Setup state remembering app switches.
   obj.previousActiveApp = nil
   obj.activeAppWatcher = hs.application.watcher.new(
@@ -94,10 +90,6 @@ function Launcher:focusPreviousApp()
   lf(self.previousActiveApp)
 end
 
-function Launcher:showAppChooser(query)
-  self.appChooser:query(query or ""):show()
-end
-
 function Launcher:enable(apps)
   if (self.launcherMode ~= nil) then
     error("Launcher mode is already enabled.")
@@ -116,16 +108,6 @@ function Launcher:enable(apps)
   -- Start listeners.
   self.activeAppWatcher:start()
   self.launcherModeKeyListener:start()
-  -- Setup chooser UI.
-  self.appChooser = hs.chooser.new(
-      function(choice)
-        if (choice ~= nil) then
-          app = self.apps[choice["hotkey"]]
-          Launcher:_triggerAction(app)
-        end
-      end
-    )
-    :choices(Launcher:appTableToChoices(apps))
   return self
 end
 
@@ -137,20 +119,6 @@ function Launcher:disable()
   self.activeAppWatcher:stop()
   self.launcherModeKeyListener:stop()
   return self
-end
-
-function Launcher:appTableToChoices(apps)
-  local choices = {}
-  local n = 0
-  for hotkey, app in pairs(apps) do
-    n = n + 1
-    choices[n] = {
-      ["text"] = app["text"],
-      ["subText"] = "[" .. app["hotkey"] .. "]",
-      ["hotkey"] = app["hotkey"]
-    }
-  end
-  return choices
 end
 
 -- hs.loadSpoon("Seal")
