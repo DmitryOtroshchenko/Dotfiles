@@ -1,6 +1,17 @@
 
 hs.window.animationDuration = 0
 
+function focusScreen(screen)
+  local windows = hs.fnutils.filter(
+    hs.window.orderedWindows(),
+    hs.fnutils.partial(isInScreen, screen))
+  local windowToFocus = #windows > 0 and windows[1] or hs.window.desktop()
+  windowToFocus:focus()
+  -- Move mouse to center of screen
+  local center = hs.geometry.rectMidPoint(screen:fullFrame())
+  hs.mouse.setAbsolutePosition(center)
+end
+
 function moveToPreviousScreen()
   local fw = hs.window.focusedWindow()
   fw:moveToScreen(fw:screen():previous())
