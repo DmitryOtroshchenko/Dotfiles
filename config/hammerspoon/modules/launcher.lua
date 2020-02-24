@@ -32,7 +32,8 @@ function Launcher:create(mods, key)
   obj.apps = nil
   -- Setup state remembering app switches.
   obj.previousActiveApp = nil
-  obj.activeAppWatcher = hs.application.watcher.new(withself(obj, obj._appSwitchListener))
+  obj.activeAppWatcher = hs.application.watcher.new(
+    withself(obj, obj._appSwitchListener))
   -- Set up app launcher hotkey mode.
   obj.isLauncherMode = false
   -- Process individual keystrokes in launcher mode.
