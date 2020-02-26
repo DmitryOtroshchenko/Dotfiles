@@ -57,7 +57,8 @@ function Launcher:enable(apps)
   end
   self.apps = apps
   -- Setup hotkey event.
-  self.launcherMode = hs.hotkey.modal.new(self.mods, self.key, nil)
+  -- self.launcherMode = hs.hotkey.modal.new(self.mods, self.key, nil)
+  self.launcherMode = hs.hotkey.modal.new()
   self.launcherMode.entered = withself(self, self._onLauncherModeEntered)
   self.launcherMode.exited = withself(self, self._onLauncherModeExited)
   -- Start listeners.
@@ -84,16 +85,26 @@ function Launcher:_appSwitchListener(appName, eventType, app)
 end
 
 function Launcher:_modeKeyListener(event)
-  if (not self.isLauncherMode) then
-    return
-  end
-  -- Exit on any, even on unbound key press.
-  self.launcherMode:exit()
   local keyPressed = hs.keycodes.map[event:getKeyCode()]
-  local action = self.apps[keyPressed]
-  if (action ~= nil) then Launcher:_triggerAction(action) end
-  -- Consume the pressed key.
-  return true
+  local isRepeat = event:getProperty(hs.eventtap.event.properties.keyboardEventAutorepeat) ~= 0
+  if (keyPressed == self.key and isRepeat) then
+    return true
+  end
+  if (not self.isLauncherMode) then
+    if (keyPressed == self.key) then
+      self.launcherMode:enter()
+      return true
+    else
+      return false
+    end
+  else
+    -- Exit on any, even on unbound key press.
+    self.launcherMode:exit()
+    local action = self.apps[keyPressed]
+    if (action ~= nil) then Launcher:_triggerAction(action) end
+    -- Consume the pressed key.
+    return true
+  end
 end
 
 function Launcher:_onLauncherModeEntered()
@@ -116,11 +127,14 @@ function Launcher:_composeModeIndicator()
   local mainScreenFrame = hs.screen.mainScreen():frame()
   local modeIndicatorSize = 200
   local launcherModeIndicator = hs.drawing.rectangle{
-    x = mainScreenFrame.x + (mainScreenFrame.w - modeIndicatorSize) / 2,
-    y = mainScreenFrame.y + (mainScreenFrame.h - modeIndicatorSize) / 2,
-    w = modeIndicatorSize,
-    h = modeIndicatorSize
-  }:setStrokeWidth(0):setFillColor(solarizedTeal):setStrokeColor(solarizedTeal)
+      x = mainScreenFrame.x + (mainScreenFrame.w - modeIndicatorSize) / 2,
+      y = mainScreenFrame.y + (mainScreenFrame.h - modeIndicatorSize) / 2,
+      w = modeIndicatorSize,
+      h = modeIndicatorSize
+    }
+    :setStrokeWidth(0)
+    :setFillColor(solarizedTeal)
+    :setStrokeColor(solarizedTeal)
   return launcherModeIndicator
 end
 

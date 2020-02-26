@@ -15,6 +15,6 @@ function withself(obj, func)
 end
 
 function rgb256(r, g, b, alpha)
-  local alpha = alpha or 1.0
+  alpha = alpha or 1.0
   return {red = r / 256, green = g / 256, blue = b / 256, opacity = alpha}
 end
