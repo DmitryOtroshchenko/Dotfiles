@@ -55,7 +55,10 @@ function Launcher:enable(apps)
   if (self.launcherMode ~= nil) then
     error("Launcher mode is already enabled.")
   end
-  self.apps = apps
+  self.apps = {}
+  for _, a in ipairs(apps) do
+    self.apps[a["hotkey"]] = a
+  end
   -- Setup hotkey event.
   -- self.launcherMode = hs.hotkey.modal.new(self.mods, self.key, nil)
   self.launcherMode = hs.hotkey.modal.new()
@@ -101,7 +104,7 @@ function Launcher:_modeKeyListener(event)
     -- Exit on any, even on unbound key press.
     self.launcherMode:exit()
     local action = self.apps[keyPressed]
-    if (action ~= nil) then Launcher:_triggerAction(action) end
+    if (action ~= nil) then Launcher._triggerAction(action) end
     -- Consume the pressed key.
     return true
   end
@@ -117,11 +120,11 @@ function Launcher:_onLauncherModeExited()
   self.modeIndicator:hide()
 end
 
-function Launcher:_triggerAction(action)
+function Launcher._triggerAction(action)
   pcall(action.action)
 end
 
-function Launcher:_composeModeIndicator()
+function Launcher._composeModeIndicator()
   local solarizedRed = rgb256(208, 27, 36)
   local solarizedTeal = rgb256(37, 145, 133)
   local mainScreenFrame = hs.screen.mainScreen():frame()
