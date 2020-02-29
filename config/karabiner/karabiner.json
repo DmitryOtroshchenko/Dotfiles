@@ -208,10 +208,26 @@
             "simple_modifications": [
                 {
                     "from": {
+                        "consumer_key_code": "play_or_pause"
+                    },
+                    "to": {
+                        "consumer_key_code": "mute"
+                    }
+                },
+                {
+                    "from": {
                         "key_code": "caps_lock"
                     },
                     "to": {
                         "key_code": "left_shift"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "delete_forward"
+                    },
+                    "to": {
+                        "key_code": "f20"
                     }
                 },
                 {
@@ -235,7 +251,7 @@
                         "key_code": "right_option"
                     },
                     "to": {
-                        "key_code": "escape"
+                        "key_code": "right_control"
                     }
                 }
             ],
