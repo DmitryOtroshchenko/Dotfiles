@@ -30,6 +30,7 @@ function Launcher:create(mods, key)
   obj.mods = mods
   obj.key = key
   obj.apps = nil
+  obj.prevLayout = hs.keycodes.currentLayout()
   -- Setup state remembering app switches.
   obj.previousActiveApp = nil
   obj.activeAppWatcher = hs.application.watcher.new(
@@ -112,11 +113,18 @@ end
 
 function Launcher:_onLauncherModeEntered()
   self.isLauncherMode = true
+  self.prevLayout = hs.keycodes.currentLayout()
+  if (self.prevLayout ~= "Colemak") then
+    hs.keycodes.setLayout("Colemak")
+  end
   self.modeIndicator:show()
 end
 
 function Launcher:_onLauncherModeExited()
   self.isLauncherMode = false
+  if (hs.keycodes.currentLayout() ~= self.prevLayout) then
+    hs.keycodes.setLayout(self.prevLayout)
+  end
   self.modeIndicator:hide()
 end
 
