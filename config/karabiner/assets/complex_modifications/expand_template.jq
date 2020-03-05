@@ -10,10 +10,17 @@ def substitute(mod):
     else .
     end;
 
-def substitute_rec(mod): walk(. | substitute(mod));
+def to_rule(mod):
+    {
+        "description": "\(mod) switches to Colemak while pressed.",
+        "manipulators": [ walk(. | substitute(mod)) ]
+    };
 
 . as $input
 | ["left_control", "left_option", "left_command",
    "right_control", "right_option", "right_command"]
-| map($input | substitute_rec(.)) as $manipulators
-| $manipulators
+| map(. as $mod | $input | to_rule($mod))
+| {
+    "title": "Temporary switch to Colemak if any modifier key is down.",
+    "rules": .
+}
