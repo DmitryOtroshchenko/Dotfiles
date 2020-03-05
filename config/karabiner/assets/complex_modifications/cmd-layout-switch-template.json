@@ -1,0 +1,31 @@
+{
+  "description": "While using $aux_layout, holding $modifier temporarily switches to $main_layout layout.",
+  "manipulators": [
+    {
+      "type": "basic",
+      "from": {
+        "key_code": "$modifier",
+        "modifiers": { "optional": "any" }
+      },
+      "conditions": [
+        {
+          "type": "input_source_if",
+          "input_sources": [ { "input_source_id": "$aux_layout" } ]
+        }
+      ],
+      "to": [
+        {
+          "select_input_source": { "input_source_id": "$main_layout" }
+        },
+        {
+          "key_code": "$modifier"
+        }
+      ],
+      "to_after_key_up": [
+        {
+          "select_input_source": { "input_source_id": "$aux_layout" }
+        }
+      ]
+    }
+  ]
+}
