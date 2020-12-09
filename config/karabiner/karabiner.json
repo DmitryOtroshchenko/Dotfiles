@@ -98,6 +98,312 @@
                                 "type": "basic"
                             }
                         ]
+                    },
+                    {
+                        "description": "left_control switches to Colemak while pressed.",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "left_control",
+                                    "modifiers": {
+                                        "optional": "any"
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "com.apple.keylayout.Colemak"
+                                        }
+                                    },
+                                    {
+                                        "key_code": "left_control"
+                                    }
+                                ],
+                                "to_after_key_up": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "left_option switches to Colemak while pressed.",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "left_option",
+                                    "modifiers": {
+                                        "optional": "any"
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "com.apple.keylayout.Colemak"
+                                        }
+                                    },
+                                    {
+                                        "key_code": "left_option"
+                                    }
+                                ],
+                                "to_after_key_up": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "left_command switches to Colemak while pressed.",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "left_command",
+                                    "modifiers": {
+                                        "optional": "any"
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "com.apple.keylayout.Colemak"
+                                        }
+                                    },
+                                    {
+                                        "key_code": "left_command"
+                                    }
+                                ],
+                                "to_after_key_up": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "right_control switches to Colemak while pressed.",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "right_control",
+                                    "modifiers": {
+                                        "optional": "any"
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "com.apple.keylayout.Colemak"
+                                        }
+                                    },
+                                    {
+                                        "key_code": "right_control"
+                                    }
+                                ],
+                                "to_after_key_up": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "right_option switches to Colemak while pressed.",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "right_option",
+                                    "modifiers": {
+                                        "optional": "any"
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "com.apple.keylayout.Colemak"
+                                        }
+                                    },
+                                    {
+                                        "key_code": "right_option"
+                                    }
+                                ],
+                                "to_after_key_up": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "right_command switches to Colemak while pressed.",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "right_command",
+                                    "modifiers": {
+                                        "optional": "any"
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "com.apple.keylayout.Colemak"
+                                        }
+                                    },
+                                    {
+                                        "key_code": "right_command"
+                                    }
+                                ],
+                                "to_after_key_up": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Fix key jitter on shitty macbook keyboards - space",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "spacebar"
+                                },
+                                "parameters": {
+                                    "basic.to_if_held_down_threshold_milliseconds": 1
+                                },
+                                "to_if_held_down": [
+                                    {
+                                        "key_code": "spacebar",
+                                        "repeat": false
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Fix key jitter on shitty macbook keyboards - f",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "f"
+                                },
+                                "parameters": {
+                                    "basic.to_if_held_down_threshold_milliseconds": 1
+                                },
+                                "to_if_held_down": [
+                                    {
+                                        "key_code": "f",
+                                        "repeat": false
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Fix key jitter on shitty macbook keyboards - j",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "j"
+                                },
+                                "parameters": {
+                                    "basic.to_if_held_down_threshold_milliseconds": 1
+                                },
+                                "to_if_held_down": [
+                                    {
+                                        "key_code": "j",
+                                        "repeat": false
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
                     }
                 ]
             },
@@ -244,14 +550,6 @@
                     },
                     "to": {
                         "key_code": "left_control"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "right_option"
-                    },
-                    "to": {
-                        "key_code": "right_control"
                     }
                 }
             ],

@@ -91,3 +91,11 @@ function git_fts() {
         echo "Fucking is a dish that is better served cold..."
     fi
 }
+
+function git_is_ahead() {
+    if [ $# -ne 2 ]; then
+        echo "$FUNCNAME() wrong call signature."
+        return 1
+    fi
+    return $(git merge-base --is-ancestor $1..$2)
+}

@@ -25,6 +25,7 @@ Launcher = {}
 Launcher.__index = Launcher
 
 function Launcher:create(mods, key)
+  print('Creating launcher bound to ' .. key .. '.')
   local obj = {}
   setmetatable(obj, Launcher)
   obj.mods = mods
@@ -39,12 +40,21 @@ function Launcher:create(mods, key)
   obj.isLauncherMode = false
   -- Process individual keystrokes in launcher mode.
   obj.launcherModeKeyListener = hs.eventtap.new(
-    {hs.eventtap.event.types.keyDown},
+    {
+      hs.eventtap.event.types.keyDown,
+      hs.eventtap.event.types.leftMouseDown,
+      hs.eventtap.event.types.leftMouseUp,
+      hs.eventtap.event.types.rightMouseDown,
+      hs.eventtap.event.types.rightMouseUp,
+      hs.eventtap.event.types.otherMouseDown,
+      hs.eventtap.event.types.otherMouseUp
+    },
     withself(obj, obj._modeKeyListener)
   )
   -- Show indicator in launcher mode.
   obj.modeIndicator = Launcher._composeModeIndicator()
 
+  print('Launcher created.')
   return obj
 end
 
@@ -53,6 +63,7 @@ function Launcher:focusPreviousApp()
 end
 
 function Launcher:enable(apps)
+  print('Enabling launcher...')
   if (self.launcherMode ~= nil) then
     error("Launcher mode is already enabled.")
   end
@@ -61,17 +72,18 @@ function Launcher:enable(apps)
     self.apps[a["hotkey"]] = a
   end
   -- Setup hotkey event.
-  -- self.launcherMode = hs.hotkey.modal.new(self.mods, self.key, nil)
-  self.launcherMode = hs.hotkey.modal.new()
+  self.launcherMode = hs.hotkey.modal.new(self.mods, self.key, nil)
   self.launcherMode.entered = withself(self, self._onLauncherModeEntered)
   self.launcherMode.exited = withself(self, self._onLauncherModeExited)
   -- Start listeners.
   self.activeAppWatcher:start()
   self.launcherModeKeyListener:start()
+  print('Launcher enabled.')
   return self
 end
 
 function Launcher:disable()
+  print('Disabling launcher...')
   -- Exit and delete mode.
   launcherMode:exit()
   launcherMode:delete()
@@ -79,6 +91,7 @@ function Launcher:disable()
   -- Stop event listeners.
   self.activeAppWatcher:stop()
   self.launcherModeKeyListener:stop()
+  print('Launcher disabled.')
   return self
 end
 
@@ -91,11 +104,13 @@ end
 function Launcher:_modeKeyListener(event)
   local keyPressed = hs.keycodes.map[event:getKeyCode()]
   local isRepeat = event:getProperty(hs.eventtap.event.properties.keyboardEventAutorepeat) ~= 0
-  if (keyPressed == self.key and isRepeat) then
+    if (event:getType() == hs.eventtap.event.types.keyDown
+        and keyPressed == self.key
+        and isRepeat) then
     return true
   end
   if (not self.isLauncherMode) then
-    if (keyPressed == self.key) then
+    if (event:getType() == hs.eventtap.event.types.keyDown and keyPressed == self.key) then
       self.launcherMode:enter()
       return true
     else
@@ -150,10 +165,10 @@ function Launcher._composeModeIndicator()
 end
 
 -- hs.loadSpoon("Seal")
--- spoon.Seal:loadPlugins({"pasteboard"})
+-- spoon.Seal:loadPlugins({"apps"})
 -- spoon.Seal:bindHotkeys({show={{"cmd", "shift"}, "\\"}})
--- spoon.Seal.plugins.useractions.actions = {
---     ["Red Hat Bugzilla"] = { url = "https://bugzilla.redhat.com/show_bug.cgi?id=${query}", icon="favicon", keyword="bz" },
---     ["Launchpad Bugs"] = { url = "https://launchpad.net/bugs/${query}", icon="favicon", keyword="lp" },
--- }
+-- -- spoon.Seal.plugins.useractions.actions = {
+-- --     ["Red Hat Bugzilla"] = { url = "https://bugzilla.redhat.com/show_bug.cgi?id=${query}", icon="favicon", keyword="bz" },
+-- --     ["Launchpad Bugs"] = { url = "https://launchpad.net/bugs/${query}", icon="favicon", keyword="lp" },
+-- -- }
 -- spoon.Seal:start()

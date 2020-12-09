@@ -1,10 +1,10 @@
 package argu
+package bass
 package colored-man-pages
 package dpaste
-package epwd
 package fonts
-package osx
+package foreign-env
+package nvm
 package python
-package tab
 package title
 theme default

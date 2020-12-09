@@ -1,8 +1,9 @@
 
 [core]
-    pager = less -r
+    pager = diff-so-fancy | less --tabs=4 -RFX
     editor = code --wait
     excludesfile = /Users/d.otroshchenko/.gitignore_global
+	precomposeunicode = true
 
 [color]
     ui = auto
@@ -35,7 +36,8 @@
     abort = rebase --abort
     unpublished="!f() { source ~/Dotfiles/config/gitcommands.sh && git_unpublished $@; }; f"
     nunpublished="!f() { source ~/Dotfiles/config/gitcommands.sh && git_n_unpublished $@; }; f"
-
+    isahead="!f() { source ~/Dotfiles/config/gitcommands.sh && git_is_ahead $@; }; f"
+    root = rev-parse --show-toplevel
 
     lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
     lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
@@ -49,7 +51,12 @@
     user = DmitryOtroshchenko
 
 [push]
-    default = simple
+	default = current
 
 [credential]
     helper = osxkeychain
+[rerere]
+	enabled = true
+[hub]
+	host = git.musta.ch
+	protocol = git

@@ -6,6 +6,7 @@
 # install/unp.py
 # install/ranger
 # autostart tmux on ssh
+# install bat-extras
 # ssh config
 
 - clean: ['~', '~/.config']

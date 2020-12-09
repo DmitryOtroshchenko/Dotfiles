@@ -48,5 +48,17 @@
     {
         "key": "ctrl+`",
         "command": "-workbench.action.terminal.toggleTerminal"
+    },
+    {
+        "key": "cmd+k cmd+m",
+        "command": "-workbench.extensions.action.showRecommendedKeymapExtensions"
+    },
+    {
+        "key": "cmd+k cmd+m",
+        "command": "workbench.action.minimizeOtherEditors"
+    },
+    {
+        "key": "cmd+k cmd+m",
+        "command": "workbench.action.toggleMaximizedPanel"
     }
 ]

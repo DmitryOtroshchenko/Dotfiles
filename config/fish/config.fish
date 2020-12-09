@@ -20,7 +20,8 @@ set dotfiles_root (echo ~)'/Dotfiles/'
 lpath '/usr/local/opt/gnu-sed/libexec/gnubin'
 lpath '/usr/local/opt/unzip/bin'
 lpath '/usr/local/bin'
-lpath (echo ~)'/.local/bin'
+lpath "$HOME/.local/bin"
+lpath "$HOME/.cargo/bin"
 
 #
 # Basic exports.
@@ -42,6 +43,7 @@ set -gx PAGER 'less'
 set -gx LESS '-FgiMRX -z-4'
 set -gx __batcommand (command -v bat)
 set -gx LESSOPEN "| $__batcommand --color=always %s"
+alias cat='bat'
 
 #
 # Basic helper functions.
@@ -93,6 +95,7 @@ set -gx RIPGREP_CONFIG_PATH $dotfiles_root'/config/ripgreprc'
 # Git goodies.
 #
 
+abbr -a g     'git'
 abbr -a gc    'git commit'
 abbr -e gcm
 abbr -a gcm   'git commit -m'
@@ -102,8 +105,12 @@ abbr -a st    'git status -bs'
 abbr -a gss   'git stash show'
 abbr -a gssv  'git stash show -v'
 abbr -a gsl   'git stash list'
+abbr -a gsh   'git show head'
 abbr -a gpro  'git pull --rebase origin'
 abbr -a gprom 'git pull --rebase origin master'
+abbr -a gpu   'git push -u'
+
+abbr -a master 'git checkout master'
 
 #
 # SSH
@@ -143,16 +150,34 @@ end
 # TODO: integrate to launcher.
 alias dot="$EDITOR ~/Dotfiles"
 
+function initrust
+    source (echo ~)'/.cargo/env'
+end
+initrust
+
 #
 # Airbnb
 #
 
-function labinit
+function initlab
     bass source ~/.airlab/shellhelper.sh
 end
 
+alias dev='set -gx ENV development'
+alias staging='set -gx ENV staging'
+alias prod='set -gx ENV production'
+
 set -gx JAVA_HOME (/usr/libexec/java_home -v 1.8)
 lpath "$JAVA_HOME/bin"
+
+lpath '/opt/airbnb/bin/'
+
+function nvm
+   bass source (brew --prefix nvm)/nvm.sh --no-use ';' nvm $argv
+end
+
+set -x NVM_DIR ~/.nvm
+# nvm use default --silent
 
 #
 # Python
@@ -181,7 +206,7 @@ set -gx BAT_CONFIG_PATH $dotfiles_root'/config/batrc'
 
 function __autojump_fzf
     set -l CHOICE (
-        cat ~/Library/autojump/autojump.txt |
+        cat (echo ~)'/Library/autojump/autojump.txt' |
         sort -nr |
         awk -F '\t' '{print $NF}' |
         fzf +s -q "$argv"
@@ -192,6 +217,16 @@ function __autojump_fzf
     end
 end
 alias j='__autojump_fzf'
+
+function choose-git-branch
+    git rev-parse --show-toplevel > /dev/null 2>&1
+    if test $status -ne 0
+        return 1
+    end
+    git branch -v | sk | sd '\s*\**\s+(\S+)\s+.*' '$1'
+end
+
+bind_all \cg 'set -l chosen_branch (choose-git-branch); and test -n "$chosen_branch"; and commandline -i "$chosen_branch"'
 
 #
 # MacOS

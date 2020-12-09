@@ -20,8 +20,8 @@ LauncherInstance = Launcher:create({}, "f20", LauncherApps)
 LauncherApps = {
   {
     hotkey = "n",
-    text = "Vivaldi",
-    action = function () lfAndMaximize("Vivaldi") end,
+    text = "Firefox",
+    action = function () lfAndMaximize("Firefox") end,
   },
   {
     hotkey = "e",
@@ -45,6 +45,11 @@ LauncherApps = {
   },
   {
     hotkey = "p",
+    text = "Bitwarden",
+    action = function () lfAndMaximize("Bitwarden") end,
+  },
+  {
+    hotkey = "r",
     text = "Insomnia",
     action = function () lfAndMaximize("Insomnia") end,
   },
@@ -76,11 +81,11 @@ LauncherApps = {
 }
 LauncherInstance:enable(LauncherApps)
 
-ChooserInstance = FuzzyChooser:create(LauncherApps)
-hs.hotkey.bind(
-  {"ctrl"}, "j",
-  function () ChooserInstance:showAppChooser() end
-)
+-- ChooserInstance = FuzzyChooser:create(LauncherApps)
+-- hs.hotkey.bind(
+--   {"ctrl"}, "j",
+--   function () ChooserInstance:showAppChooser() end
+-- )
 
 require("modules.sound")
 
@@ -97,3 +102,13 @@ require("modules.window_management")
 --     spaces.moveToSpace(1)
 --   end
 -- )
+
+-- local mt = {
+--   __newindex = function(t, k, v)
+--     error('Attempt to set new global variable "' .. k .. '", was this a typo?', 2)
+--   end,
+--   __index = function(t,k)
+--     error('Attempt to access non-existent global variable "' .. k .. '", was this a typo?', 2)
+--   end
+-- }
+-- setmetatable(_ENV, mt)
