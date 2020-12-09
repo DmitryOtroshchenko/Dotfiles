@@ -85,6 +85,8 @@ endtry
 
 "{{{ Meta-plugins and libs
 
+Plug 'justinmk/vim-sneak'
+
 " Asynchronous execution library for Vim.
 Plug 'Shougo/vimproc', { 'do': 'make' }
 
@@ -114,10 +116,10 @@ Plug 'osyo-manga/shabadou.vim'
 "{{{ Autocompletion, linters and code navigation
 
 " Autocompletion engine.
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer --system-libclang' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer --system-libclang' }
 
 " Snippet manager.
-Plug 'sirver/ultisnips'
+" Plug 'sirver/ultisnips'
 
 " A collection of snippets.
 Plug 'honza/vim-snippets'

@@ -1,23 +1,13 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+.vscode/
 
-# Fish temporary files.
-config/fish/fishd.*
+.gradle/
+
 config/fish/fish_variables
-config/fish/functions/fish_prompt.*.copy
-# Fish private.
-config/fish/source/00.credentials.fish
 
-# Oh-my-fish
-config/omf/fonts
-config/fish/conf.d/omf.fish
+config/karabiner/automatic_backups/
 
-# VSCode
-.vscode
 config/vscode/globalStorage/
 config/vscode/workspaceStorage/
 
-# Karabiner
-config/karabiner/automatic_backups/
+__pycache__/
+*.pyo
