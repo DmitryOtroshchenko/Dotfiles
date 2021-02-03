@@ -182,47 +182,6 @@
                         ]
                     },
                     {
-                        "description": "left_command switches to Colemak while pressed.",
-                        "manipulators": [
-                            {
-                                "conditions": [
-                                    {
-                                        "input_sources": [
-                                            {
-                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-                                            }
-                                        ],
-                                        "type": "input_source_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "left_command",
-                                    "modifiers": {
-                                        "optional": "any"
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "select_input_source": {
-                                            "input_source_id": "com.apple.keylayout.Colemak"
-                                        }
-                                    },
-                                    {
-                                        "key_code": "left_command"
-                                    }
-                                ],
-                                "to_after_key_up": [
-                                    {
-                                        "select_input_source": {
-                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
                         "description": "right_control switches to Colemak while pressed.",
                         "manipulators": [
                             {
@@ -346,59 +305,40 @@
                         ]
                     },
                     {
-                        "description": "Fix key jitter on shitty macbook keyboards - space",
+                        "description": "left_command switches to Colemak while pressed.",
                         "manipulators": [
                             {
-                                "from": {
-                                    "key_code": "spacebar"
-                                },
-                                "parameters": {
-                                    "basic.to_if_held_down_threshold_milliseconds": 1
-                                },
-                                "to_if_held_down": [
+                                "conditions": [
                                     {
-                                        "key_code": "spacebar",
-                                        "repeat": false
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
                                     }
                                 ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Fix key jitter on shitty macbook keyboards - f",
-                        "manipulators": [
-                            {
                                 "from": {
-                                    "key_code": "f"
+                                    "key_code": "left_command",
+                                    "modifiers": {
+                                        "optional": "any"
+                                    }
                                 },
-                                "parameters": {
-                                    "basic.to_if_held_down_threshold_milliseconds": 1
-                                },
-                                "to_if_held_down": [
+                                "to": [
                                     {
-                                        "key_code": "f",
-                                        "repeat": false
+                                        "select_input_source": {
+                                            "input_source_id": "com.apple.keylayout.Colemak"
+                                        }
+                                    },
+                                    {
+                                        "key_code": "left_command"
                                     }
                                 ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Fix key jitter on shitty macbook keyboards - j",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "j"
-                                },
-                                "parameters": {
-                                    "basic.to_if_held_down_threshold_milliseconds": 1
-                                },
-                                "to_if_held_down": [
+                                "to_after_key_up": [
                                     {
-                                        "key_code": "j",
-                                        "repeat": false
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
                                     }
                                 ],
                                 "type": "basic"
@@ -512,14 +452,6 @@
             },
             "selected": true,
             "simple_modifications": [
-                {
-                    "from": {
-                        "consumer_key_code": "play_or_pause"
-                    },
-                    "to": {
-                        "consumer_key_code": "mute"
-                    }
-                },
                 {
                     "from": {
                         "key_code": "caps_lock"
