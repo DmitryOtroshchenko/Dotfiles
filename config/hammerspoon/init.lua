@@ -22,7 +22,7 @@ LauncherApps = {
   {
     hotkey = "n",
     text = "Firefox",
-    action = function () lfAndMaximize("Firefox") end,
+    action = function () lfAndMaximize("Brave Browser") end,
   },
   {
     hotkey = "e",
@@ -42,7 +42,7 @@ LauncherApps = {
   {
     hotkey = "i",
     text = "IntelliJ",
-    action = function () lfAndMaximize("IntelliJ IDEA Community") end,
+    action = function () lfAndMaximize("IntelliJ IDEA") end,
   },
   {
     hotkey = "p",
