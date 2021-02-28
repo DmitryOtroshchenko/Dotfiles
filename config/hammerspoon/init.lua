@@ -15,6 +15,7 @@ hs.hotkey.bind(
 
 require("modules.launcher")
 require("modules.fuzzy_chooser")
+require("modules.audio_device_chooser")
 
 LauncherInstance = Launcher:create({}, "f20", LauncherApps)
 LauncherApps = {
@@ -77,6 +78,11 @@ LauncherApps = {
     hotkey = "=",
     text = "Switch to Rulemak",
     action = function () hs.keycodes.setLayout("Rulemak") end
+  },
+  {
+    hotkey = "delete",
+    text = "Choose audio output device",
+    action = chooseAudioOutputDevice
   },
 }
 LauncherInstance:enable(LauncherApps)
