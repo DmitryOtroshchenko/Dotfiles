@@ -5,6 +5,9 @@
 
 require("common")
 
+local std = require("std")
+local func = require("std.functional")
+
 function lf(app)
   hs.application.launchOrFocus(app)
 end
@@ -52,7 +55,7 @@ function Launcher:create(mods, key)
     withself(obj, obj._modeKeyListener)
   )
   -- Show indicator in launcher mode.
-  obj.modeIndicator = Launcher._composeModeIndicator()
+  obj.modeIndicators = nil
 
   print('Launcher created.')
   return obj
@@ -104,9 +107,9 @@ end
 function Launcher:_modeKeyListener(event)
   local keyPressed = hs.keycodes.map[event:getKeyCode()]
   local isRepeat = event:getProperty(hs.eventtap.event.properties.keyboardEventAutorepeat) ~= 0
-    if (event:getType() == hs.eventtap.event.types.keyDown
-        and keyPressed == self.key
-        and isRepeat) then
+  if (event:getType() == hs.eventtap.event.types.keyDown
+      and keyPressed == self.key
+      and isRepeat) then
     return true
   end
   if (not self.isLauncherMode) then
@@ -132,7 +135,15 @@ function Launcher:_onLauncherModeEntered()
   if (self.prevLayout ~= "Colemak") then
     hs.keycodes.setLayout("Colemak")
   end
-  self.modeIndicator:show()
+  self.modeIndicators = func.map(
+    function (screen)
+      local mi = Launcher._composeModeIndicator(screen:frame())
+      mi:show()
+      return mi
+    end,
+    std.ielems,
+    hs.screen.allScreens()
+  )
 end
 
 function Launcher:_onLauncherModeExited()
@@ -140,21 +151,28 @@ function Launcher:_onLauncherModeExited()
   if (hs.keycodes.currentLayout() ~= self.prevLayout) then
     hs.keycodes.setLayout(self.prevLayout)
   end
-  self.modeIndicator:hide()
+  func.map(
+    function (indicator)
+      indicator:hide()
+      indicator:delete()
+    end,
+    std.ielems,
+    self.modeIndicators
+  )
+  self.modeIndicators = nil
 end
 
 function Launcher._triggerAction(action)
   pcall(action.action)
 end
 
-function Launcher._composeModeIndicator()
+function Launcher._composeModeIndicator(screenFrame)
   local solarizedRed = rgb256(208, 27, 36)
   local solarizedTeal = rgb256(37, 145, 133)
-  local mainScreenFrame = hs.screen.mainScreen():frame()
   local modeIndicatorSize = 200
   local launcherModeIndicator = hs.drawing.rectangle{
-      x = mainScreenFrame.x + (mainScreenFrame.w - modeIndicatorSize) / 2,
-      y = mainScreenFrame.y + (mainScreenFrame.h - modeIndicatorSize) / 2,
+      x = screenFrame.x + (screenFrame.w - modeIndicatorSize) / 2,
+      y = screenFrame.y + (screenFrame.h - modeIndicatorSize) / 2,
       w = modeIndicatorSize,
       h = modeIndicatorSize
     }

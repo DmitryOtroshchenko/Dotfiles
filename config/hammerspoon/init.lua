@@ -2,67 +2,104 @@
 -- luacheck setup: https://github.com/mpeterv/luacheck/issues/78
 
 -- See https://github.com/Hammerspoon/hammerspoon/issues/363
-package.path = "/usr/local/share/lua/5.3/?.lua;/usr/local/share/lua/5.3/?/init.lua;"..package.path
-package.cpath = "/usr/local/lib/lua/5.3/?.so;"..package.cpath
+package.path = "/usr/local/share/lua/5.3/?.lua;/usr/local/share/lua/5.3/?/init.lua;" .. package.path
+package.cpath = "/usr/local/lib/lua/5.3/?.so;" .. package.cpath
 
 hs.application.enableSpotlightForNameSearches(true)
 
 -- Reload hs.
 hs.hotkey.bind(
-  {"cmd", "alt", "ctrl"}, "R",
-  function () hs.reload() end
+{ "cmd", "alt", "ctrl" }, "R",
+    function() hs.reload() end
 )
 
 require("modules.launcher")
 require("modules.fuzzy_chooser")
 require("modules.audio_device_chooser")
 
+local function starcraftRemoveUnitFromSelection()
+    local first_unit_icon_center = { x = 550, y = 880 }
+    hs.eventtap.event.newMouseEvent(hs.eventtap.event.types['leftMouseDown'], first_unit_icon_center, { 'shift' }):post()
+    hs.eventtap.event.newMouseEvent(hs.eventtap.event.types['leftMouseUp'], first_unit_icon_center, { 'shift' }):post()
+    hs.eventtap.event.newMouseEvent(hs.eventtap.event.types['leftMouseDown'], first_unit_icon_center, { 'shift' }):post()
+    hs.eventtap.event.newMouseEvent(hs.eventtap.event.types['leftMouseUp'], first_unit_icon_center, { 'shift' }):post()
+end
+
+-- LauncherInstance = Launcher:create('cmd-ctrl', "a", LauncherApps)
 LauncherInstance = Launcher:create({}, "f20", LauncherApps)
 LauncherApps = {
   {
+    hotkey = "x",
+    text = "xcode",
+    action = function()
+        pcall(function() hs.window.find("iPhone 11"):focus() end)
+        lfAndMaximize("Xcode")
+    end,
+  },
+  {
+    hotkey = "z",
+    text = "Zoom",
+    action = function() lfAndMaximize("zoom.us") end,
+  },
+  {
     hotkey = "n",
     text = "Firefox",
-    action = function () lfAndMaximize("Brave Browser") end,
+    action = function() lfAndMaximize("Brave Browser") end,
   },
   {
     hotkey = "e",
     text = "Visual Studio Code",
-    action = function () lfAndMaximize("Visual Studio Code") end,
+    action = function() lfAndMaximize("Visual Studio Code") end,
   },
   {
     hotkey = "space",
     text = "kitty",
-    action = function () lfAndMaximize("kitty") end,
+    action = function() lfAndMaximize("kitty") end,
   },
   {
     hotkey = "m",
     text = "Slack",
-    action = function () lfAndMaximize("Slack") end,
+    action = function() lfAndMaximize("Slack") end,
   },
   {
     hotkey = "i",
     text = "IntelliJ",
-    action = function () lfAndMaximize("IntelliJ IDEA") end,
+    action = function() lfAndMaximize("IntelliJ IDEA") end,
   },
   {
     hotkey = "p",
     text = "Bitwarden",
-    action = function () lfAndMaximize("Bitwarden") end,
+    action = function() lfAndMaximize("Bitwarden") end,
   },
   {
     hotkey = "r",
     text = "Insomnia",
-    action = function () lfAndMaximize("Insomnia") end,
+    action = function() lfAndMaximize("Insomnia") end,
+  },
+  {
+    hotkey = "s",
+    text = "Spotify",
+    action = function() lfAndMaximize("Spotify") end,
   },
   {
     hotkey = "t",
     text = "Telegram",
-    action = function () lfAndMaximize("Telegram") end,
+    action = function() lfAndMaximize("Telegram") end,
   },
+  {
+    hotkey = "l",
+    text = "Obsidian",
+    action = function() lfAndMaximize("Obsidian") end,
+  },
+  -- {
+  --   hotkey = "c",
+  --   text = "Fusion 360",
+  --   action = function () lfAndMaximize("Autodesk Fusion 360") end,
+  -- },
   {
     hotkey = "f20",
     text = "Activate previous app",
-    action = function () LauncherInstance:focusPreviousApp() end
+    action = function() LauncherInstance:focusPreviousApp() end
   },
   {
     hotkey = "0",
@@ -72,12 +109,12 @@ LauncherApps = {
   {
     hotkey = "-",
     text = "Switch to Colemak",
-    action = function () hs.keycodes.setLayout("Colemak") end
+    action = function() hs.keycodes.setLayout("Colemak") end
   },
   {
     hotkey = "=",
     text = "Switch to Rulemak",
-    action = function () hs.keycodes.setLayout("Rulemak") end
+    action = function() hs.keycodes.setLayout("Rulemak") end
   },
   {
     hotkey = "delete",
