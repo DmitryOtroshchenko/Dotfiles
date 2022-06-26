@@ -1,0 +1,24 @@
+
+; "description": "C-W -> delete word",
+; "manipulators": [
+;     {
+;     "type": "basic",
+;     "from": {
+;         "key_code": "w",
+;         "modifiers": {
+;             "mandatory": [ "control" ],
+;             "optional": [ "caps_lock" ]
+;         }
+;     },
+;     "to": [
+;         {
+;             "key_code": "delete_or_backspace",
+;             "modifiers": ["option"]
+;         }
+;     ]
+;     }
+; ]
+
+{:main [
+    {:des "c-w to delete_word" :rules [:!Cw :delete_or_backspace]}
+]}
