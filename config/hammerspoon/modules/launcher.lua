@@ -16,7 +16,7 @@ function lfAndMove(app, x, y, w, h)
   local hasBeenRunning = hs.application.find(app) ~= nil
   lf(app)
   if (not hasBeenRunning) then
-    hs.window.focusedWindow():moveToUnit({x, y, w, h})
+    hs.window.focusedWindow():moveToUnit({ x, y, w, h })
   end
 end
 
@@ -54,8 +54,6 @@ function Launcher:create(mods, key)
     },
     withself(obj, obj._modeKeyListener)
   )
-  -- Show indicator in launcher mode.
-  obj.modeIndicators = nil
 
   print('Launcher created.')
   return obj
@@ -72,7 +70,7 @@ function Launcher:enable(apps)
   end
   self.apps = {}
   for _, a in ipairs(apps) do
-    self.apps[a["hotkey"]] = a
+    self.apps[ a["hotkey"] ] = a
   end
   -- Setup hotkey event.
   self.launcherMode = hs.hotkey.modal.new(self.mods, self.key, nil)
@@ -131,55 +129,25 @@ end
 
 function Launcher:_onLauncherModeEntered()
   self.isLauncherMode = true
+  hs.alert.show("Launcher mode", 999999)
+  hs.execute("~/bin/karabiner --set-variables '{\"is_launcher_mode\":1'}")
   self.prevLayout = hs.keycodes.currentLayout()
   if (self.prevLayout ~= "Colemak") then
     hs.keycodes.setLayout("Colemak")
   end
-  self.modeIndicators = func.map(
-    function (screen)
-      local mi = Launcher._composeModeIndicator(screen:frame())
-      mi:show()
-      return mi
-    end,
-    std.ielems,
-    hs.screen.allScreens()
-  )
 end
 
 function Launcher:_onLauncherModeExited()
   self.isLauncherMode = false
+  hs.alert.closeAll()
+  hs.execute("~/bin/karabiner --set-variables '{\"is_launcher_mode\":0'}")
   if (hs.keycodes.currentLayout() ~= self.prevLayout) then
     hs.keycodes.setLayout(self.prevLayout)
   end
-  func.map(
-    function (indicator)
-      indicator:hide()
-      indicator:delete()
-    end,
-    std.ielems,
-    self.modeIndicators
-  )
-  self.modeIndicators = nil
 end
 
 function Launcher._triggerAction(action)
   pcall(action.action)
-end
-
-function Launcher._composeModeIndicator(screenFrame)
-  local solarizedRed = rgb256(208, 27, 36)
-  local solarizedTeal = rgb256(37, 145, 133)
-  local modeIndicatorSize = 200
-  local launcherModeIndicator = hs.drawing.rectangle{
-      x = screenFrame.x + (screenFrame.w - modeIndicatorSize) / 2,
-      y = screenFrame.y + (screenFrame.h - modeIndicatorSize) / 2,
-      w = modeIndicatorSize,
-      h = modeIndicatorSize
-    }
-    :setStrokeWidth(0)
-    :setFillColor(solarizedTeal)
-    :setStrokeColor(solarizedTeal)
-  return launcherModeIndicator
 end
 
 -- hs.loadSpoon("Seal")
