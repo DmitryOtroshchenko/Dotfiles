@@ -27,19 +27,12 @@ end
 Launcher = {}
 Launcher.__index = Launcher
 
-function Launcher:create(mods, key)
+function Launcher:create(mods, key, apps)
   print('Creating launcher bound to ' .. key .. '.')
   local obj = {}
   setmetatable(obj, Launcher)
-  obj.mods = mods
-  obj.key = key
-  obj.apps = nil
+
   obj.prevLayout = hs.keycodes.currentLayout()
-  -- Setup state remembering app switches.
-  obj.previousActiveApp = nil
-  obj.activeAppWatcher = hs.application.watcher.new(
-    withself(obj, obj._appSwitchListener))
-  -- Set up app launcher hotkey mode.
   obj.isLauncherMode = false
   -- Process individual keystrokes in launcher mode.
   obj.launcherModeKeyListener = hs.eventtap.new(
@@ -53,53 +46,19 @@ function Launcher:create(mods, key)
       hs.eventtap.event.types.otherMouseUp
     },
     withself(obj, obj._modeKeyListener)
-  )
+  ):start()
+
+  obj.apps = {}
+  for _, a in ipairs(apps) do
+    obj.apps[a["hotkey"]] = a
+  end
+  -- Setup hotkey event.
+  obj.launcherMode = hs.hotkey.modal.new(mods, key, nil)
+  obj.launcherMode.entered = withself(obj, obj._onLauncherModeEntered)
+  obj.launcherMode.exited = withself(obj, obj._onLauncherModeExited)
 
   print('Launcher created.')
   return obj
-end
-
-function Launcher:focusPreviousApp()
-  lf(self.previousActiveApp)
-end
-
-function Launcher:enable(apps)
-  print('Enabling launcher...')
-  if (self.launcherMode ~= nil) then
-    error("Launcher mode is already enabled.")
-  end
-  self.apps = {}
-  for _, a in ipairs(apps) do
-    self.apps[ a["hotkey"] ] = a
-  end
-  -- Setup hotkey event.
-  self.launcherMode = hs.hotkey.modal.new(self.mods, self.key, nil)
-  self.launcherMode.entered = withself(self, self._onLauncherModeEntered)
-  self.launcherMode.exited = withself(self, self._onLauncherModeExited)
-  -- Start listeners.
-  self.activeAppWatcher:start()
-  self.launcherModeKeyListener:start()
-  print('Launcher enabled.')
-  return self
-end
-
-function Launcher:disable()
-  print('Disabling launcher...')
-  -- Exit and delete mode.
-  launcherMode:exit()
-  launcherMode:delete()
-  self.launcherMode = nil
-  -- Stop event listeners.
-  self.activeAppWatcher:stop()
-  self.launcherModeKeyListener:stop()
-  print('Launcher disabled.')
-  return self
-end
-
-function Launcher:_appSwitchListener(appName, eventType, app)
-  if (self.previousActiveApp ~= appName) then
-    self.previousActiveApp = app:path()
-  end
 end
 
 function Launcher:_modeKeyListener(event)

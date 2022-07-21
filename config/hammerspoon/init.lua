@@ -15,6 +15,7 @@ hs.hotkey.bind(
   function() hs.reload() end
 )
 
+AppWatcher = require("modules.appwatcher")
 require("modules.launcher")
 require("modules.fuzzy_chooser")
 require("modules.audio_device_chooser")
@@ -28,81 +29,74 @@ local function starcraftRemoveUnitFromSelection()
 end
 
 -- LauncherInstance = Launcher:create('cmd-ctrl', "a", LauncherApps)
-LauncherInstance = Launcher:create({}, "f20", LauncherApps)
 LauncherApps = {
-  -- {
-  --   hotkey = "x",
-  --   text = "xcode",
-  --   action = function()
-  --     pcall(function() hs.window.find("iPhone 11"):focus() end)
-  --     lfAndMaximize("Xcode")
-  --   end,
-  -- },
-  -- {
-  --   hotkey = "z",
-  --   text = "Zoom",
-  --   action = function() lfAndMaximize("zoom.us") end,
-  -- },
-  -- {
-  --   hotkey = "n",
-  --   text = "Firefox",
-  --   action = function() lfAndMaximize("Brave Browser") end,
-  -- },
-  -- {
-  --   hotkey = "e",
-  --   text = "Visual Studio Code",
-  --   action = function() lfAndMaximize("Visual Studio Code") end,
-  -- },
-  -- {
-  --   hotkey = "space",
-  --   text = "kitty",
-  --   action = function() lfAndMaximize("kitty") end,
-  -- },
-  -- {
-  --   hotkey = "m",
-  --   text = "Slack",
-  --   action = function() lfAndMaximize("Slack") end,
-  --   -- action = function() lfAndMaximize("Brave Browser") end,
-  -- },
+  {
+    hotkey = "x",
+    text = "xcode",
+    action = function()
+      pcall(function() hs.window.find("iPhone 11"):focus() end)
+      lfAndMaximize("Xcode")
+    end,
+  },
+  {
+    hotkey = "z",
+    text = "Zoom",
+    action = function() lfAndMaximize("zoom.us") end,
+  },
+  {
+    hotkey = "n",
+    text = "Firefox",
+    action = function() lfAndMaximize("Brave Browser") end,
+  },
+  {
+    hotkey = "e",
+    text = "Visual Studio Code",
+    action = function() lfAndMaximize("Visual Studio Code") end,
+  },
+  {
+    hotkey = "space",
+    text = "kitty",
+    action = function() lfAndMaximize("kitty") end,
+  },
+  {
+    hotkey = "m",
+    text = "Slack",
+    action = function() lfAndMaximize("Slack") end,
+  },
   {
     hotkey = "i",
     text = "IntelliJ",
     action = function() lfAndMaximize("IntelliJ IDEA") end,
   },
-  -- {
-  --   hotkey = "p",
-  --   text = "Bitwarden",
-  --   action = function() lfAndMaximize("Bitwarden") end,
-  -- },
-  -- {
-  --   hotkey = "r",
-  --   text = "Insomnia",
-  --   action = function() lfAndMaximize("Insomnia") end,
-  -- },
-  -- {
-  --   hotkey = "s",
-  --   text = "Spotify",
-  --   action = function() lfAndMaximize("Spotify") end,
-  -- },
-  -- {
-  --   hotkey = "t",
-  --   text = "Telegram",
-  --   action = function() lfAndMaximize("Telegram") end,
-  -- },
-  -- {
-  --   hotkey = "l",
-  --   text = "Obsidian",
-  --   action = function() lfAndMaximize("Obsidian") end,
-  -- },
-  -- {
-  --   hotkey = "c",
-  --   text = "Fusion 360",
-  --   action = function () lfAndMaximize("Autodesk Fusion 360") end,
-  -- },
+  {
+    hotkey = "p",
+    text = "Bitwarden",
+    action = function() lfAndMaximize("Bitwarden") end,
+  },
+  {
+    hotkey = "r",
+    text = "Insomnia",
+    action = function() lfAndMaximize("Insomnia") end,
+  },
+  {
+    hotkey = "s",
+    text = "Spotify",
+    action = function() lfAndMaximize("Spotify") end,
+  },
+  {
+    hotkey = "t",
+    text = "Telegram",
+    action = function() lfAndMaximize("Telegram") end,
+  },
+  {
+    hotkey = "l",
+    text = "Obsidian",
+    action = function() lfAndMaximize("Obsidian") end,
+  },
   {
     hotkey = "f20",
     text = "Activate previous app",
-    action = function() LauncherInstance:focusPreviousApp() end
+    action = function() lf(AppWatcher.previousActiveApp) end
   },
   {
     hotkey = "0",
@@ -130,7 +124,16 @@ LauncherApps = {
     action = function() hs.eventtap.keyStroke({ "alt" }, "tab") end
   },
 }
-LauncherInstance:enable(LauncherApps)
+LauncherInstance = Launcher:create({}, "f20", LauncherApps)
+
+-- Reload hs.
+hs.hotkey.bind(
+  { "cmd", "alt", "ctrl" }, "R",
+  function()
+    hs.reload()
+    hs.application.launchOrFocus("Hammerspoon")
+  end
+)
 
 -- ChooserInstance = FuzzyChooser:create(LauncherApps)
 -- hs.hotkey.bind(
@@ -143,6 +146,22 @@ require("modules.sound")
 MuteOnLockInstance = MuteOnLock:create():enable()
 
 require("modules.window_management")
+
+function getThrottleSettings()
+  -- hs.execute("pmset -g therm | sd '\n' ' ' | rg 'CPU_Scheduler_Limit\\s+=\\s+(\\d+)\\s+CPU_Available_CPUs\\s+=\\s+(\\d+)\\s+CPU_Speed_Limit\\s+=\\s+(\\d+)' -r '$1 $2 $3'")
+  local output = hs.execute("pmset -g therm")
+  local _, _, schedulerLimit = string.find(output, "CPU_Scheduler_Limit%s+=%s+(%d+)")
+  local _, _, speedLimit = string.find(output, "CPU_Speed_Limit%s+=%s+(%d+)")
+  return schedulerLimit, speedLimit
+end
+
+ThrottleMenuItem = hs.menubar.new()
+ThrottleMenuItemTimer = hs.timer.new(5, function()
+  local scheduler, speed = getThrottleSettings()
+  print(scheduler, speed)
+  ThrottleMenuItem:setTitle('Scheduler = ' .. tostring(scheduler) .. ' Speed = ' .. tostring(speed))
+end)
+ThrottleMenuItemTimer:start()
 
 -- spaces = require("hsmodules._asm.undocumented.spaces")
 -- hs.hotkey.bind(
