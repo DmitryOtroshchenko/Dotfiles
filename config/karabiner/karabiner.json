@@ -16,6 +16,91 @@
                 },
                 "rules": [
                     {
+                        "description": "f12 launcher mode",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "type": "variable_if",
+                                        "name": "is_f12_launcher_mode",
+                                        "value": 0
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "f12",
+                                    "modifiers": {
+                                        "optional": "any"
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "is_f12_launcher_mode",
+                                            "value": 1
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "type": "variable_if",
+                                        "name": "is_f12_launcher_mode",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "j",
+                                    "modifiers": {
+                                        "optional": "any"
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "open -a 'Brave Browser.app'"
+                                    },
+                                    {
+                                        "set_variable": {
+                                            "name": "is_f12_launcher_mode",
+                                            "value": 0
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "type": "variable_if",
+                                        "name": "is_f12_launcher_mode",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "any": "key_code",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "is_f12_launcher_mode",
+                                            "value": 0
+                                        }
+                                    },
+                                    {
+                                        "key_code": "vk_none"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Swap ` and ~",
                         "manipulators": [
                             {
