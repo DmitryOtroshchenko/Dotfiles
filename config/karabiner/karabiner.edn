@@ -1,6 +1,11 @@
+;; TODO: define launcher mode on/off in :tos section.
 {:templates {:launch "open -a '%s'"}
- :input-sources {:input_rulemak {:input_source_id "org.sil.ukelele.keyboardlayout.rulemak.rulemak"} :input_colemak {:input_source_id "com.apple.keylayout.Colemak"}}
- :tos {:switch_input_to_rulemak {:input :input_rulemak} :switch_input_to_colemak {:input :input_colemak}}
+ :input-sources {:input_rulemak {:input_source_id "org.sil.ukelele.keyboardlayout.rulemak.rulemak"}
+                 :input_colemak {:input_source_id "com.apple.keylayout.Colemak"}}
+ :tos {:switch_input_to_rulemak {:input :input_rulemak}
+       :switch_input_to_colemak {:input :input_colemak}
+       :launcher_mode_marker_on {:noti {:id "launcher_mode_notification" :text "Launcher mode"}}
+       :launcher_mode_marker_off {:noti {:id "launcher_mode_notification"}}}
  :main [{:des "Ctrl-W -> delete word" :rules [[:!T##w :!Odelete_or_backspace]]}
         {:des "Cmd-Ctrl-quote -> backtick" :rules [[:!CTquote :grave_accent_and_tilde]]}
         {:des "Swap backtick and tilde" :rules [[:!Sgrave_accent_and_tilde :grave_accent_and_tilde]
@@ -14,25 +19,28 @@
                                                                [:##right_option [:##right_option :switch_input_to_colemak] nil {:afterup :switch_input_to_rulemak}]
                                                                ;; TODO: any unassigned key resets launcher mode. Use :froms
                                                                ]}
-        {:des "F12 Launcher mode"
+
+        {:des "Launcher mode - activation" :rules [[:##f20 [["launcher_mode" 1] :launcher_mode_marker_on] ["launcher_mode" 0]]]}
+        {:des "Launcher mode - bindings"
          :rules [[:condi ["launcher_mode" 1]]
-                 [:##f12 ["launcher_mode" 1] ["launcher_mode" 0]]
-                 [:##f12 ["launcher_mode" 0] ["launcher_mode" 1]]
+                 [:escape ["launcher_mode" 0]]
                  ;; apps
-                 [:spacebar [[:launch "kitty.app"], ["launcher_mode" 0]] ["launcher_mode" 1]]
-                 [:z [[:launch "zoom.us.app"], ["launcher_mode" 0]] ["launcher_mode" 1]]
-                 [:j [[:launch "Brave Browser.app"], ["launcher_mode" 0]] ["launcher_mode" 1]]
-                 [:k [[:launch "Visual Studio Code.app"], ["launcher_mode" 0]] ["launcher_mode" 1]]
-                 [:m [[:launch "Slack.app"], ["launcher_mode" 0]] ["launcher_mode" 1]]
-                 [:l [[:launch "IntelliJ IDEA.app"], ["launcher_mode" 0]] ["launcher_mode" 1]]
-                 [:d [[:launch "Spotify.app"], ["launcher_mode" 0]] ["launcher_mode" 1]]
-                 [:f [[:launch "Telegram.app"], ["launcher_mode" 0]] ["launcher_mode" 1]]
-                 [:u [[:launch "Obsidian.app"], ["launcher_mode" 0]] ["launcher_mode" 1]]
-                 [:u [[:launch "Obsidian.app"], ["launcher_mode" 0]] ["launcher_mode" 1]]
-                 [:0 [[:launch "Hammerspoon.app"], ["launcher_mode" 0]] ["launcher_mode" 1]]
+                 [:spacebar [[:launch "kitty.app"] ["launcher_mode" 0] :launcher_mode_marker_off]]
+                 [:z [[:launch "zoom.us.app"], ["launcher_mode" 0] :launcher_mode_marker_off]]
+                 [:j [[:launch "Brave Browser.app"], ["launcher_mode" 0] :launcher_mode_marker_off]]
+                 [:k [[:launch "Visual Studio Code.app"], ["launcher_mode" 0] :launcher_mode_marker_off]]
+                 [:m [[:launch "Slack.app"], ["launcher_mode" 0] :launcher_mode_marker_off]]
+                 [:l [[:launch "IntelliJ IDEA.app"], ["launcher_mode" 0] :launcher_mode_marker_off]]
+                 [:d [[:launch "Spotify.app"], ["launcher_mode" 0] :launcher_mode_marker_off]]
+                 [:f [[:launch "Telegram.app"], ["launcher_mode" 0] :launcher_mode_marker_off]]
+                 [:u [[:launch "Obsidian.app"], ["launcher_mode" 0] :launcher_mode_marker_off]]
+                 [:u [[:launch "Obsidian.app"], ["launcher_mode" 0] :launcher_mode_marker_off]]
+                 [:0 [[:launch "Hammerspoon.app"], ["launcher_mode" 0] :launcher_mode_marker_off]]
                  ;; custom actions
-                 [:hyphen [:switch_input_to_colemak, ["launcher_mode" 0]] ["launcher_mode" 1]]
-                 [:equal_sign [:switch_input_to_rulemak, ["launcher_mode" 0]] ["launcher_mode" 1]]
-                 ;; TODO: "Activate previous app"
+                 [:hyphen [:switch_input_to_colemak, ["launcher_mode" 0] :launcher_mode_marker_off]]
+                 [:equal_sign [:switch_input_to_rulemak, ["launcher_mode" 0] :launcher_mode_marker_off]]
+                 [:f20 [:!Ctab, ["launcher_mode" 0] :launcher_mode_marker_off]]
+                 ;; A fake key - just to manually change it in order to consume all unassigned keys. Replace "1" map with `"any": "key_code"`.
+                 [:##1 [["launcher_mode" 0] :launcher_mode_marker_off]]
                  ;; TODO: "Choose audio output device"
                  ]}]}

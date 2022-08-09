@@ -596,6 +596,30 @@
             "type" : "variable_if"
           } ],
           "type" : "basic"
+        }, {
+          "from" : {
+            "any": "key_code",
+            "modifiers" : {
+              "optional" : [ "any" ]
+            }
+          },
+          "to" : [ {
+            "set_variable" : {
+              "name" : "launcher_mode",
+              "value" : 0
+            }
+          }, {
+            "set_notification_message" : {
+              "id" : "launcher_mode_notification",
+              "text" : ""
+            }
+          } ],
+          "conditions" : [ {
+            "name" : "launcher_mode",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
         } ]
       } ]
     },
