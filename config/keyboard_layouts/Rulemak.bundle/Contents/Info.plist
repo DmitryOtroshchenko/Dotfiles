@@ -10,6 +10,8 @@
 	<string></string>
 	<key>KLInfo_Rulemak</key>
 	<dict>
+		<key>TICapsLockLanguageSwitchCapable</key>
+		<false/>
 		<key>TISInputSourceID</key>
 		<string>org.sil.ukelele.keyboardlayout.rulemak.rulemak</string>
 		<key>TISIntendedLanguage</key>
