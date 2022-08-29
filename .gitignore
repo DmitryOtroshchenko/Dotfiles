@@ -3,11 +3,15 @@
 .gradle/
 
 config/fish/fish_variables
+config/fish/secrets.fish
 
 config/karabiner/automatic_backups/
 
 config/vscode/globalStorage/
 config/vscode/workspaceStorage/
+config/vscode/History/
+
+config/hammerspoon/luarocks
 
 __pycache__/
 *.pyo

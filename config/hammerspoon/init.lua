@@ -1,6 +1,7 @@
 -- Classes in lua: http://lua-users.org/wiki/SimpleLuaClasses
 -- luacheck setup: https://github.com/mpeterv/luacheck/issues/78
 
+-- To make lua work with packages: config/hammerspoon/luarocks -> /usr/local/share/lua/5.4/luarocks/
 -- See https://github.com/Hammerspoon/hammerspoon/issues/363
 package.path = "/usr/local/share/lua/5.3/?.lua;/usr/local/share/lua/5.3/?/init.lua;" .. package.path
 package.cpath = "/usr/local/lib/lua/5.3/?.so;" .. package.cpath
