@@ -12,21 +12,42 @@
 - clean: ['~', '~/.config']
 
 - link:
-    ~/.gitconfig: config/gitconfig
-    ~/.nvimrc: config/vimrc
-    ~/.pylintrc: config/pylintrc
-    ~/.tmux.conf: config/tmux.conf
-    ~/.vimrc: config/vimrc
-    ~/.vimrc_base: config/vimrc_base
+    ~/.gitconfig: 
+        path: config/gitconfig
+        create: true
+        force: true
+    ~/.nvimrc: 
+        path: config/vimrc
+        create: true
+        force: true
+    ~/.pylintrc: 
+        path: config/pylintrc
+        create: true
+        force: true
+    ~/.tmux.conf: 
+        path: config/tmux.conf
+        create: true
+        force: true
+    ~/.vimrc: 
+        path: config/vimrc
+        create: true
+        force: true
+    ~/.vimrc_base: 
+        path: config/vimrc_base
+        create: true
+        force: true
     ~/.config/fish:
         path: config/fish
         create: true
+        force: true
     ~/.config/omf:
         path: config/omf
         create: true
+        force: true
     ~/.config/ranger:
         path: config/ranger
         create: true
+        force: true
 
 - shell:
     -

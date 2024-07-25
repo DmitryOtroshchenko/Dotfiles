@@ -1,4 +1,3 @@
-
 hs.window.animationDuration = 0
 
 function focusScreen(screen)
@@ -27,12 +26,12 @@ function maximizeWindow()
   fw:moveToScreen(fw:screen():previous())
 end
 
-WmPrefix = {"cmd", "ctrl"}
+WmPrefix = { "cmd", "ctrl" }
 
 local mv = function(key, xr, yr, wr, hr)
   hs.hotkey.bind(
     WmPrefix, key,
-    function() hs.window.focusedWindow():moveToUnit({xr, yr, wr, hr}) end
+    function() hs.window.focusedWindow():moveToUnit({ xr, yr, wr, hr }) end
   )
 end
 
@@ -44,3 +43,21 @@ mv("t", 0, 0, 1, 1)
 
 hs.hotkey.bind(WmPrefix, "l", moveToPreviousScreen)
 hs.hotkey.bind(WmPrefix, "u", moveToNextScreen)
+
+-- Shortcuts for launcher and internal usage.
+
+function lf(app)
+  hs.application.launchOrFocus(app)
+end
+
+function lfAndMove(app, x, y, w, h)
+  local hasBeenRunning = hs.application.find(app) ~= nil
+  lf(app)
+  if (not hasBeenRunning) then
+    hs.window.focusedWindow():moveToUnit({ x, y, w, h })
+  end
+end
+
+function lfAndMaximize(app)
+  lfAndMove(app, 0, 0, 1, 1)
+end

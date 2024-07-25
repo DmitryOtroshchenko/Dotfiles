@@ -2,7 +2,7 @@
 [core]
     pager = diff-so-fancy | less --tabs=4 -RFX
     editor = code --wait
-    excludesfile = /Users/d.otroshchenko/.gitignore_global
+    excludesfile = /Users/dmitry/.gitignore_global
 	precomposeunicode = true
 
 [color]
@@ -38,10 +38,22 @@
     nunpublished="!f() { source ~/Dotfiles/config/gitcommands.sh && git_n_unpublished $@; }; f"
     isahead="!f() { source ~/Dotfiles/config/gitcommands.sh && git_is_ahead $@; }; f"
     root = rev-parse --show-toplevel
+    ls-untracked = ls-files --others --exclude-standard
 
     lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
     lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
     lg = !git lg2
+
+    h = show HEAD
+    h1 = show HEAD~1
+    h2 = show HEAD~2
+    h3 = show HEAD~3
+    h4 = show HEAD~4
+    h5 = show HEAD~5
+    h6 = show HEAD~6
+    h7 = show HEAD~7
+    h8 = show HEAD~8
+    h9 = show HEAD~9
 
 [user]
     email = dmitry.otroshchenko@airbnb.com
@@ -60,3 +72,10 @@
 [hub]
 	host = git.musta.ch
 	protocol = git
+[init]
+	defaultBranch = master
+
+[diff]
+    tool = vscode
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE

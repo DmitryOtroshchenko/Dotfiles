@@ -3,9 +3,11 @@
     ~/.config/karabiner:
         path: config/karabiner
         create: true
+        force: true
     ~/.config/kitty:
         path: config/kitty
         create: true
+        force: true
     ~/.hammerspoon:
         path: config/hammerspoon
         create: true
@@ -13,12 +15,13 @@
     ~/Library/Application Support/Code/User:
         path: config/vscode
         create: true
+        force: true
 
-- brewfile:
-    file: Brewfile
-    stdin: true
-    stdout: true
-    stderr: true
+# - brewfile:
+#     file: Brewfile
+#     stdin: true
+#     stdout: true
+#     stderr: true
 
-- vscodefile:
-    file: config/vscode/extensions.txt
+# - vscodefile:
+#     file: config/vscode/extensions.txt

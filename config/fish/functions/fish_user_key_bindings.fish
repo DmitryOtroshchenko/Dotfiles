@@ -36,6 +36,8 @@ function fish_user_key_bindings
 
     # bind_all \ck 'fancy_cz'
 
+    bind_all \cs 'pet-select'
+
     bind_nv yy fish_clipboard_copy
     bind_nv Y fish_clipboard_copy
     bind_nv p fish_clipboard_paste

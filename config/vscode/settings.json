@@ -48,12 +48,17 @@
 
     // file types
     "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
+        "**/__pycache__": true,
         "**/.DS_Store": true,
-        "**/__pycache__": true
+        "**/.git": true,
+        "**/.hg": true,
+        "**/.svn": true,
+        "**/*.pyc": true,
+        "**/CVS": true,
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
     },
 
     // colorschemes
@@ -231,7 +236,6 @@
         "/Applications/Hammerspoon.app/Contents/Resources/extensions": true,
         "/Users/dmitry_otroshchenko/Dotfiles/config/hammerspoon": true
     },
-    "window.zoomLevel": -1,
     "vim.sneak": true,
     "vim.consistentYankTillEol": true,
     "vim.yankOnDelete": false,
@@ -250,8 +254,6 @@
         "/Users/dmitry_otroshchenko/Dotfiles/config/hammerspoon/modules/?.lua"
     ],
     "todo-tree.tree.showScanModeButton": false,
-    "workbench.sideBar.location": "left",
-    "python.defaultInterpreterPath": "/usr/local/anaconda3/bin/python",
     "debug.node.autoAttach": "on",
     "javascript.format.semicolons": "insert",
     "javascript.preferences.importModuleSpecifier": "relative",
@@ -268,5 +270,24 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "editor.formatOnSave": true,
-    "editor.fontFamily": "'Source Code Pro'"
+    "editor.fontFamily": "'Source Code Pro'",
+    "search.mode": "newEditor",
+    "json.format.enable": false,
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+    "editor.semanticHighlighting.enabled": true,
+    "Lua.telemetry.enable": false,
+    "Lua.hint.setType": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "python.defaultInterpreterPath": "/usr/local/anaconda3/bin/python",
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    "workbench.editor.showTabs": false,
+    "editor.guides.bracketPairs": true,
+    "window.dialogStyle": "custom"
 }

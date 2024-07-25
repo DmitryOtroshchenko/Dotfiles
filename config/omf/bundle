@@ -4,7 +4,7 @@ package colored-man-pages
 package dpaste
 package fonts
 package foreign-env
-package nvm
+package https://github.com/otms61/fish-pet
 package python
 package title
 theme default

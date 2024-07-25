@@ -10,15 +10,15 @@
         {:des "Cmd-Ctrl-quote -> backtick" :rules [[:!CTquote :grave_accent_and_tilde]]}
         {:des "Swap backtick and tilde" :rules [[:!Sgrave_accent_and_tilde :grave_accent_and_tilde]
                                                 [:grave_accent_and_tilde :!Sgrave_accent_and_tilde]]}
-        {:des "Holding a modifier switches to Colemak" :rules [[:condi :input_rulemak]
-                                                               [:##left_command [:##left_command :switch_input_to_colemak] nil {:afterup :switch_input_to_rulemak}]
-                                                               [:##right_command [:##right_command :switch_input_to_colemak] nil {:afterup :switch_input_to_rulemak}]
-                                                               [:##left_control [:##left_control :switch_input_to_colemak] nil {:afterup :switch_input_to_rulemak}]
-                                                               [:##right_control [:##right_control :switch_input_to_colemak] nil {:afterup :switch_input_to_rulemak}]
-                                                               [:##left_option [:##left_option :switch_input_to_colemak] nil {:afterup :switch_input_to_rulemak}]
-                                                               [:##right_option [:##right_option :switch_input_to_colemak] nil {:afterup :switch_input_to_rulemak}]
-                                                               ;; TODO: any unassigned key resets launcher mode. Use :froms
-                                                               ]}
+      ;;   {:des "Holding a modifier switches to Colemak" :rules [[:condi :input_rulemak]
+      ;;                                                          [:left_command [:left_command :switch_input_to_colemak] nil {:afterup :switch_input_to_rulemak}]
+      ;;                                                          [:right_command [:right_command :switch_input_to_colemak] nil {:afterup :switch_input_to_rulemak}]
+      ;;                                                          [:left_control [:left_control :switch_input_to_colemak] nil {:afterup :switch_input_to_rulemak}]
+      ;;                                                          [:right_control [:right_control :switch_input_to_colemak] nil {:afterup :switch_input_to_rulemak}]
+      ;;                                                          [:left_option [:left_option :switch_input_to_colemak] nil {:afterup :switch_input_to_rulemak}]
+      ;;                                                          [:right_option [:right_option :switch_input_to_colemak] nil {:afterup :switch_input_to_rulemak}]
+      ;;                                                          ;; TODO: any unassigned key resets launcher mode. Use :froms
+      ;;                                                          ]}
 
         {:des "Launcher mode - activation" :rules [[:##f20 [["launcher_mode" 1] :launcher_mode_marker_on] ["launcher_mode" 0]]]}
         {:des "Launcher mode - bindings"
