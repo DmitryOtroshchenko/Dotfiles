@@ -1,773 +1,947 @@
 {
-  "global" : {
-    "check_for_updates_on_startup" : true,
-    "show_in_menu_bar" : false,
-    "show_profile_name_in_menu_bar" : false
-  },
-  "profiles" : [ {
-    "complex_modifications" : {
-      "parameters" : {
-        "basic.simultaneous_threshold_milliseconds" : 50,
-        "basic.to_delayed_action_delay_milliseconds" : 500,
-        "basic.to_if_alone_timeout_milliseconds" : 1000,
-        "basic.to_if_held_down_threshold_milliseconds" : 500
-      },
-      "rules" : [ {
-        "description" : "Ctrl-W -> delete word",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "w",
-            "modifiers" : {
-              "mandatory" : [ "left_control" ],
-              "optional" : [ "any" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "delete_or_backspace",
-            "modifiers" : [ "left_option" ]
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "Cmd-Ctrl-quote -> backtick",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "quote",
-            "modifiers" : {
-              "mandatory" : [ "left_command", "left_control" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "grave_accent_and_tilde"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "Swap backtick and tilde",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "grave_accent_and_tilde",
-            "modifiers" : {
-              "mandatory" : [ "left_shift" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "grave_accent_and_tilde"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "grave_accent_and_tilde"
-          },
-          "to" : [ {
-            "key_code" : "grave_accent_and_tilde",
-            "modifiers" : [ "left_shift" ]
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "Holding a modifier switches to Colemak",
-        "manipulators" : [ {
-          "to_after_key_up" : [ {
-            "select_input_source" : {
-              "input_source_id" : "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-            }
-          } ],
-          "from" : {
-            "key_code" : "left_command",
-            "modifiers" : {
-              "optional" : [ "any" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "left_command"
-          }, {
-            "select_input_source" : {
-              "input_source_id" : "com.apple.keylayout.Colemak"
-            }
-          } ],
-          "conditions" : [ {
-            "input_sources" : [ {
-              "input_source_id" : "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-            } ],
-            "type" : "input_source_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "to_after_key_up" : [ {
-            "select_input_source" : {
-              "input_source_id" : "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-            }
-          } ],
-          "from" : {
-            "key_code" : "right_command",
-            "modifiers" : {
-              "optional" : [ "any" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "right_command"
-          }, {
-            "select_input_source" : {
-              "input_source_id" : "com.apple.keylayout.Colemak"
-            }
-          } ],
-          "conditions" : [ {
-            "input_sources" : [ {
-              "input_source_id" : "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-            } ],
-            "type" : "input_source_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "to_after_key_up" : [ {
-            "select_input_source" : {
-              "input_source_id" : "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-            }
-          } ],
-          "from" : {
-            "key_code" : "left_control",
-            "modifiers" : {
-              "optional" : [ "any" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "left_control"
-          }, {
-            "select_input_source" : {
-              "input_source_id" : "com.apple.keylayout.Colemak"
-            }
-          } ],
-          "conditions" : [ {
-            "input_sources" : [ {
-              "input_source_id" : "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-            } ],
-            "type" : "input_source_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "to_after_key_up" : [ {
-            "select_input_source" : {
-              "input_source_id" : "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-            }
-          } ],
-          "from" : {
-            "key_code" : "right_control",
-            "modifiers" : {
-              "optional" : [ "any" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "right_control"
-          }, {
-            "select_input_source" : {
-              "input_source_id" : "com.apple.keylayout.Colemak"
-            }
-          } ],
-          "conditions" : [ {
-            "input_sources" : [ {
-              "input_source_id" : "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-            } ],
-            "type" : "input_source_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "to_after_key_up" : [ {
-            "select_input_source" : {
-              "input_source_id" : "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-            }
-          } ],
-          "from" : {
-            "key_code" : "left_option",
-            "modifiers" : {
-              "optional" : [ "any" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "left_option"
-          }, {
-            "select_input_source" : {
-              "input_source_id" : "com.apple.keylayout.Colemak"
-            }
-          } ],
-          "conditions" : [ {
-            "input_sources" : [ {
-              "input_source_id" : "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-            } ],
-            "type" : "input_source_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "to_after_key_up" : [ {
-            "select_input_source" : {
-              "input_source_id" : "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-            }
-          } ],
-          "from" : {
-            "key_code" : "right_option",
-            "modifiers" : {
-              "optional" : [ "any" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "right_option"
-          }, {
-            "select_input_source" : {
-              "input_source_id" : "com.apple.keylayout.Colemak"
-            }
-          } ],
-          "conditions" : [ {
-            "input_sources" : [ {
-              "input_source_id" : "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-            } ],
-            "type" : "input_source_if"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "Launcher mode - activation",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "f20",
-            "modifiers" : {
-              "optional" : [ "any" ]
-            }
-          },
-          "to" : [ {
-            "set_variable" : {
-              "name" : "launcher_mode",
-              "value" : 1
-            }
-          }, {
-            "set_notification_message" : {
-              "id" : "launcher_mode_notification",
-              "text" : "Launcher mode"
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "launcher_mode",
-            "value" : 0,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "Launcher mode - bindings",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "escape"
-          },
-          "to" : [ {
-            "set_variable" : {
-              "name" : "launcher_mode",
-              "value" : 0
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "launcher_mode",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "spacebar"
-          },
-          "to" : [ {
-            "shell_command" : "open -a 'kitty.app'"
-          }, {
-            "set_variable" : {
-              "name" : "launcher_mode",
-              "value" : 0
-            }
-          }, {
-            "set_notification_message" : {
-              "id" : "launcher_mode_notification",
-              "text" : ""
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "launcher_mode",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "z"
-          },
-          "to" : [ {
-            "shell_command" : "open -a 'zoom.us.app'"
-          }, {
-            "set_variable" : {
-              "name" : "launcher_mode",
-              "value" : 0
-            }
-          }, {
-            "set_notification_message" : {
-              "id" : "launcher_mode_notification",
-              "text" : ""
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "launcher_mode",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "j"
-          },
-          "to" : [ {
-            "shell_command" : "open -a 'Brave Browser.app'"
-          }, {
-            "set_variable" : {
-              "name" : "launcher_mode",
-              "value" : 0
-            }
-          }, {
-            "set_notification_message" : {
-              "id" : "launcher_mode_notification",
-              "text" : ""
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "launcher_mode",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "k"
-          },
-          "to" : [ {
-            "shell_command" : "open -a 'Visual Studio Code.app'"
-          }, {
-            "set_variable" : {
-              "name" : "launcher_mode",
-              "value" : 0
-            }
-          }, {
-            "set_notification_message" : {
-              "id" : "launcher_mode_notification",
-              "text" : ""
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "launcher_mode",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "m"
-          },
-          "to" : [ {
-            "shell_command" : "open -a 'Slack.app'"
-          }, {
-            "set_variable" : {
-              "name" : "launcher_mode",
-              "value" : 0
-            }
-          }, {
-            "set_notification_message" : {
-              "id" : "launcher_mode_notification",
-              "text" : ""
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "launcher_mode",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "l"
-          },
-          "to" : [ {
-            "shell_command" : "open -a 'IntelliJ IDEA.app'"
-          }, {
-            "set_variable" : {
-              "name" : "launcher_mode",
-              "value" : 0
-            }
-          }, {
-            "set_notification_message" : {
-              "id" : "launcher_mode_notification",
-              "text" : ""
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "launcher_mode",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "d"
-          },
-          "to" : [ {
-            "shell_command" : "open -a 'Spotify.app'"
-          }, {
-            "set_variable" : {
-              "name" : "launcher_mode",
-              "value" : 0
-            }
-          }, {
-            "set_notification_message" : {
-              "id" : "launcher_mode_notification",
-              "text" : ""
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "launcher_mode",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "f"
-          },
-          "to" : [ {
-            "shell_command" : "open -a 'Telegram.app'"
-          }, {
-            "set_variable" : {
-              "name" : "launcher_mode",
-              "value" : 0
-            }
-          }, {
-            "set_notification_message" : {
-              "id" : "launcher_mode_notification",
-              "text" : ""
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "launcher_mode",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "u"
-          },
-          "to" : [ {
-            "shell_command" : "open -a 'Obsidian.app'"
-          }, {
-            "set_variable" : {
-              "name" : "launcher_mode",
-              "value" : 0
-            }
-          }, {
-            "set_notification_message" : {
-              "id" : "launcher_mode_notification",
-              "text" : ""
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "launcher_mode",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "u"
-          },
-          "to" : [ {
-            "shell_command" : "open -a 'Obsidian.app'"
-          }, {
-            "set_variable" : {
-              "name" : "launcher_mode",
-              "value" : 0
-            }
-          }, {
-            "set_notification_message" : {
-              "id" : "launcher_mode_notification",
-              "text" : ""
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "launcher_mode",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "0"
-          },
-          "to" : [ {
-            "shell_command" : "open -a 'Hammerspoon.app'"
-          }, {
-            "set_variable" : {
-              "name" : "launcher_mode",
-              "value" : 0
-            }
-          }, {
-            "set_notification_message" : {
-              "id" : "launcher_mode_notification",
-              "text" : ""
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "launcher_mode",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "hyphen"
-          },
-          "to" : [ {
-            "select_input_source" : {
-              "input_source_id" : "com.apple.keylayout.Colemak"
-            }
-          }, {
-            "set_variable" : {
-              "name" : "launcher_mode",
-              "value" : 0
-            }
-          }, {
-            "set_notification_message" : {
-              "id" : "launcher_mode_notification",
-              "text" : ""
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "launcher_mode",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "equal_sign"
-          },
-          "to" : [ {
-            "select_input_source" : {
-              "input_source_id" : "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-            }
-          }, {
-            "set_variable" : {
-              "name" : "launcher_mode",
-              "value" : 0
-            }
-          }, {
-            "set_notification_message" : {
-              "id" : "launcher_mode_notification",
-              "text" : ""
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "launcher_mode",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "f20"
-          },
-          "to" : [ {
-            "key_code" : "tab",
-            "modifiers" : [ "left_command" ]
-          }, {
-            "set_variable" : {
-              "name" : "launcher_mode",
-              "value" : 0
-            }
-          }, {
-            "set_notification_message" : {
-              "id" : "launcher_mode_notification",
-              "text" : ""
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "launcher_mode",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "any": "key_code",
-            "modifiers" : {
-              "optional" : [ "any" ]
-            }
-          },
-          "to" : [ {
-            "set_variable" : {
-              "name" : "launcher_mode",
-              "value" : 0
-            }
-          }, {
-            "set_notification_message" : {
-              "id" : "launcher_mode_notification",
-              "text" : ""
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "launcher_mode",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        } ]
-      } ]
+    "global": {
+        "check_for_updates_on_startup": true,
+        "show_in_menu_bar": false,
+        "show_profile_name_in_menu_bar": false
     },
-    "devices" : [ ],
-    "fn_function_keys" : [ {
-      "from" : {
-        "key_code" : "f1"
-      },
-      "to" : [ {
-        "consumer_key_code" : "display_brightness_decrement"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f2"
-      },
-      "to" : [ {
-        "consumer_key_code" : "display_brightness_increment"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f3"
-      },
-      "to" : [ {
-        "key_code" : "mission_control"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f4"
-      },
-      "to" : [ {
-        "key_code" : "launchpad"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f5"
-      },
-      "to" : [ {
-        "key_code" : "illumination_decrement"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f6"
-      },
-      "to" : [ {
-        "key_code" : "illumination_increment"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f7"
-      },
-      "to" : [ {
-        "consumer_key_code" : "rewind"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f8"
-      },
-      "to" : [ {
-        "consumer_key_code" : "play_or_pause"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f9"
-      },
-      "to" : [ {
-        "consumer_key_code" : "fastforward"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f10"
-      },
-      "to" : [ {
-        "consumer_key_code" : "mute"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f11"
-      },
-      "to" : [ {
-        "consumer_key_code" : "volume_decrement"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f12"
-      },
-      "to" : [ {
-        "consumer_key_code" : "volume_increment"
-      } ]
-    } ],
-    "name" : "Default",
-    "parameters" : {
-      "delay_milliseconds_before_open_device" : 1000
-    },
-    "selected" : true,
-    "simple_modifications" : [ {
-      "from" : {
-        "key_code" : "caps_lock"
-      },
-      "to" : [ {
-        "key_code" : "left_shift"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "delete_forward"
-      },
-      "to" : [ {
-        "key_code" : "f20"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f19"
-      },
-      "to" : [ {
-        "key_code" : "escape"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f21"
-      },
-      "to" : [ {
-        "key_code" : "f20"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "non_us_backslash"
-      },
-      "to" : [ {
-        "key_code" : "f20"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "right_command"
-      },
-      "to" : [ {
-        "key_code" : "left_control"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "right_shift"
-      },
-      "to" : [ {
-        "key_code" : "escape"
-      } ]
-    } ],
-    "virtual_hid_keyboard" : {
-      "country_code" : 0,
-      "indicate_sticky_modifier_keys_state" : true,
-      "mouse_key_xy_scale" : 100
-    }
-  } ]
+    "profiles": [
+        {
+            "complex_modifications": {
+                "parameters": {
+                    "basic.simultaneous_threshold_milliseconds": 50,
+                    "basic.to_delayed_action_delay_milliseconds": 500,
+                    "basic.to_if_alone_timeout_milliseconds": 1000,
+                    "basic.to_if_held_down_threshold_milliseconds": 500
+                },
+                "rules": [
+                    {
+                        "description": "Holding left_command switches rulemak -> Colemak.",
+                        "manipulators": [
+                            {
+                                "to_after_key_up": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "left_command",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "com.apple.keylayout.Colemak"
+                                        }
+                                    },
+                                    {
+                                        "key_code": "left_command"
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Holding left_control switches rulemak -> Colemak.",
+                        "manipulators": [
+                            {
+                                "to_after_key_up": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "left_control",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "com.apple.keylayout.Colemak"
+                                        }
+                                    },
+                                    {
+                                        "key_code": "left_control"
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Holding left_option switches rulemak -> Colemak.",
+                        "manipulators": [
+                            {
+                                "to_after_key_up": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "left_option",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "com.apple.keylayout.Colemak"
+                                        }
+                                    },
+                                    {
+                                        "key_code": "left_option"
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Holding right_command switches rulemak -> Colemak.",
+                        "manipulators": [
+                            {
+                                "to_after_key_up": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "right_command",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "com.apple.keylayout.Colemak"
+                                        }
+                                    },
+                                    {
+                                        "key_code": "right_command"
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Holding right_control switches rulemak -> Colemak.",
+                        "manipulators": [
+                            {
+                                "to_after_key_up": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "right_control",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "com.apple.keylayout.Colemak"
+                                        }
+                                    },
+                                    {
+                                        "key_code": "right_control"
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Holding right_option switches rulemak -> Colemak.",
+                        "manipulators": [
+                            {
+                                "to_after_key_up": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "right_option",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "com.apple.keylayout.Colemak"
+                                        }
+                                    },
+                                    {
+                                        "key_code": "right_option"
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Ctrl-W -> delete word",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "w",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_control"
+                                        ],
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "delete_or_backspace",
+                                        "modifiers": [
+                                            "left_option"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Swap backtick and tilde",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "grave_accent_and_tilde",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "grave_accent_and_tilde"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "grave_accent_and_tilde"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "grave_accent_and_tilde",
+                                        "modifiers": [
+                                            "left_shift"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "launcher -> activation",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "f20",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "launcher_mode",
+                                            "value": 1
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "launcher_mode_notification",
+                                            "text": "LAUNCHER"
+                                        }
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "value": 0,
+                                        "type": "variable_if"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "launcher_spacebar -> kitty.app",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "launcher_mode",
+                                            "value": 0
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "launcher_mode_notification",
+                                            "text": ""
+                                        }
+                                    },
+                                    {
+                                        "shell_command": "open -a 'kitty.app'"
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "value": 1,
+                                        "type": "variable_if"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "launcher_j -> Brave Browser.app",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "j",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "launcher_mode",
+                                            "value": 0
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "launcher_mode_notification",
+                                            "text": ""
+                                        }
+                                    },
+                                    {
+                                        "shell_command": "open -a 'Brave Browser.app'"
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "value": 1,
+                                        "type": "variable_if"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "launcher_k -> Visual Studio Code.app",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "k",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "launcher_mode",
+                                            "value": 0
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "launcher_mode_notification",
+                                            "text": ""
+                                        }
+                                    },
+                                    {
+                                        "shell_command": "open -a 'Visual Studio Code.app'"
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "value": 1,
+                                        "type": "variable_if"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "launcher_d -> Spotify.app",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "d",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "launcher_mode",
+                                            "value": 0
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "launcher_mode_notification",
+                                            "text": ""
+                                        }
+                                    },
+                                    {
+                                        "shell_command": "open -a 'Spotify.app'"
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "value": 1,
+                                        "type": "variable_if"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "launcher_f -> Telegram.app",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "f",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "launcher_mode",
+                                            "value": 0
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "launcher_mode_notification",
+                                            "text": ""
+                                        }
+                                    },
+                                    {
+                                        "shell_command": "open -a 'Telegram.app'"
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "value": 1,
+                                        "type": "variable_if"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "launcher_u -> Obsidian.app",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "u",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "launcher_mode",
+                                            "value": 0
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "launcher_mode_notification",
+                                            "text": ""
+                                        }
+                                    },
+                                    {
+                                        "shell_command": "open -a 'Obsidian.app'"
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "value": 1,
+                                        "type": "variable_if"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "launcher hyphen -> switch to com.apple.keylayout.Colemak",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "hyphen",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "launcher_mode",
+                                            "value": 0
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "launcher_mode_notification",
+                                            "text": ""
+                                        }
+                                    },
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "com.apple.keylayout.Colemak"
+                                        }
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "value": 1,
+                                        "type": "variable_if"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "launcher equal_sign -> switch to org.sil.ukelele.keyboardlayout.rulemak.rulemak",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "equal_sign",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "launcher_mode",
+                                            "value": 0
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "launcher_mode_notification",
+                                            "text": ""
+                                        }
+                                    },
+                                    {
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "value": 1,
+                                        "type": "variable_if"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "launcher -> f20 switches to the previous app",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "f20",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "launcher_mode",
+                                            "value": 0
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "launcher_mode_notification",
+                                            "text": ""
+                                        }
+                                    },
+                                    {
+                                        "key_code": "tab",
+                                        "modifiers": [
+                                            "left_command"
+                                        ]
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "value": 1,
+                                        "type": "variable_if"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "launcher -> deactivation",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "any": "key_code",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "launcher_mode",
+                                            "value": 0
+                                        }
+                                    },
+                                    {
+                                        "set_notification_message": {
+                                            "id": "launcher_mode_notification",
+                                            "text": ""
+                                        }
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "value": 1,
+                                        "type": "variable_if"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "devices": [],
+            "fn_function_keys": [
+                {
+                    "from": {
+                        "key_code": "f1"
+                    },
+                    "to": [
+                        {
+                            "consumer_key_code": "display_brightness_decrement"
+                        }
+                    ]
+                },
+                {
+                    "from": {
+                        "key_code": "f2"
+                    },
+                    "to": [
+                        {
+                            "consumer_key_code": "display_brightness_increment"
+                        }
+                    ]
+                },
+                {
+                    "from": {
+                        "key_code": "f3"
+                    },
+                    "to": [
+                        {
+                            "key_code": "mission_control"
+                        }
+                    ]
+                },
+                {
+                    "from": {
+                        "key_code": "f4"
+                    },
+                    "to": [
+                        {
+                            "key_code": "launchpad"
+                        }
+                    ]
+                },
+                {
+                    "from": {
+                        "key_code": "f5"
+                    },
+                    "to": [
+                        {
+                            "key_code": "illumination_decrement"
+                        }
+                    ]
+                },
+                {
+                    "from": {
+                        "key_code": "f6"
+                    },
+                    "to": [
+                        {
+                            "key_code": "illumination_increment"
+                        }
+                    ]
+                },
+                {
+                    "from": {
+                        "key_code": "f7"
+                    },
+                    "to": [
+                        {
+                            "consumer_key_code": "rewind"
+                        }
+                    ]
+                },
+                {
+                    "from": {
+                        "key_code": "f8"
+                    },
+                    "to": [
+                        {
+                            "consumer_key_code": "play_or_pause"
+                        }
+                    ]
+                },
+                {
+                    "from": {
+                        "key_code": "f9"
+                    },
+                    "to": [
+                        {
+                            "consumer_key_code": "fastforward"
+                        }
+                    ]
+                },
+                {
+                    "from": {
+                        "key_code": "f10"
+                    },
+                    "to": [
+                        {
+                            "consumer_key_code": "mute"
+                        }
+                    ]
+                },
+                {
+                    "from": {
+                        "key_code": "f11"
+                    },
+                    "to": [
+                        {
+                            "consumer_key_code": "volume_decrement"
+                        }
+                    ]
+                },
+                {
+                    "from": {
+                        "key_code": "f12"
+                    },
+                    "to": [
+                        {
+                            "consumer_key_code": "volume_increment"
+                        }
+                    ]
+                }
+            ],
+            "name": "Default",
+            "parameters": {
+                "delay_milliseconds_before_open_device": 1000
+            },
+            "selected": true,
+            "simple_modifications": [
+                {
+                    "from": {
+                        "key_code": "caps_lock"
+                    },
+                    "to": [
+                        {
+                            "key_code": "left_shift"
+                        }
+                    ]
+                },
+                {
+                    "from": {
+                        "key_code": "right_command"
+                    },
+                    "to": [
+                        {
+                            "key_code": "left_control"
+                        }
+                    ]
+                },
+                {
+                    "from": {
+                        "key_code": "non_us_backslash"
+                    },
+                    "to": [
+                        {
+                            "key_code": "f20"
+                        }
+                    ]
+                }
+            ],
+            "virtual_hid_keyboard": {
+                "country_code": 0,
+                "indicate_sticky_modifier_keys_state": true,
+                "mouse_key_xy_scale": 100
+            }
+        }
+    ]
 }
