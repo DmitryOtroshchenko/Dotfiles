@@ -1,8 +1,10 @@
 {
     "global": {
+        "ask_for_confirmation_before_quitting": true,
         "check_for_updates_on_startup": true,
         "show_in_menu_bar": false,
-        "show_profile_name_in_menu_bar": false
+        "show_profile_name_in_menu_bar": false,
+        "unsafe_ui": false
     },
     "profiles": [
         {
@@ -11,18 +13,22 @@
                     "basic.simultaneous_threshold_milliseconds": 50,
                     "basic.to_delayed_action_delay_milliseconds": 500,
                     "basic.to_if_alone_timeout_milliseconds": 1000,
-                    "basic.to_if_held_down_threshold_milliseconds": 500
+                    "basic.to_if_held_down_threshold_milliseconds": 500,
+                    "mouse_motion_to_scroll.speed": 100
                 },
                 "rules": [
                     {
                         "description": "Holding left_command switches rulemak -> Colemak.",
                         "manipulators": [
                             {
-                                "to_after_key_up": [
+                                "conditions": [
                                     {
-                                        "select_input_source": {
-                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-                                        }
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
                                     }
                                 ],
                                 "from": {
@@ -43,14 +49,11 @@
                                         "key_code": "left_command"
                                     }
                                 ],
-                                "conditions": [
+                                "to_after_key_up": [
                                     {
-                                        "input_sources": [
-                                            {
-                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-                                            }
-                                        ],
-                                        "type": "input_source_if"
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
                                     }
                                 ],
                                 "type": "basic"
@@ -61,11 +64,14 @@
                         "description": "Holding left_control switches rulemak -> Colemak.",
                         "manipulators": [
                             {
-                                "to_after_key_up": [
+                                "conditions": [
                                     {
-                                        "select_input_source": {
-                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-                                        }
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
                                     }
                                 ],
                                 "from": {
@@ -86,14 +92,11 @@
                                         "key_code": "left_control"
                                     }
                                 ],
-                                "conditions": [
+                                "to_after_key_up": [
                                     {
-                                        "input_sources": [
-                                            {
-                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-                                            }
-                                        ],
-                                        "type": "input_source_if"
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
                                     }
                                 ],
                                 "type": "basic"
@@ -104,11 +107,14 @@
                         "description": "Holding left_option switches rulemak -> Colemak.",
                         "manipulators": [
                             {
-                                "to_after_key_up": [
+                                "conditions": [
                                     {
-                                        "select_input_source": {
-                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-                                        }
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
                                     }
                                 ],
                                 "from": {
@@ -129,14 +135,11 @@
                                         "key_code": "left_option"
                                     }
                                 ],
-                                "conditions": [
+                                "to_after_key_up": [
                                     {
-                                        "input_sources": [
-                                            {
-                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-                                            }
-                                        ],
-                                        "type": "input_source_if"
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
                                     }
                                 ],
                                 "type": "basic"
@@ -147,11 +150,14 @@
                         "description": "Holding right_command switches rulemak -> Colemak.",
                         "manipulators": [
                             {
-                                "to_after_key_up": [
+                                "conditions": [
                                     {
-                                        "select_input_source": {
-                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-                                        }
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
                                     }
                                 ],
                                 "from": {
@@ -172,14 +178,11 @@
                                         "key_code": "right_command"
                                     }
                                 ],
-                                "conditions": [
+                                "to_after_key_up": [
                                     {
-                                        "input_sources": [
-                                            {
-                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-                                            }
-                                        ],
-                                        "type": "input_source_if"
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
                                     }
                                 ],
                                 "type": "basic"
@@ -190,11 +193,14 @@
                         "description": "Holding right_control switches rulemak -> Colemak.",
                         "manipulators": [
                             {
-                                "to_after_key_up": [
+                                "conditions": [
                                     {
-                                        "select_input_source": {
-                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-                                        }
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
                                     }
                                 ],
                                 "from": {
@@ -215,14 +221,11 @@
                                         "key_code": "right_control"
                                     }
                                 ],
-                                "conditions": [
+                                "to_after_key_up": [
                                     {
-                                        "input_sources": [
-                                            {
-                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-                                            }
-                                        ],
-                                        "type": "input_source_if"
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
                                     }
                                 ],
                                 "type": "basic"
@@ -233,11 +236,14 @@
                         "description": "Holding right_option switches rulemak -> Colemak.",
                         "manipulators": [
                             {
-                                "to_after_key_up": [
+                                "conditions": [
                                     {
-                                        "select_input_source": {
-                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-                                        }
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
                                     }
                                 ],
                                 "from": {
@@ -258,14 +264,11 @@
                                         "key_code": "right_option"
                                     }
                                 ],
-                                "conditions": [
+                                "to_after_key_up": [
                                     {
-                                        "input_sources": [
-                                            {
-                                                "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
-                                            }
-                                        ],
-                                        "type": "input_source_if"
+                                        "select_input_source": {
+                                            "input_source_id": "org.sil.ukelele.keyboardlayout.rulemak.rulemak"
+                                        }
                                     }
                                 ],
                                 "type": "basic"
@@ -338,6 +341,13 @@
                         "description": "launcher -> activation",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "type": "variable_if",
+                                        "value": 0
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "f20",
                                     "modifiers": {
@@ -352,21 +362,10 @@
                                             "name": "launcher_mode",
                                             "value": 1
                                         }
-                                    },
-                                    {
-                                        "set_notification_message": {
-                                            "id": "launcher_mode_notification",
-                                            "text": "LAUNCHER"
-                                        }
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                        "name": "launcher_mode",
-                                        "value": 0,
-                                        "type": "variable_if"
-                                    }
-                                ],
+                                "to_after_key_up": [],
+                                "to_if_held_down": [],
                                 "type": "basic"
                             }
                         ]
@@ -375,6 +374,13 @@
                         "description": "launcher_spacebar -> kitty.app",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "spacebar",
                                     "modifiers": {
@@ -400,13 +406,6 @@
                                         "shell_command": "open -a 'kitty.app'"
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                        "name": "launcher_mode",
-                                        "value": 1,
-                                        "type": "variable_if"
-                                    }
-                                ],
                                 "type": "basic"
                             }
                         ]
@@ -415,6 +414,13 @@
                         "description": "launcher_j -> Brave Browser.app",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "j",
                                     "modifiers": {
@@ -440,13 +446,6 @@
                                         "shell_command": "open -a 'Brave Browser.app'"
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                        "name": "launcher_mode",
-                                        "value": 1,
-                                        "type": "variable_if"
-                                    }
-                                ],
                                 "type": "basic"
                             }
                         ]
@@ -455,6 +454,13 @@
                         "description": "launcher_k -> Visual Studio Code.app",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "k",
                                     "modifiers": {
@@ -480,13 +486,6 @@
                                         "shell_command": "open -a 'Visual Studio Code.app'"
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                        "name": "launcher_mode",
-                                        "value": 1,
-                                        "type": "variable_if"
-                                    }
-                                ],
                                 "type": "basic"
                             }
                         ]
@@ -495,6 +494,13 @@
                         "description": "launcher_d -> Spotify.app",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "d",
                                     "modifiers": {
@@ -520,13 +526,6 @@
                                         "shell_command": "open -a 'Spotify.app'"
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                        "name": "launcher_mode",
-                                        "value": 1,
-                                        "type": "variable_if"
-                                    }
-                                ],
                                 "type": "basic"
                             }
                         ]
@@ -535,6 +534,13 @@
                         "description": "launcher_f -> Telegram.app",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "f",
                                     "modifiers": {
@@ -560,13 +566,6 @@
                                         "shell_command": "open -a 'Telegram.app'"
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                        "name": "launcher_mode",
-                                        "value": 1,
-                                        "type": "variable_if"
-                                    }
-                                ],
                                 "type": "basic"
                             }
                         ]
@@ -575,6 +574,13 @@
                         "description": "launcher_u -> Obsidian.app",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "u",
                                     "modifiers": {
@@ -600,13 +606,6 @@
                                         "shell_command": "open -a 'Obsidian.app'"
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                        "name": "launcher_mode",
-                                        "value": 1,
-                                        "type": "variable_if"
-                                    }
-                                ],
                                 "type": "basic"
                             }
                         ]
@@ -615,6 +614,13 @@
                         "description": "launcher hyphen -> switch to com.apple.keylayout.Colemak",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "hyphen",
                                     "modifiers": {
@@ -642,13 +648,6 @@
                                         }
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                        "name": "launcher_mode",
-                                        "value": 1,
-                                        "type": "variable_if"
-                                    }
-                                ],
                                 "type": "basic"
                             }
                         ]
@@ -657,6 +656,13 @@
                         "description": "launcher equal_sign -> switch to org.sil.ukelele.keyboardlayout.rulemak.rulemak",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "equal_sign",
                                     "modifiers": {
@@ -684,13 +690,6 @@
                                         }
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                        "name": "launcher_mode",
-                                        "value": 1,
-                                        "type": "variable_if"
-                                    }
-                                ],
                                 "type": "basic"
                             }
                         ]
@@ -699,6 +698,13 @@
                         "description": "launcher -> f20 switches to the previous app",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "f20",
                                     "modifiers": {
@@ -727,13 +733,6 @@
                                         ]
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                        "name": "launcher_mode",
-                                        "value": 1,
-                                        "type": "variable_if"
-                                    }
-                                ],
                                 "type": "basic"
                             }
                         ]
@@ -742,6 +741,13 @@
                         "description": "launcher -> deactivation",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "name": "launcher_mode",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
                                 "from": {
                                     "any": "key_code",
                                     "modifiers": {
@@ -764,20 +770,58 @@
                                         }
                                     }
                                 ],
-                                "conditions": [
-                                    {
-                                        "name": "launcher_mode",
-                                        "value": 1,
-                                        "type": "variable_if"
-                                    }
-                                ],
                                 "type": "basic"
                             }
                         ]
                     }
                 ]
             },
-            "devices": [],
+            "devices": [
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": [],
+                    "game_pad_swap_sticks": false,
+                    "identifiers": {
+                        "is_game_pad": false,
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 611,
+                        "vendor_id": 1452
+                    },
+                    "ignore": false,
+                    "manipulate_caps_lock_led": true,
+                    "mouse_flip_horizontal_wheel": false,
+                    "mouse_flip_vertical_wheel": false,
+                    "mouse_flip_x": false,
+                    "mouse_flip_y": false,
+                    "mouse_swap_wheels": false,
+                    "mouse_swap_xy": false,
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": [],
+                    "game_pad_swap_sticks": false,
+                    "identifiers": {
+                        "is_game_pad": false,
+                        "is_keyboard": false,
+                        "is_pointing_device": true,
+                        "product_id": 611,
+                        "vendor_id": 1452
+                    },
+                    "ignore": true,
+                    "manipulate_caps_lock_led": false,
+                    "mouse_flip_horizontal_wheel": false,
+                    "mouse_flip_vertical_wheel": false,
+                    "mouse_flip_x": false,
+                    "mouse_flip_y": false,
+                    "mouse_swap_wheels": false,
+                    "mouse_swap_xy": false,
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
+                }
+            ],
             "fn_function_keys": [
                 {
                     "from": {
@@ -918,21 +962,21 @@
                 },
                 {
                     "from": {
-                        "key_code": "right_command"
-                    },
-                    "to": [
-                        {
-                            "key_code": "left_control"
-                        }
-                    ]
-                },
-                {
-                    "from": {
                         "key_code": "non_us_backslash"
                     },
                     "to": [
                         {
                             "key_code": "f20"
+                        }
+                    ]
+                },
+                {
+                    "from": {
+                        "key_code": "right_command"
+                    },
+                    "to": [
+                        {
+                            "key_code": "left_control"
                         }
                     ]
                 }

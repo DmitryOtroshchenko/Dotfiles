@@ -86,23 +86,48 @@ f20_turns_on_launcher_mode = {
     "description": "launcher -> activation",
     "manipulators": [
         {
+            "type": "basic",
             "from": {"key_code": "f20", "modifiers": {"optional": ["any"]}},
             "to": [
                 {"set_variable": {"name": "launcher_mode", "value": 1}},
-                {
-                    "set_notification_message": {
-                        "id": "launcher_mode_notification",
-                        "text": "LAUNCHER",
-                    }
-                },
+                # {
+                #     "set_notification_message": {
+                #         "id": "launcher_mode_notification",
+                #         "text": "LAUNCHER",
+                #     }
+                # },
             ],
+            "to_after_key_up": [],
+            "to_if_held_down": [],
             "conditions": [
                 {"name": "launcher_mode", "value": 0, "type": "variable_if"}
             ],
-            "type": "basic",
         }
     ],
 }
+
+
+# f20_turns_on_launcher_mode = {
+#     "description": "launcher -> activation",
+#     "manipulators": [
+#         {
+#             "from": {"key_code": "f20", "modifiers": {"optional": ["any"]}},
+#             "to": [
+#                 {"set_variable": {"name": "launcher_mode", "value": 1}},
+#                 {
+#                     "set_notification_message": {
+#                         "id": "launcher_mode_notification",
+#                         "text": "LAUNCHER",
+#                     }
+#                 },
+#             ],
+#             "conditions": [
+#                 {"name": "launcher_mode", "value": 0, "type": "variable_if"}
+#             ],
+#             "type": "basic",
+#         }
+#     ],
+# }
 
 
 f20_in_launcher_mode_does_cmd_tab = {
@@ -179,7 +204,7 @@ def launcher_mode_select_input_source(key_code, to_layout):
 
 def launcher_mode_shell_command(key_code, shell_command, *, description=None):
     return {
-        "description": description or f"launcher_{key_code} -> {shell_command}",
+        "description": description or f"launcher {key_code} -> {shell_command}",
         "manipulators": [
             {
                 "from": {"key_code": key_code, "modifiers": {"optional": ["any"]}},
